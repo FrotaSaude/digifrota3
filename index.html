@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#1A2B5F">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="DigiFrota">
+<link rel="manifest" href="manifest.json">
+<title>DigiFrota 3.0</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--navy:#1A2B5F;--navy2:#243480;--yellow:#F5C400;--bg:#F4F6FB;--card:#fff;--border:#E2E6F0;--text:#1A2B5F;--muted:#7A84A0;--danger:#E24B4A;--success:#22C55E;--radius:16px;--rsm:10px}
+html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+.app{max-width:480px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column}
+.hdr{background:var(--navy);flex-shrink:0}
+.hdr-inner{padding:16px 20px 18px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:36px;height:36px;background:var(--yellow);border-radius:10px;display:flex;align-items:center;justify-content:center}
+.logo-icon svg{width:20px;height:20px}
+.logo-text{font-size:20px;font-weight:700;color:#fff;letter-spacing:.5px}
+.logo-text b{color:var(--yellow)}
+.badge{background:rgba(245,196,0,.2);border:1px solid rgba(245,196,0,.4);color:var(--yellow);font-size:11px;font-weight:600;padding:3px 8px;border-radius:20px}
+.prog-bar{background:var(--navy2);padding:12px 20px;display:flex;align-items:center;gap:8px}
+.prog-steps{display:flex;gap:5px;flex:1}
+.prog-step{flex:1;height:3px;border-radius:3px;background:rgba(255,255,255,.2);transition:background .3s}
+.prog-step.done{background:rgba(255,255,255,.5)}
+.prog-step.active{background:var(--yellow)}
+.prog-label{color:rgba(255,255,255,.5);font-size:11px;font-weight:600;white-space:nowrap}
+.prog-label b{color:var(--yellow)}
+.offline{background:#F59E0B;color:#fff;text-align:center;font-size:12px;font-weight:600;padding:6px 20px;display:none}
+.offline.show{display:block}
+.content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:20px;padding-bottom:40px}
+.screen{display:none;animation:fadeUp .2s ease}
+.screen.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.sec-hdr{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.sec-icon{width:38px;height:38px;background:var(--yellow);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sec-icon svg{width:20px;height:20px}
+.sec-title{font-size:19px;font-weight:700;color:var(--navy)}
+.sec-desc{color:var(--muted);font-size:13px;margin-bottom:20px;padding-left:50px;line-height:1.4}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:14px}
+.field{margin-bottom:14px}
+.field:last-child{margin-bottom:0}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field label{display:block;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px}
+.req{color:var(--danger)}
+.field input,.field select{width:100%;padding:13px 14px;border:1.5px solid var(--border);border-radius:var(--rsm);font-family:'Inter',sans-serif;font-size:15px;color:var(--text);background:var(--card);outline:none;transition:border-color .2s,box-shadow .2s;appearance:none;-webkit-appearance:none}
+.field input:focus,.field select:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(26,43,95,.08)}
+.field.error input,.field.error select{border-color:var(--danger)}
+.err-msg{display:none;color:var(--danger);font-size:11px;font-weight:600;margin-top:5px}
+.field.error .err-msg{display:block}
+.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237A84A0' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:38px;cursor:pointer}
+.km-wrap{position:relative}
+.km-wrap input{padding-right:42px;font-size:18px;font-weight:600}
+.km-unit{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:12px;font-weight:600;color:var(--muted);pointer-events:none}
+.photo-box{width:100%;border:2px dashed var(--border);border-radius:var(--radius);background:var(--card);overflow:hidden;position:relative;transition:border-color .2s;cursor:pointer}
+.photo-box input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.ph-placeholder{padding:32px 20px;text-align:center}
+.ph-ico{width:52px;height:52px;background:var(--bg);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px}
+.ph-ico svg{width:24px;height:24px;stroke:var(--muted)}
+.ph-placeholder p{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:4px}
+.ph-placeholder span{font-size:12px;color:var(--muted)}
+.ph-preview{display:none}
+.ph-preview img{width:100%;max-height:220px;object-fit:cover;display:block}
+.ph-retake{padding:10px;text-align:center;font-size:12px;font-weight:600;color:var(--navy);background:var(--bg);border-top:1px solid var(--border)}
+.ph-err{display:none;color:var(--danger);font-size:11px;font-weight:600;margin-top:6px}
+.resumo{background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:var(--radius);padding:18px;margin-bottom:14px}
+.resumo-title{font-size:11px;font-weight:600;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.6px;margin-bottom:14px}
+.resumo-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.resumo-row:last-child{border-bottom:none}
+.resumo-key{font-size:12px;color:rgba(255,255,255,.6)}
+.resumo-val{font-size:13px;font-weight:600;color:#fff;text-align:right;max-width:60%}
+.btn{width:100%;padding:16px;border:none;border-radius:var(--radius);font-family:'Inter',sans-serif;font-size:16px;font-weight:600;cursor:pointer;transition:transform .15s,opacity .15s;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn:active{transform:scale(.98)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-primary{background:var(--yellow);color:var(--navy)}
+.btn-ghost{background:transparent;color:var(--muted);border:1.5px solid var(--border)}
+.btn svg{width:18px;height:18px;flex-shrink:0}
+.center-wrap{text-align:center;padding:20px 0}
+.big-circle{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
+.big-circle.ok{background:#DCFCE7}
+.big-circle.ok svg{stroke:var(--success)}
+.big-circle.err{background:#FEE2E2}
+.big-circle.err svg{stroke:var(--danger)}
+.big-circle svg{width:40px;height:40px;fill:none;stroke-width:2.5;stroke-linecap:round}
+.big-title{font-size:24px;font-weight:700;color:var(--navy)}
+.big-title.err{color:#991B1B}
+.big-sub{color:var(--muted);font-size:14px;margin-top:8px;line-height:1.5;word-break:break-word}
+.overlay{display:none;position:fixed;inset:0;background:rgba(26,43,95,.6);z-index:999;align-items:center;justify-content:center;flex-direction:column;gap:16px}
+.overlay.show{display:flex}
+.spinner{width:48px;height:48px;border:4px solid rgba(255,255,255,.2);border-top-color:var(--yellow);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ov-text{color:#fff;font-size:16px;font-weight:600}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="offline" id="offlineBar">Sem conexão — verifique a internet</div>
+
+  <header class="hdr">
+    <div class="hdr-inner">
+      <div class="logo">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2.5" stroke-linecap="round">
+            <rect x="1" y="3" width="15" height="13" rx="2"/>
+            <path d="M16 8h4l3 3v5h-7V8z"/>
+            <circle cx="5.5" cy="18.5" r="2.5"/>
+            <circle cx="18.5" cy="18.5" r="2.5"/>
+          </svg>
+        </div>
+        <div class="logo-text">DIGI<b>FROTA</b></div>
+      </div>
+      <div class="badge">3.0</div>
+    </div>
+    <div class="prog-bar" id="progBar">
+      <div class="prog-steps">
+        <div class="prog-step active" id="ps0"></div>
+        <div class="prog-step" id="ps1"></div>
+        <div class="prog-step" id="ps2"></div>
+        <div class="prog-step" id="ps3"></div>
+      </div>
+      <div class="prog-label">Etapa <b id="stepNum">1</b>/4</div>
+    </div>
+  </header>
+
+  <div class="content" id="mainContent">
+
+    <!-- ETAPA 1: PARTIDA -->
+    <div class="screen active" id="step0">
+      <div class="sec-hdr">
+        <div class="sec-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2.5" stroke-linecap="round">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+        <div class="sec-title">Partida</div>
+      </div>
+      <div class="sec-desc">Data e horário de saída da viagem</div>
+      <div class="card">
+        <div class="field-row">
+          <div class="field" id="f-dataPartida">
+            <label>Data <span class="req">*</span></label>
+            <input type="date" id="dataPartida">
+            <div class="err-msg">Obrigatório</div>
+          </div>
+          <div class="field" id="f-horarioPartida">
+            <label>Horário <span class="req">*</span></label>
+            <input type="time" id="horarioPartida">
+            <div class="err-msg">Obrigatório</div>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="goTo(1)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        Próximo
+      </button>
+    </div>
+
+    <!-- ETAPA 2: VIAGEM -->
+    <div class="screen" id="step1">
+      <div class="sec-hdr">
+        <div class="sec-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2.5" stroke-linecap="round">
+            <rect x="1" y="3" width="15" height="13" rx="2"/>
+            <path d="M16 8h4l3 3v5h-7V8z"/>
+            <circle cx="5.5" cy="18.5" r="2.5"/>
+            <circle cx="18.5" cy="18.5" r="2.5"/>
+          </svg>
+        </div>
+        <div class="sec-title">Viagem</div>
+      </div>
+      <div class="sec-desc">Motorista, frota e destino</div>
+      <div class="card">
+        <div class="field" id="f-motorista">
+          <label>Motorista <span class="req">*</span></label>
+          <select id="motorista">
+            <option value="">Selecione o motorista...</option>
+            <option>ADEMAR SAMU</option><option>AGNALDO</option><option>ALBERTO</option>
+            <option>ALCY</option><option>ALEXANDRE BARBOSA</option><option>ALEXANDRE SAMU</option>
+            <option>ALEXANDRE SILVEIRA</option><option>ANDRE COUTO</option><option>ANDRE RENATO</option>
+            <option>ANTONIO MARCOS</option><option>CARLOS NEGRAO</option><option>CELSO SAMU</option>
+            <option>CESAR</option><option>DIEGO</option><option>EDSON BARBOSA SAMU</option>
+            <option>EDSON FELICIANO SAMU</option><option>EMERSON BISPO</option><option>EVERTON SAMU</option>
+            <option>FABIO SAMU</option><option>FLAVIO DAMAS</option><option>GABRIEL BRANDAO</option>
+            <option>GERSON</option><option>GREGORIO</option><option>JEFFERSON</option>
+            <option>JHONAS</option><option>JOAO CAMPANA</option><option>JOAO PAULO</option>
+            <option>JOSE ALVES</option><option>JOSE DONISETE</option><option>JOSE ROBERTO</option>
+            <option>JOSENIR</option><option>JULIO SAMU</option><option>JURACI</option>
+            <option>LAURINDO</option><option>LUIS FEITOSA</option><option>MARCELO CARVALHO</option>
+            <option>MARCELO LOPES</option><option>MARCELO MARQUES</option><option>MARCIO NUNES</option>
+            <option>MARCIO RODRIGUES</option><option>MARCO AURELIO</option><option>MARCOS GARCIA</option>
+            <option>MARCOS MORGADO</option><option>MARCOS RODRIGO</option><option>MARCOS SOARES</option>
+            <option>MAURILIO SAMU</option><option>MAURO ALBERTO</option><option>MAURO CELSO</option>
+            <option>MOACIR</option><option>NICOLAU SAMU</option><option>PETER</option>
+            <option>RAFAEL</option><option>REGIS</option><option>ROBERTO BONFIM</option>
+            <option>SAMIR</option><option>SERGIO</option><option>SIDNEI</option>
+            <option>TAKASHI</option><option>VAGNER SAMU</option><option>VALDINEI</option>
+            <option>WAGNER</option><option>WILTON</option>
+          </select>
+          <div class="err-msg">Selecione o motorista</div>
+        </div>
+        <div class="field" id="f-frota">
+          <label>Frota <span class="req">*</span></label>
+          <select id="frota">
+            <option value="">Selecione a frota...</option>
+            <option>12</option><option>338</option><option>347</option><option>386</option>
+            <option>387</option><option>404</option><option>405</option><option>407</option>
+            <option>445</option><option>449</option><option>454</option><option>487</option>
+            <option>492</option><option>496</option><option>509</option><option>514</option>
+            <option>521</option><option>543</option><option>552</option><option>556</option>
+            <option>591</option><option>607</option><option>621</option><option>622</option>
+            <option>634</option><option>635</option><option>636</option><option>638</option>
+            <option>639</option><option>640</option><option>642</option><option>652</option>
+            <option>653</option><option>654</option><option>676</option><option>677</option>
+            <option>680</option><option>681</option><option>682</option><option>691</option>
+            <option>692</option><option>697</option><option>698</option><option>699</option>
+            <option>701</option><option>702</option><option>708</option><option>714</option>
+            <option>716</option><option>748</option><option>755</option><option>760</option>
+            <option>761</option><option>762</option><option>763</option><option>781</option>
+            <option>782</option><option>783</option><option>784</option><option>785</option>
+            <option>786</option><option>787</option><option>788</option><option>789</option>
+            <option>790</option><option>791</option><option>792</option><option>793</option>
+            <option>794</option><option>795</option><option>796</option><option>810</option>
+            <option>820</option><option>823</option><option>825</option><option>831</option>
+            <option>835</option><option>857</option><option>860</option><option>893</option>
+            <option>894</option><option>895</option><option>899</option><option>908</option>
+            <option>909</option><option>910</option><option>911</option><option>912</option>
+            <option>913</option><option>914</option><option>918</option><option>919</option>
+            <option>921</option><option>923</option><option>924</option>
+          </select>
+          <div class="err-msg">Selecione a frota</div>
+        </div>
+        <div class="field" id="f-destino">
+          <label>Destino <span class="req">*</span></label>
+          <select id="destino">
+            <option value="">Selecione o destino...</option>
+            <option>Araçatuba</option><option>Andradina</option>
+            <option>Andradina/Castilho/Ilha Solteira</option><option>Andradina/Ilha Solteira</option>
+            <option>Andradina/Ilha Solteira/Mirandópolis</option><option>Andradina/Mirandópolis</option>
+            <option>Auriflama</option><option>Auriflama/Nhandeara</option>
+            <option>Barretos</option><option>Barretos/São José do Rio Preto</option>
+            <option>Bauru</option><option>Bauru/Botucatu</option><option>Birigui</option>
+            <option>Botucatu</option><option>Brasília</option><option>Buritama</option>
+            <option>Campo Grande</option><option>Castilho</option><option>Castilho/Ilha Solteira</option>
+            <option>Catanduva</option><option>Catanduva/Jaci</option><option>Fernandópolis</option>
+            <option>Fernandópolis/Jales</option><option>Ilha Solteira</option>
+            <option>Ilha Solteira/Castilho</option><option>Ilha Solteira/Mirandópolis</option>
+            <option>Ilha Solteira/Nhandeara</option><option>Ilha Solteira/Valparaíso</option>
+            <option>Jaci</option><option>Jales</option><option>Jales/Fernandópolis</option>
+            <option>Jaú</option><option>Lins</option><option>Mirandópolis</option>
+            <option>Mirassol</option><option>Monte Aprazível</option><option>Nhandeara</option>
+            <option>Nhandeara/São José do Rio Preto</option><option>Nhandeara/Valparaíso</option>
+            <option>Nhandeara/Votuporanga</option><option>Penápolis</option>
+            <option>Pirangi</option><option>Pirangi/Ribeirão Preto</option>
+            <option>Presidente Prudente</option><option>Ribeirão Preto</option>
+            <option>Rio de Janeiro</option><option>São José do Rio Preto</option>
+            <option>São José do Rio Preto/Catanduva</option><option>São José do Rio Preto/Cross</option>
+            <option>São Paulo</option><option>São Paulo/Campinas</option><option>São Paulo/Sorocaba</option>
+            <option>Sorocaba</option><option>Valparaíso</option>
+          </select>
+          <div class="err-msg">Selecione o destino</div>
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="goTo(2)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        Próximo
+      </button>
+      <button class="btn btn-ghost" onclick="goTo(0)">Voltar</button>
+    </div>
+
+    <!-- ETAPA 3: CHEGADA -->
+    <div class="screen" id="step2">
+      <div class="sec-hdr">
+        <div class="sec-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2.5" stroke-linecap="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+        </div>
+        <div class="sec-title">Chegada</div>
+      </div>
+      <div class="sec-desc">Data, horário e quilometragem de retorno</div>
+      <div class="card">
+        <div class="field-row">
+          <div class="field" id="f-dataChegada">
+            <label>Data <span class="req">*</span></label>
+            <input type="date" id="dataChegada">
+            <div class="err-msg">Obrigatório</div>
+          </div>
+          <div class="field" id="f-horarioChegada">
+            <label>Horário <span class="req">*</span></label>
+            <input type="time" id="horarioChegada">
+            <div class="err-msg">Obrigatório</div>
+          </div>
+        </div>
+        <div class="field" id="f-kmChegada">
+          <label>KM de chegada <span class="req">*</span></label>
+          <div class="km-wrap">
+            <input type="number" id="kmChegada" placeholder="Ex: 123456" min="0" inputmode="numeric">
+            <span class="km-unit">km</span>
+          </div>
+          <div class="err-msg">Informe o KM de chegada</div>
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="goTo(3)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        Próximo
+      </button>
+      <button class="btn btn-ghost" onclick="goTo(1)">Voltar</button>
+    </div>
+
+    <!-- ETAPA 4: FOTO -->
+    <div class="screen" id="step3">
+      <div class="sec-hdr">
+        <div class="sec-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2.5" stroke-linecap="round">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+            <circle cx="12" cy="13" r="4"/>
+          </svg>
+        </div>
+        <div class="sec-title">Foto do painel</div>
+      </div>
+      <div class="sec-desc">Fotografe o hodômetro para confirmar o KM</div>
+      <div class="photo-box" id="photoBox">
+        <input type="file" id="fotoInput" accept="image/*" capture="environment" onchange="previewFoto(this)">
+        <div class="ph-placeholder" id="phPlaceholder">
+          <div class="ph-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+              <circle cx="12" cy="13" r="4"/>
+            </svg>
+          </div>
+          <p>Toque para fotografar</p>
+          <span>ou selecione da galeria</span>
+        </div>
+        <div class="ph-preview" id="phPreview">
+          <img id="phImg" src="" alt="Foto do painel">
+          <div class="ph-retake">Toque para trocar a foto</div>
+        </div>
+      </div>
+      <div class="ph-err" id="phErr">Adicione uma foto do painel</div>
+      <button class="btn btn-primary" id="btnEnviar" onclick="enviar()" style="margin-top:14px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        Registrar viagem
+      </button>
+      <button class="btn btn-ghost" onclick="goTo(2)">Voltar</button>
+    </div>
+
+    <!-- SUCESSO -->
+    <div class="screen" id="stepSuccess">
+      <div class="center-wrap">
+        <div class="big-circle ok">
+          <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <div class="big-title">Viagem registrada!</div>
+        <div class="big-sub">Dados salvos com sucesso na planilha DigiFrota 3.0</div>
+      </div>
+      <div class="resumo" id="resumoCard"></div>
+      <button class="btn btn-primary" onclick="resetar()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Nova viagem
+      </button>
+    </div>
+
+    <!-- ERRO -->
+    <div class="screen" id="stepError">
+      <div class="center-wrap">
+        <div class="big-circle err">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+        </div>
+        <div class="big-title err">Falha no envio</div>
+        <div class="big-sub" id="errDetail">Não foi possível salvar. Verifique a conexão.</div>
+      </div>
+      <button class="btn btn-primary" onclick="reenviar()">Tentar novamente</button>
+      <button class="btn btn-ghost" onclick="goTo(3)">Voltar ao formulário</button>
+    </div>
+
+  </div>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="spinner"></div>
+  <div class="ov-text">Enviando dados...</div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════
+// ⚠️  SUBSTITUA PELA URL DO SEU APPS SCRIPT
+// ═══════════════════════════════════════════════════
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzOVmKH_a2gWBy-GZxp7i31W5b00TCBf7YKeFa6t9XFR4dGVwtA2XnEab-ndwO3V8bZeg/exec";
+// ═══════════════════════════════════════════════════
+
+let step = 0;
+let payload = null;
+
+window.addEventListener('online',  () => document.getElementById('offlineBar').classList.remove('show'));
+window.addEventListener('offline', () => document.getElementById('offlineBar').classList.add('show'));
+if (!navigator.onLine) document.getElementById('offlineBar').classList.add('show');
+
+(function preencheDataHora(){
+  const now = new Date();
+  const pad = n => String(n).padStart(2,'0');
+  document.getElementById('dataPartida').value    = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
+  document.getElementById('horarioPartida').value = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
+})();
+
+const VALIDACOES = [
+  [['dataPartida','horarioPartida'],       ['f-dataPartida','f-horarioPartida']],
+  [['motorista','frota','destino'],         ['f-motorista','f-frota','f-destino']],
+  [['dataChegada','horarioChegada','kmChegada'], ['f-dataChegada','f-horarioChegada','f-kmChegada']],
+];
+
+function validar(s) {
+  if (s >= VALIDACOES.length) return true;
+  const [ids, wids] = VALIDACOES[s];
+  let ok = true;
+  ids.forEach((id, i) => {
+    const el = document.getElementById(id);
+    const w  = document.getElementById(wids[i]);
+    if (!el.value.trim()) { w.classList.add('error'); ok = false; }
+    else w.classList.remove('error');
+  });
+  return ok;
+}
+
+function goTo(n) {
+  if (n > step && !validar(step)) return;
+  document.getElementById('step' + step).classList.remove('active');
+  step = n;
+
+  const ehForm = n < 4;
+  document.getElementById('progBar').style.display = ehForm ? 'flex' : 'none';
+
+  if (ehForm) {
+    for (let i = 0; i < 4; i++) {
+      const d = document.getElementById('ps' + i);
+      d.className = 'prog-step' + (i < n ? ' done' : i === n ? ' active' : '');
+    }
+    document.getElementById('stepNum').textContent = n + 1;
+    document.getElementById('step' + n).classList.add('active');
+  } else {
+    document.getElementById('step' + n).classList.add('active');
+  }
+  document.getElementById('mainContent').scrollTo(0, 0);
+}
+
+function showScreen(id) {
+  ['step0','step1','step2','step3','stepSuccess','stepError'].forEach(s =>
+    document.getElementById(s).classList.remove('active')
+  );
+  document.getElementById('progBar').style.display = 'none';
+  document.getElementById(id).classList.add('active');
+  document.getElementById('mainContent').scrollTo(0, 0);
+}
+
+function previewFoto(input) {
+  if (!input.files || !input.files[0]) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    document.getElementById('phImg').src = e.target.result;
+    document.getElementById('phPlaceholder').style.display = 'none';
+    document.getElementById('phPreview').style.display = 'block';
+    document.getElementById('phErr').style.display = 'none';
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+function comprimirFoto(file, maxW, qual) {
+  return new Promise(res => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        let w = img.width, h = img.height;
+        if (w > maxW) { h = Math.round(h * maxW / w); w = maxW; }
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        res(canvas.toDataURL('image/jpeg', qual));
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function fmtData(v) {
+  if (!v) return '—';
+  const [a,m,d] = v.split('-');
+  return `${d}/${m}/${a}`;
+}
+
+async function enviar() {
+  if (!validar(2)) { goTo(2); return; }
+
+  const foto = document.getElementById('fotoInput');
+  if (!foto.files || !foto.files[0]) {
+    document.getElementById('phErr').style.display = 'block';
+    return;
+  }
+
+  if (!navigator.onLine) {
+    alert('Sem conexão. Conecte-se e tente novamente.');
+    return;
+  }
+
+  const fotoBase64 = await comprimirFoto(foto.files[0], 1200, 0.75);
+
+  payload = {
+    dataPartida:    document.getElementById('dataPartida').value,
+    horarioPartida: document.getElementById('horarioPartida').value,
+    dataChegada:    document.getElementById('dataChegada').value,
+    horarioChegada: document.getElementById('horarioChegada').value,
+    motorista:      document.getElementById('motorista').value,
+    frota:          document.getElementById('frota').value,
+    destino:        document.getElementById('destino').value,
+    kmChegada:      document.getElementById('kmChegada').value,
+    foto:           fotoBase64,
+    fotoNome:       foto.files[0].name,
+    email:          ''
+  };
+
+  await enviarDados(payload);
+}
+
+async function reenviar() {
+  if (!payload) { goTo(0); return; }
+  await enviarDados(payload);
+}
+
+async function enviarDados(dados) {
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('btnEnviar').disabled = true;
+
+  try {
+    const res  = await fetch(SCRIPT_URL, {
+      method:  'POST',
+      body:    JSON.stringify(dados),
+      headers: { 'Content-Type': 'text/plain' }
+    });
+    const json = await res.json();
+    document.getElementById('overlay').classList.remove('show');
+    document.getElementById('btnEnviar').disabled = false;
+
+    if (json.status === 'ok') mostrarSucesso(dados, json.kmRodado);
+    else mostrarErro(json.mensagem || 'Erro desconhecido.');
+  } catch (err) {
+    document.getElementById('overlay').classList.remove('show');
+    document.getElementById('btnEnviar').disabled = false;
+    mostrarErro('Falha de conexão: ' + err.message);
+  }
+}
+
+function mostrarSucesso(d, kmRodado) {
+  const rows = [
+    ['Motorista', d.motorista],
+    ['Frota',     d.frota],
+    ['Destino',   d.destino],
+    ['Partida',   fmtData(d.dataPartida) + ' às ' + d.horarioPartida],
+    ['Chegada',   fmtData(d.dataChegada) + ' às ' + d.horarioChegada],
+    ['KM chegada', Number(d.kmChegada).toLocaleString('pt-BR') + ' km'],
+    ...(kmRodado ? [['KM rodado', Number(kmRodado).toLocaleString('pt-BR') + ' km']] : []),
+  ];
+  document.getElementById('resumoCard').innerHTML =
+    '<div class="resumo-title">Resumo da viagem</div>' +
+    rows.map(([k,v]) =>
+      `<div class="resumo-row"><span class="resumo-key">${k}</span><span class="resumo-val">${v}</span></div>`
+    ).join('');
+  showScreen('stepSuccess');
+}
+
+function mostrarErro(msg) {
+  document.getElementById('errDetail').textContent = msg;
+  showScreen('stepError');
+}
+
+function resetar() {
+  ['dataChegada','horarioChegada','kmChegada','motorista','frota','destino'].forEach(id =>
+    document.getElementById(id).value = ''
+  );
+  const now = new Date();
+  const pad = n => String(n).padStart(2,'0');
+  document.getElementById('dataPartida').value    = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
+  document.getElementById('horarioPartida').value = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
+
+  document.getElementById('fotoInput').value = '';
+  document.getElementById('phPlaceholder').style.display = 'block';
+  document.getElementById('phPreview').style.display = 'none';
+  document.getElementById('phErr').style.display = 'none';
+
+  payload = null;
+  step = 0;
+  document.getElementById('progBar').style.display = 'flex';
+  for (let i = 0; i < 4; i++) {
+    document.getElementById('ps' + i).className = 'prog-step' + (i === 0 ? ' active' : '');
+  }
+  document.getElementById('stepNum').textContent = '1';
+  showScreen('step0');
+  document.getElementById('step0').classList.add('active');
+}
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+</script>
+</body>
+</html>
