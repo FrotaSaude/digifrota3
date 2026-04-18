@@ -40,25 +40,23 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
   min-height:160px;
 }
 
-/* Van mascote ao fundo */
+/* Van como fundo desfocado cobrindo todo o header */
 .hdr-van{
   position:absolute;
-  right:0;
-  bottom:0;
-  width:55%;
-  height:100%;
-  background:url('https://github.com/FrotaSaude/digifrota3/blob/main/van.jpg?raw=true') no-repeat right bottom / contain;
-  opacity:.85;
+  inset:0;
+  background:url('https://github.com/FrotaSaude/digifrota3/blob/main/van.jpg?raw=true') no-repeat center center / cover;
+  opacity:.18;
   pointer-events:none;
-  filter:none;
+  filter:blur(3px) saturate(0.6);
+  transform:scale(1.05);
 }
 
-/* Gradiente sobre a van para não cortar bruscamente */
+/* Gradiente vertical para manter legibilidade do logo */
 .hdr-van::before{
   content:'';
   position:absolute;
   inset:0;
-  background:linear-gradient(90deg, var(--navy) 0%, transparent 40%);
+  background:linear-gradient(180deg, rgba(11,22,56,.6) 0%, rgba(11,22,56,.85) 100%);
 }
 
 /* Brilho dourado decorativo */
@@ -266,7 +264,6 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
   <div class="offline" id="offlineBar">Sem conexão — verifique a internet antes de enviar</div>
 
   <header class="hdr">
-    <!-- Van mascote ao fundo -->
     <div class="hdr-van"></div>
     <div class="hdr-glow"></div>
 
