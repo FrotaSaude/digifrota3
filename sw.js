@@ -1,10 +1,9 @@
 // DigiFrota 3.0 — Service Worker
-const CACHE = 'digifrota-v6';
+const CACHE = 'digifrota-20260418';
 const ASSETS = [
   './',
   './index.html',
   'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap'
-  // manifest.json e ícones FORA do cache — sempre buscam da rede
 ];
 
 self.addEventListener('install', e => {
@@ -24,14 +23,12 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', e => {
   // Apps Script sempre vai para a rede
   if (e.request.url.includes('script.google.com')) return;
-
   // Manifest e ícones sempre buscam da rede (nunca do cache)
   if (
     e.request.url.includes('manifest.json') ||
     e.request.url.includes('icon-192') ||
     e.request.url.includes('icon-512')
   ) return;
-
   e.respondWith(
     caches.match(e.request).then(cached => cached || fetch(e.request))
   );
