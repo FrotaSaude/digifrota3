@@ -8,6 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="DigiFrota">
 <link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
 <title>DigiFrota 3.0</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -387,11 +388,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 </div>
 
 <script>
-// ═══════════════════════════════════════════════════
-// ⚠️  SUBSTITUA PELA URL DO SEU APPS SCRIPT
-// ═══════════════════════════════════════════════════
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzOVmKH_a2gWBy-GZxp7i31W5b00TCBf7YKeFa6t9XFR4dGVwtA2XnEab-ndwO3V8bZeg/exec";
-// ═══════════════════════════════════════════════════
 
 let step = 0;
 let payload = null;
@@ -430,10 +427,8 @@ function goTo(n) {
   if (n > step && !validar(step)) return;
   document.getElementById('step' + step).classList.remove('active');
   step = n;
-
   const ehForm = n < 4;
   document.getElementById('progBar').style.display = ehForm ? 'flex' : 'none';
-
   if (ehForm) {
     for (let i = 0; i < 4; i++) {
       const d = document.getElementById('ps' + i);
@@ -495,20 +490,16 @@ function fmtData(v) {
 
 async function enviar() {
   if (!validar(2)) { goTo(2); return; }
-
   const foto = document.getElementById('fotoInput');
   if (!foto.files || !foto.files[0]) {
     document.getElementById('phErr').style.display = 'block';
     return;
   }
-
   if (!navigator.onLine) {
     alert('Sem conexão. Conecte-se e tente novamente.');
     return;
   }
-
   const fotoBase64 = await comprimirFoto(foto.files[0], 1200, 0.75);
-
   payload = {
     dataPartida:    document.getElementById('dataPartida').value,
     horarioPartida: document.getElementById('horarioPartida').value,
@@ -522,7 +513,6 @@ async function enviar() {
     fotoNome:       foto.files[0].name,
     email:          ''
   };
-
   await enviarDados(payload);
 }
 
@@ -534,7 +524,6 @@ async function reenviar() {
 async function enviarDados(dados) {
   document.getElementById('overlay').classList.add('show');
   document.getElementById('btnEnviar').disabled = true;
-
   try {
     const res  = await fetch(SCRIPT_URL, {
       method:  'POST',
@@ -544,7 +533,6 @@ async function enviarDados(dados) {
     const json = await res.json();
     document.getElementById('overlay').classList.remove('show');
     document.getElementById('btnEnviar').disabled = false;
-
     if (json.status === 'ok') mostrarSucesso(dados, json.kmRodado);
     else mostrarErro(json.mensagem || 'Erro desconhecido.');
   } catch (err) {
@@ -585,12 +573,10 @@ function resetar() {
   const pad = n => String(n).padStart(2,'0');
   document.getElementById('dataPartida').value    = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
   document.getElementById('horarioPartida').value = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
-
   document.getElementById('fotoInput').value = '';
   document.getElementById('phPlaceholder').style.display = 'block';
   document.getElementById('phPreview').style.display = 'none';
   document.getElementById('phErr').style.display = 'none';
-
   payload = null;
   step = 0;
   document.getElementById('progBar').style.display = 'flex';
