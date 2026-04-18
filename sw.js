@@ -1,12 +1,11 @@
 // DigiFrota 3.0 — Service Worker
-const CACHE = 'digifrota-20260419';
+const CACHE = 'digifrota-20260418b';
 const ASSETS = [
   './',
   './index.html',
   './manifest.json',
   'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap'
 ];
-
 self.addEventListener('install', e => {
   e.waitUntil(
     caches.open(CACHE)
@@ -14,7 +13,6 @@ self.addEventListener('install', e => {
       .then(() => self.skipWaiting())
   );
 });
-
 self.addEventListener('activate', e => {
   e.waitUntil(
     caches.keys().then(keys =>
@@ -22,14 +20,9 @@ self.addEventListener('activate', e => {
     ).then(() => self.clients.claim())
   );
 });
-
 self.addEventListener('fetch', e => {
   const url = e.request.url;
-
-  // Apps Script sempre vai para a rede — nunca cacheia
   if (url.includes('script.google.com')) return;
-
-  // Manifest e ícones: rede primeiro, cache como fallback
   if (
     url.includes('manifest.json') ||
     url.includes('icon-192') ||
@@ -40,8 +33,6 @@ self.addEventListener('fetch', e => {
     );
     return;
   }
-
-  // Demais recursos: cache primeiro, rede como fallback
   e.respondWith(
     caches.match(e.request).then(cached => cached || fetch(e.request))
   );
