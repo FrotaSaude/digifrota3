@@ -3,12 +3,15 @@ const CACHE = 'digifrota-20260418';
 const ASSETS = [
   './',
   './index.html',
-  'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap'
+  './manifest.json',
+  'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap'
 ];
 
 self.addEventListener('install', e => {
   e.waitUntil(
-    caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting())
+    caches.open(CACHE)
+      .then(c => c.addAll(ASSETS))
+      .then(() => self.skipWaiting())
   );
 });
 
@@ -21,14 +24,24 @@ self.addEventListener('activate', e => {
 });
 
 self.addEventListener('fetch', e => {
-  // Apps Script sempre vai para a rede
-  if (e.request.url.includes('script.google.com')) return;
-  // Manifest e ícones sempre buscam da rede (nunca do cache)
+  const url = e.request.url;
+
+  // Apps Script sempre vai para a rede — nunca cacheia
+  if (url.includes('script.google.com')) return;
+
+  // Manifest e ícones: rede primeiro, cache como fallback
   if (
-    e.request.url.includes('manifest.json') ||
-    e.request.url.includes('icon-192') ||
-    e.request.url.includes('icon-512')
-  ) return;
+    url.includes('manifest.json') ||
+    url.includes('icon-192') ||
+    url.includes('icon-512')
+  ) {
+    e.respondWith(
+      fetch(e.request).catch(() => caches.match(e.request))
+    );
+    return;
+  }
+
+  // Demais recursos: cache primeiro, rede como fallback
   e.respondWith(
     caches.match(e.request).then(cached => cached || fetch(e.request))
   );
