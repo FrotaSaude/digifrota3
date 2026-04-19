@@ -24,128 +24,50 @@
   --text:#0B1638;
   --muted:#6B77A0;
   --danger:#E53935;
+  --danger-lt:#FFEBEE;
   --success:#00C853;
+  --success-lt:#E8F5E9;
+  --warn:#FF8F00;
+  --warn-lt:#FFF8E1;
   --radius:18px;
   --rsm:12px;
 }
 html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
 .app{max-width:480px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;position:relative}
 
-.hdr{
-  background:var(--navy);
-  flex-shrink:0;
-  position:relative;
-  overflow:hidden;
-  min-height:160px;
-}
-.hdr-van{
-  position:absolute;
-  inset:0;
-  background:url('https://github.com/FrotaSaude/digifrota3/blob/main/van.jpg?raw=true') no-repeat center center / cover;
-  opacity:.18;
-  pointer-events:none;
-  filter:blur(3px) saturate(0.6);
-  transform:scale(1.05);
-}
-.hdr-van::before{
-  content:'';
-  position:absolute;
-  inset:0;
-  background:linear-gradient(180deg, rgba(11,22,56,.6) 0%, rgba(11,22,56,.85) 100%);
-}
-.hdr-glow{
-  position:absolute;
-  top:-60px;left:-60px;
-  width:220px;height:220px;
-  border-radius:50%;
-  background:radial-gradient(circle,rgba(245,196,0,.18) 0%,transparent 70%);
-  pointer-events:none;
-}
-.hdr-content{
-  position:relative;z-index:2;
-  padding:20px 20px 0;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
+/* ── HEADER ─────────────────────────────────────── */
+.hdr{background:var(--navy);flex-shrink:0;position:relative;overflow:hidden;min-height:160px}
+.hdr-van{position:absolute;inset:0;background:url('https://github.com/FrotaSaude/digifrota3/blob/main/van.jpg?raw=true') no-repeat center center / cover;opacity:.18;pointer-events:none;filter:blur(3px) saturate(0.6);transform:scale(1.05)}
+.hdr-van::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,22,56,.6) 0%,rgba(11,22,56,.85) 100%)}
+.hdr-glow{position:absolute;top:-60px;left:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(245,196,0,.18) 0%,transparent 70%);pointer-events:none}
+.hdr-content{position:relative;z-index:2;padding:20px 20px 0;display:flex;align-items:center;justify-content:space-between}
 .logo{display:flex;align-items:center;gap:10px}
-.logo-icon{
-  width:42px;height:42px;
-  background:var(--yellow);
-  border-radius:13px;
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 4px 14px rgba(245,196,0,.45);
-  flex-shrink:0;
-}
+.logo-icon{width:42px;height:42px;background:var(--yellow);border-radius:13px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(245,196,0,.45);flex-shrink:0}
 .logo-icon svg{width:23px;height:23px}
 .logo-text{font-size:22px;font-weight:800;color:#fff;letter-spacing:.5px;line-height:1}
 .logo-text b{color:var(--yellow)}
-.ver-pill{
-  background:rgba(245,196,0,.15);
-  border:1px solid rgba(245,196,0,.35);
-  color:var(--yellow);
-  font-size:11px;font-weight:700;
-  padding:4px 11px;border-radius:20px;
-  letter-spacing:.5px;
-}
-.hdr-tagline{
-  position:relative;z-index:2;
-  padding:10px 20px 0;
-  font-size:12px;font-weight:600;
-  color:rgba(255,255,255,.4);
-  text-transform:uppercase;letter-spacing:.9px;
-}
-.prog-strip{
-  position:relative;z-index:2;
-  background:rgba(0,0,0,.25);
-  padding:10px 20px;
-  display:flex;align-items:center;gap:8px;
-  border-top:1px solid rgba(255,255,255,.06);
-  margin-top:16px;
-}
+.ver-pill{background:rgba(245,196,0,.15);border:1px solid rgba(245,196,0,.35);color:var(--yellow);font-size:11px;font-weight:700;padding:4px 11px;border-radius:20px;letter-spacing:.5px}
+.hdr-tagline{position:relative;z-index:2;padding:10px 20px 0;font-size:12px;font-weight:600;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.9px}
+.prog-strip{position:relative;z-index:2;background:rgba(0,0,0,.25);padding:10px 20px;display:flex;align-items:center;gap:8px;border-top:1px solid rgba(255,255,255,.06);margin-top:16px}
 .prog-steps{display:flex;gap:4px;flex:1}
-.prog-step{
-  flex:1;height:4px;border-radius:4px;
-  background:rgba(255,255,255,.12);
-  transition:all .35s cubic-bezier(.4,0,.2,1);
-  position:relative;overflow:hidden;
-}
+.prog-step{flex:1;height:4px;border-radius:4px;background:rgba(255,255,255,.12);transition:all .35s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden}
 .prog-step.done{background:rgba(255,255,255,.35)}
-.prog-step.active{
-  background:var(--yellow);
-  box-shadow:0 0 8px rgba(245,196,0,.6);
-}
-.prog-step.active::after{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);
-  animation:shine 1.6s infinite;
-}
+.prog-step.active{background:var(--yellow);box-shadow:0 0 8px rgba(245,196,0,.6)}
+.prog-step.active::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);animation:shine 1.6s infinite}
 @keyframes shine{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
 .prog-info{display:flex;align-items:center;gap:6px;white-space:nowrap}
-.prog-num{
-  width:26px;height:26px;
-  background:rgba(245,196,0,.18);
-  border:1px solid rgba(245,196,0,.4);
-  border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:11px;font-weight:800;color:var(--yellow);
-}
+.prog-num{width:26px;height:26px;background:rgba(245,196,0,.18);border:1px solid rgba(245,196,0,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--yellow)}
 .prog-label{font-size:11px;font-weight:600;color:rgba(255,255,255,.4)}
 .offline{background:linear-gradient(90deg,#F59E0B,#FBBF24);color:var(--navy);text-align:center;font-size:12px;font-weight:700;padding:7px 20px;display:none}
 .offline.show{display:block}
+
+/* ── CONTENT ─────────────────────────────────────── */
 .content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:24px 20px 48px}
 .screen{display:none;animation:fadeUp .25s ease}
 .screen.active{display:block}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .sec-hdr{display:flex;align-items:center;gap:14px;margin-bottom:6px}
-.sec-icon{
-  width:44px;height:44px;
-  background:var(--yellow);
-  border-radius:14px;
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;
-  box-shadow:0 4px 14px rgba(245,196,0,.38);
-}
+.sec-icon{width:44px;height:44px;background:var(--yellow);border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 14px rgba(245,196,0,.38)}
 .sec-icon svg{width:22px;height:22px}
 .sec-title{font-size:20px;font-weight:800;color:var(--navy);line-height:1.1}
 .sec-step{font-size:11px;font-weight:600;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.5px}
@@ -156,22 +78,12 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 .field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .field label{display:block;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:7px}
 .req{color:var(--danger)}
-.field input,.field select{
-  width:100%;padding:14px 16px;
-  border:1.5px solid var(--border);border-radius:var(--rsm);
-  font-family:'Inter',sans-serif;font-size:15px;font-weight:500;
-  color:var(--text);background:var(--bg);
-  outline:none;transition:border-color .2s,box-shadow .2s,background .2s;
-  appearance:none;-webkit-appearance:none;
-}
+.field input,.field select{width:100%;padding:14px 16px;border:1.5px solid var(--border);border-radius:var(--rsm);font-family:'Inter',sans-serif;font-size:15px;font-weight:500;color:var(--text);background:var(--bg);outline:none;transition:border-color .2s,box-shadow .2s,background .2s;appearance:none;-webkit-appearance:none}
 .field input:focus,.field select:focus{border-color:var(--navy3);box-shadow:0 0 0 3px rgba(30,45,110,.1);background:var(--card)}
 .field.error input,.field.error select{border-color:var(--danger);box-shadow:0 0 0 3px rgba(229,57,53,.1)}
 .err-msg{display:none;color:var(--danger);font-size:11px;font-weight:600;margin-top:5px}
 .field.error .err-msg{display:block}
-.field select{
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B77A0' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:right 16px center;padding-right:40px;cursor:pointer;
-}
+.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B77A0' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:40px;cursor:pointer}
 .km-wrap{position:relative}
 .km-wrap input{font-size:22px;font-weight:700;padding:14px 52px 14px 16px;letter-spacing:-.5px}
 .km-unit{position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:13px;font-weight:700;color:var(--muted);pointer-events:none}
@@ -218,17 +130,63 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 .error-icon svg{width:36px;height:36px;stroke:#FCA5A5}
 .error-title{font-size:24px;font-weight:800;color:#fff}
 .error-detail{color:rgba(255,255,255,.6);font-size:13px;margin-top:8px;line-height:1.5;word-break:break-word}
-.overlay{display:none;position:fixed;inset:0;background:rgba(11,22,56,.8);backdrop-filter:blur(4px);z-index:999;align-items:center;justify-content:center;flex-direction:column;gap:18px}
+.overlay{display:none;position:fixed;inset:0;background:rgba(11,22,56,.8);backdrop-filter:blur(4px);z-index:999;align-items:center;justify-content:flex-direction:column;gap:18px;flex-direction:column}
 .overlay.show{display:flex}
 .spin-ring{width:56px;height:56px;border:4px solid rgba(245,196,0,.2);border-top-color:var(--yellow);border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .ov-text{color:#fff;font-size:16px;font-weight:700}
 .ov-sub{color:rgba(255,255,255,.4);font-size:12px;margin-top:-10px}
+
+/* ══════════════════════════════════════════════════
+   CHECKLIST — ETAPA 5
+══════════════════════════════════════════════════ */
+.ck-badges{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px;margin-bottom:18px}
+.ck-badge{font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;border:1.5px solid}
+.ck-badge-warn{background:var(--warn-lt);color:var(--warn);border-color:var(--warn)}
+.ck-badge-err{background:var(--danger-lt);color:var(--danger);border-color:var(--danger)}
+.ck-badge-neu{background:var(--bg);color:var(--muted);border-color:var(--border)}
+.ck-legenda{display:flex;gap:14px;margin-bottom:16px;flex-wrap:wrap}
+.ck-leg-item{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--muted)}
+.ck-leg-dot-w{width:9px;height:9px;border-radius:50%;background:var(--warn);flex-shrink:0}
+.ck-leg-dot-r{width:9px;height:9px;border-radius:50%;background:var(--danger);flex-shrink:0}
+.ck-grupo{margin-bottom:14px}
+.ck-grupo-titulo{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;padding-left:2px}
+.ck-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.ck-chip{display:flex;align-items:center;gap:8px;padding:10px 11px;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:all .15s;background:var(--card);user-select:none}
+.ck-chip:active{transform:scale(.97)}
+.ck-chip.sel{border-color:var(--warn);background:var(--warn-lt)}
+.ck-chip.grave.sel{border-color:var(--danger);background:var(--danger-lt)}
+.ck-chip.grave:not(.sel):hover{border-color:rgba(229,57,53,.4)}
+.ck-dot{width:9px;height:9px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;transition:all .15s}
+.ck-chip.sel .ck-dot{background:var(--warn);border-color:var(--warn)}
+.ck-chip.grave.sel .ck-dot{background:var(--danger);border-color:var(--danger)}
+.ck-lbl{font-size:12px;font-weight:600;color:var(--text);line-height:1.25;flex:1}
+.ck-sev{font-size:9px;font-weight:700;color:var(--danger);margin-left:auto;white-space:nowrap;opacity:0;transition:opacity .15s}
+.ck-chip.grave .ck-sev{opacity:1}
+.ck-divider{height:1px;background:var(--border);margin:18px 0}
+.ck-obs-label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px}
+.ck-obs-textarea{width:100%;min-height:80px;font-size:13px;font-family:'Inter',sans-serif;padding:12px 14px;border:1.5px solid var(--border);border-radius:var(--rsm);background:var(--bg);color:var(--text);resize:vertical;outline:none;transition:border-color .2s}
+.ck-obs-textarea:focus{border-color:var(--navy3);box-shadow:0 0 0 3px rgba(30,45,110,.1);background:var(--card)}
+
+/* Declaração de responsabilidade */
+.ck-decl{border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:all .2s;margin-top:4px}
+.ck-decl.ok{border-color:var(--success);background:var(--success-lt)}
+.ck-decl.erro-decl{border-color:var(--danger);background:var(--danger-lt);animation:shake .35s ease}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.ck-decl-corpo{padding:16px}
+.ck-decl-check{display:flex;align-items:flex-start;gap:12px;cursor:pointer;user-select:none}
+.ck-checkbox{width:22px;height:22px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .2s;background:var(--card)}
+.ck-checkbox.checked{background:var(--success);border-color:var(--success)}
+.ck-checkbox.checked::after{content:'✓';font-size:13px;color:#fff;font-weight:700}
+.ck-decl-txt{font-size:13px;font-weight:600;color:var(--navy);line-height:1.55}
+.ck-decl-resp{font-size:11px;color:var(--muted);margin-top:10px;padding-top:10px;border-top:1px solid var(--border);line-height:1.6;font-style:italic}
+.ck-disabled{opacity:.4;pointer-events:none}
+.ck-alerta-obrig{display:none;align-items:center;gap:8px;padding:11px 14px;background:var(--danger-lt);border:1.5px solid var(--danger);border-radius:var(--rsm);margin-top:10px;font-size:12px;font-weight:600;color:var(--danger)}
+.ck-alerta-obrig.show{display:flex}
 </style>
 </head>
 <body>
 <div class="app">
-
   <div class="offline" id="offlineBar">Sem conexão — verifique a internet antes de enviar</div>
 
   <header class="hdr">
@@ -248,24 +206,25 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
       </div>
       <div class="ver-pill">v3.0</div>
     </div>
-    <div class="hdr-tagline">Registro de viagem</div>
+    <div class="hdr-tagline" id="hdrTagline">Registro de viagem</div>
     <div class="prog-strip" id="progStrip">
       <div class="prog-steps">
         <div class="prog-step active" id="ps0"></div>
         <div class="prog-step" id="ps1"></div>
         <div class="prog-step" id="ps2"></div>
         <div class="prog-step" id="ps3"></div>
+        <div class="prog-step" id="ps4"></div>
       </div>
       <div class="prog-info">
         <div class="prog-num" id="stepNum">1</div>
-        <div class="prog-label">de 4</div>
+        <div class="prog-label">de 5</div>
       </div>
     </div>
   </header>
 
   <div class="content" id="mainContent">
 
-    <!-- ETAPA 1: PARTIDA -->
+    <!-- ══ ETAPA 1: PARTIDA ══ -->
     <div class="screen active" id="step0">
       <div class="sec-hdr">
         <div class="sec-icon">
@@ -275,7 +234,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
         </div>
         <div>
           <div class="sec-title">Partida</div>
-          <div class="sec-step">Etapa 1 de 4</div>
+          <div class="sec-step">Etapa 1 de 5</div>
         </div>
       </div>
       <div class="sec-desc">Informe a data e o horário de saída</div>
@@ -299,7 +258,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
       </button>
     </div>
 
-    <!-- ETAPA 2: VIAGEM -->
+    <!-- ══ ETAPA 2: VIAGEM ══ -->
     <div class="screen" id="step1">
       <div class="sec-hdr">
         <div class="sec-icon">
@@ -312,7 +271,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
         </div>
         <div>
           <div class="sec-title">Viagem</div>
-          <div class="sec-step">Etapa 2 de 4</div>
+          <div class="sec-step">Etapa 2 de 5</div>
         </div>
       </div>
       <div class="sec-desc">Selecione motorista, frota e destino</div>
@@ -414,7 +373,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
       <button class="btn btn-ghost" onclick="goTo(0)">Voltar</button>
     </div>
 
-    <!-- ETAPA 3: CHEGADA -->
+    <!-- ══ ETAPA 3: CHEGADA ══ -->
     <div class="screen" id="step2">
       <div class="sec-hdr">
         <div class="sec-icon">
@@ -424,7 +383,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
         </div>
         <div>
           <div class="sec-title">Chegada</div>
-          <div class="sec-step">Etapa 3 de 4</div>
+          <div class="sec-step">Etapa 3 de 5</div>
         </div>
       </div>
       <div class="sec-desc">Data, horário e quilometragem de retorno</div>
@@ -457,7 +416,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
       <button class="btn btn-ghost" onclick="goTo(1)">Voltar</button>
     </div>
 
-    <!-- ETAPA 4: FOTO -->
+    <!-- ══ ETAPA 4: FOTO ══ -->
     <div class="screen" id="step3">
       <div class="sec-hdr">
         <div class="sec-icon">
@@ -468,7 +427,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
         </div>
         <div>
           <div class="sec-title">Foto do painel</div>
-          <div class="sec-step">Etapa 4 de 4</div>
+          <div class="sec-step">Etapa 4 de 5</div>
         </div>
       </div>
       <div class="sec-desc">Fotografe o hodômetro para registrar o KM</div>
@@ -490,17 +449,74 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
         </div>
       </div>
       <div class="ph-err" id="phErr">Adicione uma foto do painel</div>
-      <div id="resumoPreEnvio" style="margin-top:16px;display:none"></div>
+      <button class="btn btn-primary" onclick="goTo(4)" style="margin-top:14px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        Próximo — Vistoria
+      </button>
+      <button class="btn btn-ghost" onclick="goTo(2)">Voltar</button>
+    </div>
+
+    <!-- ══ ETAPA 5: CHECKLIST DE VISTORIA ══ -->
+    <div class="screen" id="step4">
+      <div class="sec-hdr">
+        <div class="sec-icon" style="background:var(--warn-lt);box-shadow:0 4px 14px rgba(255,143,0,.25)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--warn)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+        </div>
+        <div>
+          <div class="sec-title">Vistoria do veículo</div>
+          <div class="sec-step">Etapa 5 de 5</div>
+        </div>
+      </div>
+      <div class="sec-desc">Marque as intercorrências identificadas no veículo. Itens urgentes impedem a partida.</div>
+
+      <div class="ck-badges">
+        <span class="ck-badge ck-badge-warn" id="ck-b-warn">Atenção: 0</span>
+        <span class="ck-badge ck-badge-err" id="ck-b-err">Urgente: 0</span>
+        <span class="ck-badge ck-badge-neu" id="ck-b-total">Marcados: 0</span>
+      </div>
+      <div class="ck-legenda">
+        <div class="ck-leg-item"><div class="ck-leg-dot-w"></div> Atenção — monitorar</div>
+        <div class="ck-leg-item"><div class="ck-leg-dot-r"></div> Urgente — veículo não deve partir</div>
+      </div>
+
+      <div id="ck-grupos-container"></div>
+
+      <div class="ck-divider"></div>
+      <div class="ck-obs-label">Outras ocorrências / observações gerais</div>
+      <textarea class="ck-obs-textarea" id="ck-obs-geral" placeholder="Descreva aqui qualquer outra situação observada, localização do dano, número de peças etc."></textarea>
+
+      <div class="ck-divider"></div>
+
+      <!-- Declaração de responsabilidade -->
+      <div class="ck-decl" id="ck-decl-box">
+        <div class="ck-decl-corpo">
+          <div class="ck-decl-check" onclick="toggleDecl()">
+            <div class="ck-checkbox" id="ck-checkbox"></div>
+            <div>
+              <div class="ck-decl-txt"><strong>Declaro que o veículo se encontra em ordem.</strong><br>Não foram identificadas intercorrências, avarias, defeitos mecânicos ou quaisquer irregularidades que possam comprometer a segurança da viagem.</div>
+              <div class="ck-decl-resp">Ao marcar esta opção, o motorista assume total responsabilidade pela veracidade das informações prestadas nesta vistoria, ficando sujeito às sanções administrativas e legais cabíveis em caso de omissão ou declaração falsa, conforme as normas internas da frota e a legislação de trânsito vigente.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ck-alerta-obrig" id="ck-alerta-obrig">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Nenhuma intercorrência marcada. É obrigatório declarar que o veículo está em ordem para finalizar.
+      </div>
+
       <button class="btn btn-primary" id="btnEnviar" onclick="enviar()" style="margin-top:14px">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
           <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
         </svg>
         Registrar viagem
       </button>
-      <button class="btn btn-ghost" onclick="goTo(2)">Voltar</button>
+      <button class="btn btn-ghost" onclick="goTo(3)">Voltar</button>
     </div>
 
-    <!-- SUCESSO -->
+    <!-- ══ SUCESSO ══ -->
     <div class="screen" id="stepSuccess">
       <div class="success-bg">
         <div class="success-icon">
@@ -520,7 +536,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
       </button>
     </div>
 
-    <!-- ERRO -->
+    <!-- ══ ERRO ══ -->
     <div class="screen" id="stepError">
       <div class="error-bg">
         <div class="error-icon">
@@ -534,7 +550,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
         <div class="error-detail" id="errDetail">Não foi possível salvar. Verifique a conexão.</div>
       </div>
       <button class="btn btn-primary" onclick="reenviar()">Tentar novamente</button>
-      <button class="btn btn-ghost" onclick="goTo(3)">Voltar ao formulário</button>
+      <button class="btn btn-ghost" onclick="goTo(4)">Voltar ao formulário</button>
     </div>
 
   </div>
@@ -547,26 +563,197 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 </div>
 
 <script>
-// ═══════════════════════════════════════════════════
-// ⚠️  SUBSTITUA PELA URL DO SEU APPS SCRIPT
-// ═══════════════════════════════════════════════════
+// ═══════════════════════════════════════════
+// CONFIGURAÇÃO — substitua pela URL do seu Apps Script
+// ═══════════════════════════════════════════
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzOVmKH_a2gWBy-GZxp7i31W5b00TCBf7YKeFa6t9XFR4dGVwtA2XnEab-ndwO3V8bZeg/exec";
-// ═══════════════════════════════════════════════════
 
-let step = 0, payload = null;
+// ── CHECKLIST DATA ──────────────────────────
+const CK_GRUPOS = [
+  {titulo:'Iluminação',itens:[
+    {l:'Farol dianteiro queimado (baixo)',g:true},
+    {l:'Farol dianteiro queimado (alto)',g:false},
+    {l:'Farol de neblina apagado',g:false},
+    {l:'Lanterna traseira quebrada',g:true},
+    {l:'Luz de freio apagada',g:true},
+    {l:'Seta / pisca com defeito',g:false},
+    {l:'Luz de ré apagada',g:false},
+    {l:'Luz interna da cabine',g:false},
+  ]},
+  {titulo:'Motor e mecânica',itens:[
+    {l:'Vazamento de óleo',g:true},
+    {l:'Vazamento de água / fluido',g:true},
+    {l:'Vazamento de combustível',g:true},
+    {l:'Nível de óleo abaixo do mínimo',g:true},
+    {l:'Nível de água/arrefecimento baixo',g:true},
+    {l:'Nível do fluido de freio baixo',g:true},
+    {l:'Correia com desgaste visível',g:true},
+    {l:'Painel com alerta/luz acesa',g:true},
+    {l:'Fumaça saindo do motor',g:true},
+    {l:'Superaquecimento',g:true},
+  ]},
+  {titulo:'Pneus e rodas',itens:[
+    {l:'Pneu murcho (dianteiro)',g:true},
+    {l:'Pneu murcho (traseiro)',g:true},
+    {l:'Pneu com corte ou bolha',g:true},
+    {l:'Pneu com desgaste excessivo',g:false},
+    {l:'Estepe sem calibragem',g:false},
+    {l:'Estepe ausente',g:false},
+    {l:'Macaco/chave de roda ausente',g:false},
+    {l:'Parafuso de roda faltando/solto',g:true},
+  ]},
+  {titulo:'Freios e suspensão',itens:[
+    {l:'Freio de serviço sem resposta',g:true},
+    {l:'Freio de mão sem funcionamento',g:true},
+    {l:'Ruído ao frear',g:false},
+    {l:'Pedal de freio fundo / mole',g:true},
+    {l:'Barulho na suspensão',g:false},
+    {l:'Veículo puxando para um lado',g:true},
+  ]},
+  {titulo:'Lataria e carroceria',itens:[
+    {l:'Amassado na lataria (dianteiro)',g:false},
+    {l:'Amassado na lataria (traseiro)',g:false},
+    {l:'Amassado na lataria (lateral)',g:false},
+    {l:'Arranhão / risco na pintura',g:false},
+    {l:'Porta com dificuldade de fechar',g:false},
+    {l:'Trava/fechadura com defeito',g:false},
+  ]},
+  {titulo:'Vidros e retrovisores',itens:[
+    {l:'Para-brisa com trinca',g:true},
+    {l:'Vidro lateral trincado/quebrado',g:false},
+    {l:'Retrovisor externo quebrado',g:true},
+    {l:'Retrovisor interno solto/quebrado',g:false},
+    {l:'Palheta do limpador danificada',g:false},
+    {l:'Bomba do limpador sem funcionar',g:false},
+  ]},
+  {titulo:'Conforto e acessórios',itens:[
+    {l:'Ar condicionado sem funcionar',g:false},
+    {l:'Cinto de segurança com defeito',g:true},
+    {l:'Buzina sem funcionar',g:false},
+    {l:'Hodômetro com defeito',g:false},
+    {l:'Tacógrafo com defeito',g:false},
+    {l:'Tomada/USB sem funcionar',g:false},
+  ]},
+  {titulo:'Segurança obrigatória',itens:[
+    {l:'Extinguidor ausente ou vencido',g:true},
+    {l:'Triângulo de segurança ausente',g:true},
+    {l:'Macaco ausente',g:false},
+    {l:'Colete refletivo ausente',g:false},
+  ]},
+];
 
+const ckSel  = new Set();
+let ckDeclMarcada = false;
+let step = 0;
+let payload = null;
+
+// ── INICIALIZAR CHECKLIST ────────────────────
+function initChecklist() {
+  const container = document.getElementById('ck-grupos-container');
+  container.innerHTML = '';
+  CK_GRUPOS.forEach((g, gi) => {
+    const div = document.createElement('div');
+    div.className = 'ck-grupo';
+    const chips = g.itens.map((it, ii) => {
+      const key = gi + '_' + ii;
+      return `<div class="ck-chip${it.g ? ' grave' : ''}" id="ckchip-${key}" onclick="ckToggle('${key}')">
+        <div class="ck-dot" id="ckdot-${key}"></div>
+        <span class="ck-lbl">${it.l}</span>
+        ${it.g ? '<span class="ck-sev">urgente</span>' : ''}
+      </div>`;
+    }).join('');
+    div.innerHTML = `<div class="ck-grupo-titulo">${g.titulo}</div><div class="ck-grid">${chips}</div>`;
+    container.appendChild(div);
+  });
+}
+
+function ckToggle(key) {
+  if (ckSel.has(key)) ckSel.delete(key);
+  else ckSel.add(key);
+  document.getElementById('ckchip-' + key).classList.toggle('sel', ckSel.has(key));
+  if (ckSel.size > 0 && ckDeclMarcada) {
+    ckDeclMarcada = false;
+    atualizarDecl();
+  }
+  ckAtualizar();
+}
+
+function ckAtualizar() {
+  let warn = 0, grave = 0;
+  ckSel.forEach(key => {
+    const [gi, ii] = key.split('_').map(Number);
+    if (CK_GRUPOS[gi].itens[ii].g) grave++; else warn++;
+  });
+  document.getElementById('ck-b-warn').textContent  = 'Atenção: ' + warn;
+  document.getElementById('ck-b-err').textContent   = 'Urgente: ' + grave;
+  document.getElementById('ck-b-total').textContent = 'Marcados: ' + ckSel.size;
+
+  const declBox = document.getElementById('ck-decl-box');
+  if (ckSel.size > 0) {
+    declBox.classList.add('ck-disabled');
+    declBox.title = 'Remova as intercorrências para declarar que o veículo está em ordem';
+  } else {
+    declBox.classList.remove('ck-disabled');
+    declBox.title = '';
+  }
+}
+
+function toggleDecl() {
+  if (ckSel.size > 0) return;
+  ckDeclMarcada = !ckDeclMarcada;
+  atualizarDecl();
+  document.getElementById('ck-alerta-obrig').classList.remove('show');
+}
+
+function atualizarDecl() {
+  const box  = document.getElementById('ck-checkbox');
+  const card = document.getElementById('ck-decl-box');
+  box.className  = 'ck-checkbox' + (ckDeclMarcada ? ' checked' : '');
+  card.className = 'ck-decl' + (ckDeclMarcada ? ' ok' : '');
+}
+
+function ckReset() {
+  ckSel.clear();
+  document.querySelectorAll('.ck-chip').forEach(c => c.classList.remove('sel'));
+  ckDeclMarcada = false;
+  atualizarDecl();
+  document.getElementById('ck-obs-geral').value = '';
+  document.getElementById('ck-alerta-obrig').classList.remove('show');
+  ckAtualizar();
+}
+
+function getCkPayload() {
+  const urgentes = [], atencao = [];
+  ckSel.forEach(key => {
+    const [gi, ii] = key.split('_').map(Number);
+    const it = CK_GRUPOS[gi].itens[ii];
+    if (it.g) urgentes.push(CK_GRUPOS[gi].titulo + ' — ' + it.l);
+    else atencao.push(CK_GRUPOS[gi].titulo + ' — ' + it.l);
+  });
+  return {
+    ckStatus:         ckSel.size === 0 ? 'EM ORDEM' : (urgentes.length > 0 ? 'URGENTE' : 'ATENCAO'),
+    ckDeclarado:      ckDeclMarcada,
+    ckItensUrgentes:  urgentes.join(' | '),
+    ckItensAtencao:   atencao.join(' | '),
+    ckTotalMarcados:  ckSel.size,
+    ckObs:            document.getElementById('ck-obs-geral').value.trim(),
+  };
+}
+
+// ── NAVEGAÇÃO ────────────────────────────────
 window.addEventListener('online',  () => document.getElementById('offlineBar').classList.remove('show'));
 window.addEventListener('offline', () => document.getElementById('offlineBar').classList.add('show'));
 if (!navigator.onLine) document.getElementById('offlineBar').classList.add('show');
 
-(function init(){
-  const now = new Date(), pad = n => String(n).padStart(2,'0');
-  const hoje = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
+(function init() {
+  const now = new Date(), pad = n => String(n).padStart(2, '0');
+  const hoje  = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
   const agora = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
   document.getElementById('dataPartida').value    = hoje;
   document.getElementById('horarioPartida').value = agora;
   document.getElementById('dataChegada').value    = hoje;
   document.getElementById('horarioChegada').value = agora;
+  initChecklist();
 })();
 
 const VAL = [
@@ -578,7 +765,7 @@ const VAL = [
 function validar(s) {
   if (s >= VAL.length) return true;
   const [ids, wids] = VAL[s]; let ok = true;
-  ids.forEach((id,i) => {
+  ids.forEach((id, i) => {
     const el = document.getElementById(id), w = document.getElementById(wids[i]);
     if (!el.value.trim()) { w.classList.add('error'); ok = false; }
     else w.classList.remove('error');
@@ -588,51 +775,32 @@ function validar(s) {
 
 function goTo(n) {
   if (n > step && !validar(step)) return;
-  document.getElementById('step'+step).classList.remove('active');
+  if (n === 4 && step === 3) {
+    const foto = document.getElementById('fotoInput');
+    if (!foto.files || !foto.files[0]) {
+      document.getElementById('phErr').style.display = 'block';
+      return;
+    }
+    document.getElementById('phErr').style.display = 'none';
+  }
+  document.getElementById('step' + step).classList.remove('active');
   step = n;
-  const isForm = n < 4;
+  const isForm = n < 5;
   document.getElementById('progStrip').style.display = isForm ? 'flex' : 'none';
   if (isForm) {
-    for (let i=0;i<4;i++) {
-      document.getElementById('ps'+i).className = 'prog-step'+(i<n?' done':i===n?' active':'');
+    for (let i = 0; i < 5; i++) {
+      document.getElementById('ps' + i).className = 'prog-step' + (i < n ? ' done' : i === n ? ' active' : '');
     }
-    document.getElementById('stepNum').textContent = n+1;
-    document.getElementById('step'+n).classList.add('active');
-    if (n === 3) mostrarResumoPreEnvio();
+    document.getElementById('stepNum').textContent = n + 1;
+    document.getElementById('step' + n).classList.add('active');
   } else {
-    document.getElementById('step'+n).classList.add('active');
+    document.getElementById('step' + n).classList.add('active');
   }
-  document.getElementById('mainContent').scrollTo(0,0);
-}
-
-function mostrarResumoPreEnvio() {
-  const el = document.getElementById('resumoPreEnvio');
-  const rows = [
-    ['Motorista', document.getElementById('motorista').value],
-    ['Frota',     document.getElementById('frota').value],
-    ['Destino',   document.getElementById('destino').value],
-    ['Partida',   fmtData(document.getElementById('dataPartida').value)+' '+document.getElementById('horarioPartida').value],
-    ['Chegada',   fmtData(document.getElementById('dataChegada').value)+' '+document.getElementById('horarioChegada').value],
-    ['KM',        Number(document.getElementById('kmChegada').value).toLocaleString('pt-BR')+' km'],
-  ];
-  el.innerHTML = rows.map(([k,v])=>
-    `<div class="resumo-pre-row"><span class="resumo-pre-key">${k}</span><span class="resumo-pre-val">${v||'—'}</span></div>`
-  ).join('');
-  el.style.display = 'block';
-  el.className = 'resumo-pre';
-}
-
-function showScreen(id) {
-  ['step0','step1','step2','step3','stepSuccess','stepError'].forEach(s =>
-    document.getElementById(s).classList.remove('active')
-  );
-  document.getElementById('progStrip').style.display = 'none';
-  document.getElementById(id).classList.add('active');
-  document.getElementById('mainContent').scrollTo(0,0);
+  document.getElementById('mainContent').scrollTo(0, 0);
 }
 
 function previewFoto(input) {
-  if (!input.files||!input.files[0]) return;
+  if (!input.files || !input.files[0]) return;
   const reader = new FileReader();
   reader.onload = e => {
     document.getElementById('phImg').src = e.target.result;
@@ -650,11 +818,11 @@ function comprimirFoto(file, maxW, qual) {
       const img = new Image();
       img.onload = () => {
         const canvas = document.createElement('canvas');
-        let w=img.width, h=img.height;
-        if (w>maxW) { h=Math.round(h*maxW/w); w=maxW; }
-        canvas.width=w; canvas.height=h;
-        canvas.getContext('2d').drawImage(img,0,0,w,h);
-        res(canvas.toDataURL('image/jpeg',qual));
+        let w = img.width, h = img.height;
+        if (w > maxW) { h = Math.round(h * maxW / w); w = maxW; }
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        res(canvas.toDataURL('image/jpeg', qual));
       };
       img.src = e.target.result;
     };
@@ -664,16 +832,35 @@ function comprimirFoto(file, maxW, qual) {
 
 function fmtData(v) {
   if (!v) return '—';
-  const [a,m,d] = v.split('-');
+  const [a, m, d] = v.split('-');
   return `${d}/${m}/${a}`;
 }
 
+function showScreen(id) {
+  ['step0','step1','step2','step3','step4','stepSuccess','stepError'].forEach(s =>
+    document.getElementById(s).classList.remove('active')
+  );
+  document.getElementById('progStrip').style.display = 'none';
+  document.getElementById(id).classList.add('active');
+  document.getElementById('mainContent').scrollTo(0, 0);
+}
+
+// ── ENVIO ────────────────────────────────────
 async function enviar() {
-  if (!validar(2)) { goTo(2); return; }
-  const foto = document.getElementById('fotoInput');
-  if (!foto.files||!foto.files[0]) { document.getElementById('phErr').style.display='block'; return; }
+  // Valida checklist
+  if (ckSel.size === 0 && !ckDeclMarcada) {
+    document.getElementById('ck-alerta-obrig').classList.add('show');
+    const declBox = document.getElementById('ck-decl-box');
+    declBox.classList.add('erro-decl');
+    setTimeout(() => declBox.classList.remove('erro-decl'), 500);
+    document.getElementById('mainContent').scrollTo({ top: 9999, behavior: 'smooth' });
+    return;
+  }
+  document.getElementById('ck-alerta-obrig').classList.remove('show');
+
   if (!navigator.onLine) { alert('Sem conexão. Tente novamente.'); return; }
 
+  const foto = document.getElementById('fotoInput');
   const fotoBase64 = await comprimirFoto(foto.files[0], 1200, 0.75);
   const motorista  = document.getElementById('motorista').value;
 
@@ -688,7 +875,8 @@ async function enviar() {
     kmChegada:      document.getElementById('kmChegada').value,
     foto:           fotoBase64,
     fotoNome:       foto.files[0].name,
-    email:          motorista
+    email:          motorista,
+    ...getCkPayload()
   };
 
   await enviarDados(payload);
@@ -707,30 +895,32 @@ async function enviarDados(dados) {
     const json = await res.json();
     document.getElementById('overlay').classList.remove('show');
     document.getElementById('btnEnviar').disabled = false;
-    if (json.status==='ok') mostrarSucesso(dados, json.kmRodado);
-    else mostrarErro(json.mensagem||'Erro desconhecido.');
+    if (json.status === 'ok') mostrarSucesso(dados, json.kmRodado);
+    else mostrarErro(json.mensagem || 'Erro desconhecido.');
   } catch(err) {
     document.getElementById('overlay').classList.remove('show');
     document.getElementById('btnEnviar').disabled = false;
-    mostrarErro('Falha de conexão: '+err.message);
+    mostrarErro('Falha de conexão: ' + err.message);
   }
 }
 
 function mostrarSucesso(d, kmRodado) {
+  const ckStatus = d.ckStatus === 'EM ORDEM' ? '✅ Em ordem' : d.ckStatus === 'URGENTE' ? '🔴 Urgente' : '⚠️ Com atenção';
   const rows = [
     ['Motorista', d.motorista],
     ['Frota',     d.frota],
     ['Destino',   d.destino],
-    ['Partida',   fmtData(d.dataPartida)+' às '+d.horarioPartida],
-    ['Chegada',   fmtData(d.dataChegada)+' às '+d.horarioChegada],
-    ['KM chegada', Number(d.kmChegada).toLocaleString('pt-BR')+' km'],
+    ['Partida',   fmtData(d.dataPartida) + ' às ' + d.horarioPartida],
+    ['Chegada',   fmtData(d.dataChegada) + ' às ' + d.horarioChegada],
+    ['KM chegada', Number(d.kmChegada).toLocaleString('pt-BR') + ' km'],
+    ['Vistoria',  ckStatus],
   ];
   const kmRow = kmRodado
     ? `<div class="resumo-row"><span class="resumo-key">KM rodado</span><span class="resumo-km-badge">${Number(kmRodado).toLocaleString('pt-BR')} km</span></div>`
     : '';
   document.getElementById('resumoCard').innerHTML =
     '<div class="resumo-header">Resumo da viagem</div>' +
-    rows.map(([k,v])=>`<div class="resumo-row"><span class="resumo-key">${k}</span><span class="resumo-val">${v}</span></div>`).join('') +
+    rows.map(([k,v]) => `<div class="resumo-row"><span class="resumo-key">${k}</span><span class="resumo-val">${v}</span></div>`).join('') +
     kmRow;
   showScreen('stepSuccess');
 }
@@ -742,31 +932,27 @@ function mostrarErro(msg) {
 
 function resetar() {
   const now = new Date(), pad = n => String(n).padStart(2,'0');
-  const hoje = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
+  const hoje  = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
   const agora = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
-
-  ['kmChegada','motorista','frota','destino'].forEach(id =>
-    document.getElementById(id).value = ''
-  );
+  ['kmChegada','motorista','frota','destino'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('dataPartida').value    = hoje;
   document.getElementById('horarioPartida').value = agora;
   document.getElementById('dataChegada').value    = hoje;
   document.getElementById('horarioChegada').value = agora;
-
   document.getElementById('fotoInput').value = '';
   document.getElementById('phPlaceholder').style.display = 'block';
   document.getElementById('phPreview').style.display = 'none';
   document.getElementById('phErr').style.display = 'none';
-  document.getElementById('resumoPreEnvio').style.display = 'none';
-  payload=null; step=0;
+  ckReset();
+  payload = null; step = 0;
   document.getElementById('progStrip').style.display = 'flex';
-  for(let i=0;i<4;i++) document.getElementById('ps'+i).className='prog-step'+(i===0?' active':'');
-  document.getElementById('stepNum').textContent='1';
+  for (let i = 0; i < 5; i++) document.getElementById('ps' + i).className = 'prog-step' + (i === 0 ? ' active' : '');
+  document.getElementById('stepNum').textContent = '1';
   showScreen('step0');
   document.getElementById('step0').classList.add('active');
 }
 
-if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
 </script>
 </body>
 </html>
