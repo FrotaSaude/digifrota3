@@ -2,242 +2,1478 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#0B1638">
-
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="DigiFrota">
+<link rel="manifest" href="manifest.json">
 <title>DigiFrota 3.0</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --navy:#0B1638;
+  --navy2:#162050;
+  --navy3:#1E2D6E;
+  --yellow:#F5C400;
+  --yellow2:#FFD93D;
+  --bg:#F0F3FA;
+  --card:#fff;
+  --border:#DDE3F0;
+  --text:#0B1638;
+  --muted:#6B77A0;
+  --danger:#E53935;
+  --danger-lt:#FFEBEE;
+  --success:#00C853;
+  --success-lt:#E8F5E9;
+  --warn:#FF8F00;
+  --warn-lt:#FFF8E1;
+  --radius:18px;
+  --rsm:12px;
+  --blue-seg:#1565C0;
+}
+html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+.app{max-width:480px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;position:relative}
 
-body{
-  background:#F0F3FA;
+/* ── HEADER ─────────────────────────────────────── */
+.hdr{background:var(--navy);flex-shrink:0;position:relative;overflow:hidden;min-height:160px}
+.hdr-van{position:absolute;inset:0;background:url('https://github.com/FrotaSaude/digifrota3/blob/main/van.jpg?raw=true') no-repeat center center / cover;opacity:.18;pointer-events:none;filter:blur(3px) saturate(0.6);transform:scale(1.05)}
+.hdr-van::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,22,56,.6) 0%,rgba(11,22,56,.85) 100%)}
+.hdr-glow{position:absolute;top:-60px;left:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(245,196,0,.18) 0%,transparent 70%);pointer-events:none}
+.hdr-content{position:relative;z-index:2;padding:20px 20px 0;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:42px;height:42px;background:var(--yellow);border-radius:13px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(245,196,0,.45);flex-shrink:0}
+.logo-icon svg{width:23px;height:23px}
+.logo-text{font-size:22px;font-weight:800;color:#fff;letter-spacing:.5px;line-height:1}
+.logo-text b{color:var(--yellow)}
+.ver-pill{background:rgba(245,196,0,.15);border:1px solid rgba(245,196,0,.35);color:var(--yellow);font-size:11px;font-weight:700;padding:4px 11px;border-radius:20px;letter-spacing:.5px}
+.hdr-tagline{position:relative;z-index:2;padding:10px 20px 0;font-size:12px;font-weight:600;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.9px}
+.prog-strip{position:relative;z-index:2;background:rgba(0,0,0,.25);padding:10px 20px;display:flex;align-items:center;gap:8px;border-top:1px solid rgba(255,255,255,.06);margin-top:16px}
+.prog-steps{display:flex;gap:4px;flex:1}
+.prog-step{flex:1;height:4px;border-radius:4px;background:rgba(255,255,255,.12);transition:all .35s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden}
+.prog-step.done{background:rgba(255,255,255,.35)}
+.prog-step.active{background:var(--yellow);box-shadow:0 0 8px rgba(245,196,0,.6)}
+.prog-step.active::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);animation:shine 1.6s infinite}
+@keyframes shine{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+.prog-info{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.prog-num{width:26px;height:26px;background:rgba(245,196,0,.18);border:1px solid rgba(245,196,0,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--yellow)}
+.prog-label{font-size:11px;font-weight:600;color:rgba(255,255,255,.4)}
+.offline{background:linear-gradient(90deg,#F59E0B,#FBBF24);color:var(--navy);text-align:center;font-size:12px;font-weight:700;padding:7px 20px;display:none}
+.offline.show{display:block}
+
+/* ── CONTENT ─────────────────────────────────────── */
+.content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:24px 20px 100px}
+.screen{display:none;animation:fadeUp .25s ease}
+.screen.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.sec-hdr{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+.sec-icon{width:44px;height:44px;background:var(--yellow);border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 14px rgba(245,196,0,.38)}
+.sec-icon svg{width:22px;height:22px}
+.sec-title{font-size:20px;font-weight:800;color:var(--navy);line-height:1.1}
+.sec-step{font-size:11px;font-weight:600;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.5px}
+.sec-desc{font-size:13px;color:var(--muted);margin:10px 0 22px;padding-left:58px;line-height:1.5}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:14px;box-shadow:0 2px 12px rgba(11,22,56,.06)}
+.field{margin-bottom:16px}
+.field:last-child{margin-bottom:0}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field label{display:block;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:7px}
+.req{color:var(--danger)}
+.field input,.field select{width:100%;padding:14px 16px;border:1.5px solid var(--border);border-radius:var(--rsm);font-family:'Inter',sans-serif;font-size:15px;font-weight:500;color:var(--text);background:var(--bg);outline:none;transition:border-color .2s,box-shadow .2s,background .2s;appearance:none;-webkit-appearance:none}
+.field input:focus,.field select:focus{border-color:var(--navy3);box-shadow:0 0 0 3px rgba(30,45,110,.1);background:var(--card)}
+.field.error input,.field.error select{border-color:var(--danger);box-shadow:0 0 0 3px rgba(229,57,53,.1)}
+.err-msg{display:none;color:var(--danger);font-size:11px;font-weight:600;margin-top:5px}
+.field.error .err-msg{display:block}
+.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B77A0' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:40px;cursor:pointer}
+.km-wrap{position:relative}
+.km-wrap input{font-size:22px;font-weight:700;padding:14px 52px 14px 16px;letter-spacing:-.5px}
+.km-unit{position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:13px;font-weight:700;color:var(--muted);pointer-events:none}
+.photo-box{width:100%;border:2px dashed var(--border);border-radius:var(--radius);background:var(--card);overflow:hidden;position:relative;cursor:pointer;transition:border-color .2s}
+.photo-box:active{border-color:var(--yellow)}
+.photo-box input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.ph-placeholder{padding:36px 20px;text-align:center}
+.ph-ico{width:60px;height:60px;background:linear-gradient(135deg,var(--navy),var(--navy3));border-radius:18px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;box-shadow:0 6px 16px rgba(11,22,56,.2)}
+.ph-ico svg{width:28px;height:28px;stroke:#fff}
+.ph-placeholder p{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:5px}
+.ph-placeholder span{font-size:12px;color:var(--muted)}
+.ph-preview{display:none}
+.ph-preview img{width:100%;max-height:240px;object-fit:cover;display:block}
+.ph-retake{padding:11px;text-align:center;font-size:12px;font-weight:700;color:var(--navy);background:var(--bg);border-top:1px solid var(--border)}
+.ph-err{display:none;color:var(--danger);font-size:11px;font-weight:600;margin-top:6px}
+.btn{width:100%;padding:17px;border:none;border-radius:var(--radius);font-family:'Inter',sans-serif;font-size:16px;font-weight:700;cursor:pointer;transition:transform .15s,box-shadow .15s,opacity .15s;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:9px;letter-spacing:.2px}
+.btn:active{transform:scale(.98)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn-primary{background:var(--yellow);color:var(--navy);box-shadow:0 4px 16px rgba(245,196,0,.4)}
+.btn-primary:not(:disabled):hover{background:var(--yellow2);box-shadow:0 6px 20px rgba(245,196,0,.5)}
+.btn-ghost{background:transparent;color:var(--muted);border:1.5px solid var(--border)}
+.btn-ghost:hover{background:var(--border);color:var(--navy)}
+.btn svg{width:18px;height:18px;flex-shrink:0}
+.success-bg{background:linear-gradient(160deg,var(--navy) 0%,var(--navy3) 100%);border-radius:var(--radius);padding:32px 24px;text-align:center;margin-bottom:16px;position:relative;overflow:hidden}
+.success-bg::before{content:'';position:absolute;top:-30px;right:-30px;width:130px;height:130px;border-radius:50%;background:radial-gradient(circle,rgba(245,196,0,.2) 0%,transparent 70%)}
+.success-icon{width:72px;height:72px;background:rgba(0,200,83,.15);border:2px solid rgba(0,200,83,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;position:relative;z-index:1}
+.success-icon svg{width:36px;height:36px;stroke:var(--success)}
+.success-title{font-size:26px;font-weight:800;color:#fff;position:relative;z-index:1}
+.success-sub{color:rgba(255,255,255,.5);font-size:13px;margin-top:8px;line-height:1.5;position:relative;z-index:1}
+.resumo-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:14px;box-shadow:0 2px 12px rgba(11,22,56,.06)}
+.resumo-header{background:var(--navy);padding:12px 18px;font-size:11px;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.7px}
+.resumo-row{display:flex;justify-content:space-between;align-items:center;padding:12px 18px;border-bottom:1px solid var(--border)}
+.resumo-row:last-child{border-bottom:none}
+.resumo-key{font-size:12px;color:var(--muted);font-weight:500}
+.resumo-val{font-size:14px;font-weight:700;color:var(--navy);text-align:right;max-width:60%}
+.resumo-km-badge{background:linear-gradient(135deg,var(--navy),var(--navy3));color:var(--yellow);padding:4px 12px;border-radius:20px;font-size:13px;font-weight:700}
+.error-bg{background:linear-gradient(160deg,#7F1D1D,#991B1B);border-radius:var(--radius);padding:32px 24px;text-align:center;margin-bottom:16px}
+.error-icon{width:72px;height:72px;background:rgba(229,57,53,.2);border:2px solid rgba(229,57,53,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px}
+.error-icon svg{width:36px;height:36px;stroke:#FCA5A5}
+.error-title{font-size:24px;font-weight:800;color:#fff}
+.error-detail{color:rgba(255,255,255,.6);font-size:13px;margin-top:8px;line-height:1.5;word-break:break-word}
+.overlay{display:none;position:fixed;inset:0;background:rgba(11,22,56,.8);backdrop-filter:blur(4px);z-index:999;align-items:center;justify-content:center;gap:18px;flex-direction:column}
+.overlay.show{display:flex}
+.spin-ring{width:56px;height:56px;border:4px solid rgba(245,196,0,.2);border-top-color:var(--yellow);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ov-text{color:#fff;font-size:16px;font-weight:700}
+.ov-sub{color:rgba(255,255,255,.4);font-size:12px;margin-top:-10px}
+
+/* ══════════════════════════════════════════════════
+   CUSTOM DATE / TIME PICKERS
+══════════════════════════════════════════════════ */
+.cpicker-wrap{position:relative}
+.cpicker-display{
+  width:100%;padding:14px 12px 14px 14px;
+  border:1.5px solid var(--border);border-radius:var(--rsm);
+  font-family:'Inter',sans-serif;font-size:15px;font-weight:500;
+  color:var(--text);background:var(--bg);
+  display:flex;align-items:center;justify-content:space-between;
+  cursor:pointer;transition:border-color .2s,box-shadow .2s,background .2s;
+  user-select:none;-webkit-user-select:none
+}
+.cpicker-display.open,
+.cpicker-display:focus{border-color:var(--navy3);box-shadow:0 0 0 3px rgba(30,45,110,.1);background:var(--card)}
+.field.error .cpicker-display{border-color:var(--danger);box-shadow:0 0 0 3px rgba(229,57,53,.1)}
+.cpicker-val{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cpicker-val.ph{color:var(--muted);font-weight:400}
+.cpicker-ico{flex-shrink:0;margin-left:6px;display:flex;align-items:center}
+.cpicker-ico svg{width:17px;height:17px;stroke:var(--muted)}
+
+/* Dropdown container */
+.cpicker-drop{
+  position:absolute;left:0;top:calc(100% + 6px);
+  min-width:min(280px,90vw);
+  background:var(--card);border:1.5px solid var(--border);
+  border-radius:14px;box-shadow:0 8px 32px rgba(11,22,56,.16);
+  z-index:300;overflow:hidden
 }
 
-/* ===== FAB ===== */
+/* Calendar */
+.cal-hdr{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 14px 8px;border-bottom:1px solid var(--border)
+}
+.cal-month-lbl{font-size:13px;font-weight:700;color:var(--navy);flex:1;text-align:center}
+.cal-nav-btn{
+  background:none;border:none;cursor:pointer;
+  width:28px;height:28px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--muted);font-size:14px;
+  transition:background .15s
+}
+.cal-nav-btn:hover{background:var(--bg)}
+.cal-days-hdr{
+  display:grid;grid-template-columns:repeat(7,1fr);
+  padding:8px 10px 4px
+}
+.cal-days-hdr span{
+  text-align:center;font-size:10px;font-weight:700;
+  color:var(--muted);text-transform:uppercase
+}
+.cal-grid{
+  display:grid;grid-template-columns:repeat(7,1fr);
+  padding:2px 10px 10px;gap:2px
+}
+.cal-day{
+  aspect-ratio:1;display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:500;border-radius:8px;
+  cursor:pointer;transition:background .15s;color:var(--text)
+}
+.cal-day:active{transform:scale(.92)}
+.cal-day.other{color:var(--border);cursor:default;pointer-events:none}
+.cal-day.today{color:var(--navy3);font-weight:700}
+.cal-day.sel{background:var(--navy);color:#fff;font-weight:700}
+.cal-footer{
+  display:flex;justify-content:space-between;
+  padding:8px 14px 10px;border-top:1px solid var(--border)
+}
+.cal-foot-btn{
+  background:none;border:none;font-family:'Inter',sans-serif;
+  font-size:13px;font-weight:600;cursor:pointer;
+  color:var(--navy3);padding:4px 10px;border-radius:8px;
+  transition:background .15s
+}
+.cal-foot-btn:hover{background:var(--bg)}
+
+/* Time picker */
+.tp-drop{min-width:unset;width:164px}
+.tp-cols{display:flex}
+.tp-sep{width:1px;background:var(--border);flex-shrink:0}
+.tp-col{
+  flex:1;height:200px;overflow-y:scroll;
+  scroll-behavior:smooth;-webkit-overflow-scrolling:touch;
+  scrollbar-width:none
+}
+.tp-col::-webkit-scrollbar{display:none}
+.tp-item{
+  padding:11px 0;text-align:center;
+  font-size:15px;font-weight:500;color:var(--text);
+  cursor:pointer;transition:background .1s
+}
+.tp-item:hover:not(.sel){background:var(--bg)}
+.tp-item.sel{
+  background:var(--border);font-weight:700;
+  color:var(--navy);border-radius:6px;
+  margin:0 4px
+}
+.tp-hdr{
+  padding:8px 0 4px;text-align:center;
+  font-size:10px;font-weight:700;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.6px;
+  border-bottom:1px solid var(--border)
+}
+
+/* ══════════════════════════════════════════════════
+   CHECKLIST — ETAPA 5
+══════════════════════════════════════════════════ */
+.ck-badges{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px;margin-bottom:18px}
+.ck-badge{font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;border:1.5px solid}
+.ck-badge-warn{background:var(--warn-lt);color:var(--warn);border-color:var(--warn)}
+.ck-badge-err{background:var(--danger-lt);color:var(--danger);border-color:var(--danger)}
+.ck-badge-neu{background:var(--bg);color:var(--muted);border-color:var(--border)}
+.ck-legenda{display:flex;gap:14px;margin-bottom:16px;flex-wrap:wrap}
+.ck-leg-item{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--muted)}
+.ck-leg-dot-w{width:9px;height:9px;border-radius:50%;background:var(--warn);flex-shrink:0}
+.ck-leg-dot-r{width:9px;height:9px;border-radius:50%;background:var(--danger);flex-shrink:0}
+.ck-grupo{margin-bottom:14px}
+.ck-grupo-titulo{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;padding-left:2px}
+.ck-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.ck-chip{display:flex;align-items:center;gap:8px;padding:10px 11px;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:all .15s;background:var(--card);user-select:none}
+.ck-chip:active{transform:scale(.97)}
+.ck-chip.sel{border-color:var(--warn);background:var(--warn-lt)}
+.ck-chip.grave.sel{border-color:var(--danger);background:var(--danger-lt)}
+.ck-dot{width:9px;height:9px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;transition:all .15s}
+.ck-chip.sel .ck-dot{background:var(--warn);border-color:var(--warn)}
+.ck-chip.grave.sel .ck-dot{background:var(--danger);border-color:var(--danger)}
+.ck-lbl{font-size:12px;font-weight:600;color:var(--text);line-height:1.25;flex:1}
+.ck-sev{font-size:9px;font-weight:700;color:var(--danger);margin-left:auto;white-space:nowrap}
+.ck-divider{height:1px;background:var(--border);margin:18px 0}
+.ck-obs-label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px}
+.ck-obs-textarea{width:100%;min-height:80px;font-size:13px;font-family:'Inter',sans-serif;padding:12px 14px;border:1.5px solid var(--border);border-radius:var(--rsm);background:var(--bg);color:var(--text);resize:vertical;outline:none;transition:border-color .2s}
+.ck-obs-textarea:focus{border-color:var(--navy3);box-shadow:0 0 0 3px rgba(30,45,110,.1);background:var(--card)}
+.ck-decl{border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:all .2s;margin-top:4px}
+.ck-decl.ok{border-color:var(--success);background:var(--success-lt)}
+.ck-decl.erro-decl{border-color:var(--danger);background:var(--danger-lt);animation:shake .35s ease}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.ck-decl-corpo{padding:16px}
+.ck-decl-check{display:flex;align-items:flex-start;gap:12px;cursor:pointer;user-select:none}
+.ck-checkbox{width:22px;height:22px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .2s;background:var(--card)}
+.ck-checkbox.checked{background:var(--success);border-color:var(--success)}
+.ck-checkbox.checked::after{content:'✓';font-size:13px;color:#fff;font-weight:700}
+.ck-decl-txt{font-size:13px;font-weight:600;color:var(--navy);line-height:1.55}
+.ck-decl-resp{font-size:11px;color:var(--muted);margin-top:10px;padding-top:10px;border-top:1px solid var(--border);line-height:1.6;font-style:italic}
+.ck-disabled{opacity:.4;pointer-events:none}
+.ck-alerta-obrig{display:none;align-items:center;gap:8px;padding:11px 14px;background:var(--danger-lt);border:1.5px solid var(--danger);border-radius:var(--rsm);margin-top:10px;font-size:12px;font-weight:600;color:var(--danger)}
+.ck-alerta-obrig.show{display:flex}
+
+/* ══════════════════════════════════════════════════
+   GUINCHO FAB + PAINEL
+══════════════════════════════════════════════════ */
 .guincho-fab{
-  position:fixed;
-  bottom:20px;
-  right:16px;
-  background:#1A8CC8;
-  color:#fff;
-  border:none;
-  border-radius:30px;
-  padding:12px 16px;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  font-weight:700;
-  cursor:pointer;
-  box-shadow:0 4px 18px rgba(26,140,200,.5);
+  position:fixed;bottom:22px;right:16px;
+  background:var(--blue-seg);color:#fff;
+  border:none;border-radius:30px;
+  padding:12px 16px 12px 13px;
+  display:flex;align-items:center;gap:8px;
+  font-family:'Inter',sans-serif;font-size:12px;font-weight:700;
+  cursor:pointer;letter-spacing:.2px;
+  box-shadow:0 4px 18px rgba(21,101,192,.55);
+  z-index:490;transition:transform .15s,box-shadow .15s
 }
+.guincho-fab:active{transform:scale(.96)}
+.guincho-fab-star{width:22px;height:22px;flex-shrink:0}
 
-/* ===== OVERLAY ===== */
 .guincho-overlay{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.5);
-  z-index:999;
+  display:none;position:fixed;inset:0;
+  background:rgba(11,22,56,.55);backdrop-filter:blur(3px);
+  z-index:700;align-items:flex-end;justify-content:center
 }
-
-.guincho-overlay.show{
-  display:flex;
-  align-items:flex-end;
-}
-
-/* ===== MODAL ===== */
+.guincho-overlay.show{display:flex}
 .guincho-sheet{
-  width:100%;
-  max-width:480px;
-  margin:auto;
-  background:#fff;
-  border-radius:24px 24px 0 0;
-  padding-bottom:20px;
+  width:100%;max-width:480px;
+  background:var(--card);border-radius:24px 24px 0 0;
+  padding-bottom:env(safe-area-inset-bottom,12px);
+  animation:sheetUp .3s cubic-bezier(.32,0,.2,1);
+  max-height:88vh;overflow-y:auto
 }
-
-/* HEADER */
+@keyframes sheetUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.guincho-handle{width:40px;height:4px;background:var(--border);border-radius:4px;margin:14px auto 0}
 .guincho-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:16px;
-  border-bottom:1px solid #eee;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 20px 12px;border-bottom:1px solid var(--border)
 }
-
-.gente-logo{
-  display:flex;
-  align-items:center;
-  gap:10px;
+.guincho-logo{display:flex;align-items:center;gap:10px}
+.guincho-logo svg{width:34px;height:34px}
+.guincho-logo-txt{line-height:1}
+.guincho-logo-txt strong{display:block;font-size:15px;font-weight:800;color:var(--blue-seg)}
+.guincho-logo-txt span{font-size:10px;font-weight:600;color:var(--blue-seg);opacity:.7;text-transform:lowercase;letter-spacing:.4px}
+.guincho-close{
+  width:32px;height:32px;border:none;background:var(--bg);
+  border-radius:50%;cursor:pointer;display:flex;align-items:center;
+  justify-content:center;color:var(--muted);font-size:18px;line-height:1
 }
-
-.gente-star{
-  width:36px;
-  height:36px;
-}
-
-.gente-nome{
-  font-size:20px;
-  font-weight:800;
-  color:#1A5276;
-}
-
-.gente-sub{
-  font-size:12px;
-  color:#1A8CC8;
-}
-
-/* CARDS */
-.guincho-cards{
-  display:grid;
-  grid-template-columns:repeat(3, minmax(0,1fr));
-  gap:12px;
-  padding:16px;
-}
-
-@media (max-width:420px){
-  .guincho-cards{
-    grid-template-columns:1fr 1fr;
-  }
-}
-
+.guincho-body{padding:16px 20px 4px}
+.guincho-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
 .guincho-card{
-  background:#1A8CC8;
-  border-radius:16px;
-  padding:20px 12px;
-  text-align:center;
-  color:#fff;
-  min-height:150px;
+  background:var(--blue-seg);border-radius:14px;
+  padding:18px 14px 16px;text-align:center;color:#fff
 }
-
 .guincho-card-ico{
-  width:56px;
-  height:56px;
-  background:rgba(255,255,255,.2);
-  border-radius:50%;
-  margin:0 auto 14px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  width:46px;height:46px;background:rgba(255,255,255,.15);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  margin:0 auto 10px
 }
-
-.guincho-card-lbl{
-  font-size:12px;
-  font-weight:700;
-  margin-bottom:6px;
-}
-
-.guincho-card-num{
-  font-size:13px;
-  font-weight:800;
-}
-
-/* INFO */
+.guincho-card-ico svg{width:22px;height:22px;stroke:#fff;stroke-width:2;fill:none}
+.guincho-card-lbl{font-size:11px;font-weight:700;line-height:1.35;margin-bottom:6px;opacity:.85}
+.guincho-card-num{font-size:14px;font-weight:800;letter-spacing:.3px}
 .guincho-info{
-  margin:0 16px;
-  background:#F7F9FC;
-  border-radius:14px;
-  padding:14px;
-  font-size:13px;
+  background:var(--bg);border:1px solid var(--border);
+  border-radius:14px;padding:4px 16px 2px;margin-bottom:20px
 }
-
-/* BOTÃO FECHAR */
-.close-btn{
-  cursor:pointer;
-  font-size:20px;
-  color:#777;
+.guincho-info-row{
+  display:flex;gap:10px;align-items:flex-start;
+  padding:10px 0;border-bottom:1px solid var(--border);font-size:13px
 }
+.guincho-info-row:last-child{border-bottom:none}
+.guincho-info-ico{flex-shrink:0;margin-top:1px}
+.guincho-info-ico svg{width:15px;height:15px;stroke:var(--muted);stroke-width:2}
+.guincho-info-lbl{font-weight:600;color:var(--muted);font-size:11px;display:block;margin-bottom:1px}
+.guincho-info-val{font-weight:600;color:var(--navy);line-height:1.45}
 </style>
 </head>
-
 <body>
+<div class="app">
+  <div class="offline" id="offlineBar">Sem conexão — verifique a internet antes de enviar</div>
 
-<!-- BOTÃO -->
-<button class="guincho-fab" onclick="openGuincho()">
-☎ Precisa de guincho?
-</button>
+  <header class="hdr">
+    <div class="hdr-van"></div>
+    <div class="hdr-glow"></div>
+    <div class="hdr-content">
+      <div class="logo">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="3" width="15" height="13" rx="2"/>
+            <path d="M16 8h4l3 3v5h-7V8z"/>
+            <circle cx="5.5" cy="18.5" r="2.5"/>
+            <circle cx="18.5" cy="18.5" r="2.5"/>
+          </svg>
+        </div>
+        <div class="logo-text">DIGI<b>FROTA</b></div>
+      </div>
+      <div class="ver-pill">v3.0</div>
+    </div>
+    <div class="hdr-tagline" id="hdrTagline">Registro de viagem</div>
+    <div class="prog-strip" id="progStrip">
+      <div class="prog-steps">
+        <div class="prog-step active" id="ps0"></div>
+        <div class="prog-step" id="ps1"></div>
+        <div class="prog-step" id="ps2"></div>
+        <div class="prog-step" id="ps3"></div>
+        <div class="prog-step" id="ps4"></div>
+      </div>
+      <div class="prog-info">
+        <div class="prog-num" id="stepNum">1</div>
+        <div class="prog-label">de 5</div>
+      </div>
+    </div>
+  </header>
 
-<!-- MODAL -->
-<div class="guincho-overlay" id="overlay" onclick="closeOutside(event)">
-  <div class="guincho-sheet">
+  <div class="content" id="mainContent">
 
-    <div class="guincho-top">
-      <div class="gente-logo">
-        <svg class="gente-star" viewBox="0 0 60 60">
-          <polygon points="30,4 56,50 4,50" fill="#1A8CC8"/>
-          <polygon points="30,56 4,10 56,10" fill="#1A8CC8"/>
-        </svg>
+    <!-- ══ ETAPA 1: PARTIDA ══ -->
+    <div class="screen active" id="step0">
+      <div class="sec-hdr">
+        <div class="sec-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2.5" stroke-linecap="round">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
         <div>
-          <div class="gente-nome">gente</div>
-          <div class="gente-sub">seguradora</div>
+          <div class="sec-title">Partida</div>
+          <div class="sec-step">Etapa 1 de 5</div>
         </div>
       </div>
-      <div class="close-btn" onclick="closeGuincho()">✕</div>
+      <div class="sec-desc">Informe a data e o horário de saída</div>
+      <div class="card">
+        <div class="field-row">
+          <div class="field" id="f-dataPartida">
+            <label>Data <span class="req">*</span></label>
+            <div class="cpicker-wrap">
+              <div class="cpicker-display" id="cd-dataPartida" onclick="toggleDP('dataPartida')">
+                <span class="cpicker-val ph" id="cv-dataPartida">dd/mm/aaaa</span>
+                <span class="cpicker-ico">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+                  </svg>
+                </span>
+              </div>
+              <div class="cpicker-drop" id="ddp-dataPartida" style="display:none"></div>
+            </div>
+            <input type="hidden" id="dataPartida">
+            <div class="err-msg">Obrigatório</div>
+          </div>
+          <div class="field" id="f-horarioPartida">
+            <label>Horário <span class="req">*</span></label>
+            <div class="cpicker-wrap">
+              <div class="cpicker-display" id="cd-horarioPartida" onclick="toggleTP('horarioPartida')">
+                <span class="cpicker-val ph" id="cv-horarioPartida">--:--</span>
+                <span class="cpicker-ico">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                </span>
+              </div>
+              <div class="cpicker-drop tp-drop" id="dtp-horarioPartida" style="display:none">
+                <div class="tp-cols">
+                  <div class="tp-col" id="tph-horarioPartida">
+                    <div class="tp-hdr">h</div>
+                  </div>
+                  <div class="tp-sep"></div>
+                  <div class="tp-col" id="tpm-horarioPartida">
+                    <div class="tp-hdr">min</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <input type="hidden" id="horarioPartida">
+            <div class="err-msg">Obrigatório</div>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="goTo(1)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        Próximo
+      </button>
     </div>
 
-    <!-- CARDS -->
-    <div class="guincho-cards">
+    <!-- ══ ETAPA 2: VIAGEM ══ -->
+    <div class="screen" id="step1">
+      <div class="sec-hdr">
+        <div class="sec-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="3" width="15" height="13" rx="2"/>
+            <path d="M16 8h4l3 3v5h-7V8z"/>
+            <circle cx="5.5" cy="18.5" r="2.5"/>
+            <circle cx="18.5" cy="18.5" r="2.5"/>
+          </svg>
+        </div>
+        <div>
+          <div class="sec-title">Viagem</div>
+          <div class="sec-step">Etapa 2 de 5</div>
+        </div>
+      </div>
+      <div class="sec-desc">Selecione motorista, frota e destino</div>
+      <div class="card">
+        <div class="field" id="f-motorista">
+          <label>Motorista <span class="req">*</span></label>
+          <select id="motorista">
+            <option value="">Selecione o motorista...</option>
+            <option>ADEMAR SAMU</option><option>AGNALDO</option><option>ALBERTO</option>
+            <option>ALCY</option><option>ALEXANDRE BARBOSA</option><option>ALEXANDRE SAMU</option>
+            <option>ALEXANDRE SILVEIRA</option><option>ANDRE COUTO</option><option>ANDRE RENATO</option>
+            <option>ANTONIO MARCOS</option><option>CARLOS NEGRAO</option><option>CELSO SAMU</option>
+            <option>CESAR</option><option>DIEGO</option><option>EDSON BARBOSA SAMU</option>
+            <option>EDSON FELICIANO SAMU</option><option>EMERSON BISPO</option><option>EVERTON SAMU</option>
+            <option>FABIO SAMU</option><option>FLAVIO DAMAS</option><option>GABRIEL BRANDAO</option>
+            <option>GERSON</option><option>GREGORIO</option><option>JEFFERSON</option>
+            <option>JHONAS</option><option>JOAO CAMPANA</option><option>JOAO PAULO</option>
+            <option>JOSE ALVES</option><option>JOSE DONISETE</option><option>JOSE ROBERTO</option>
+            <option>JOSENIR</option><option>JULIO SAMU</option><option>JURACI</option>
+            <option>LAURINDO</option><option>LUIS FEITOSA</option><option>MARCELO CARVALHO</option>
+            <option>MARCELO LOPES</option><option>MARCELO MARQUES</option><option>MARCIO NUNES</option>
+            <option>MARCIO RODRIGUES</option><option>MARCO AURELIO</option><option>MARCOS GARCIA</option>
+            <option>MARCOS MORGADO</option><option>MARCOS RODRIGO</option><option>MARCOS SOARES</option>
+            <option>MAURILIO SAMU</option><option>MAURO ALBERTO</option><option>MAURO CELSO</option>
+            <option>MOACIR</option><option>NICOLAU SAMU</option><option>PETER</option>
+            <option>RAFAEL</option><option>REGIS</option><option>ROBERTO BONFIM</option>
+            <option>SAMIR</option><option>SERGIO</option><option>SIDNEI</option>
+            <option>TAKASHI</option><option>VAGNER SAMU</option><option>VALDINEI</option>
+            <option>WAGNER</option><option>WILTON</option>
+          </select>
+          <div class="err-msg">Selecione o motorista</div>
+        </div>
+        <div class="field" id="f-frota">
+          <label>Frota <span class="req">*</span></label>
+          <select id="frota">
+            <option value="">Selecione a frota...</option>
+            <option>12</option><option>338</option><option>347</option><option>386</option>
+            <option>387</option><option>404</option><option>405</option><option>407</option>
+            <option>445</option><option>449</option><option>454</option><option>487</option>
+            <option>492</option><option>496</option><option>509</option><option>514</option>
+            <option>521</option><option>543</option><option>552</option><option>556</option>
+            <option>591</option><option>607</option><option>621</option><option>622</option>
+            <option>634</option><option>635</option><option>636</option><option>638</option>
+            <option>639</option><option>640</option><option>642</option><option>652</option>
+            <option>653</option><option>654</option><option>676</option><option>677</option>
+            <option>680</option><option>681</option><option>682</option><option>691</option>
+            <option>692</option><option>697</option><option>698</option><option>699</option>
+            <option>701</option><option>702</option><option>708</option><option>714</option>
+            <option>716</option><option>748</option><option>755</option><option>760</option>
+            <option>761</option><option>762</option><option>763</option><option>781</option>
+            <option>782</option><option>783</option><option>784</option><option>785</option>
+            <option>786</option><option>787</option><option>788</option><option>789</option>
+            <option>790</option><option>791</option><option>792</option><option>793</option>
+            <option>794</option><option>795</option><option>796</option><option>810</option>
+            <option>820</option><option>823</option><option>825</option><option>831</option>
+            <option>835</option><option>857</option><option>860</option><option>893</option>
+            <option>894</option><option>895</option><option>899</option><option>908</option>
+            <option>909</option><option>910</option><option>911</option><option>912</option>
+            <option>913</option><option>914</option><option>918</option><option>919</option>
+            <option>921</option><option>923</option><option>924</option>
+          </select>
+          <div class="err-msg">Selecione a frota</div>
+        </div>
+        <div class="field" id="f-destino">
+          <label>Destino <span class="req">*</span></label>
+          <select id="destino">
+            <option value="">Selecione o destino...</option>
+            <option>Araçatuba</option><option>Andradina</option>
+            <option>Andradina/Castilho/Ilha Solteira</option><option>Andradina/Ilha Solteira</option>
+            <option>Andradina/Ilha Solteira/Mirandópolis</option><option>Andradina/Mirandópolis</option>
+            <option>Auriflama</option><option>Auriflama/Nhandeara</option>
+            <option>Barretos</option><option>Barretos/São José do Rio Preto</option>
+            <option>Bauru</option><option>Bauru/Botucatu</option><option>Birigui</option>
+            <option>Botucatu</option><option>Brasília</option><option>Buritama</option>
+            <option>Campo Grande</option><option>Castilho</option><option>Castilho/Ilha Solteira</option>
+            <option>Catanduva</option><option>Catanduva/Jaci</option><option>Fernandópolis</option>
+            <option>Fernandópolis/Jales</option><option>Ilha Solteira</option>
+            <option>Ilha Solteira/Castilho</option><option>Ilha Solteira/Mirandópolis</option>
+            <option>Ilha Solteira/Nhandeara</option><option>Ilha Solteira/Valparaíso</option>
+            <option>Jaci</option><option>Jales</option><option>Jales/Fernandópolis</option>
+            <option>Jaú</option><option>Lins</option><option>Mirandópolis</option>
+            <option>Mirassol</option><option>Monte Aprazível</option><option>Nhandeara</option>
+            <option>Nhandeara/São José do Rio Preto</option><option>Nhandeara/Valparaíso</option>
+            <option>Nhandeara/Votuporanga</option><option>Penápolis</option>
+            <option>Pirangi</option><option>Pirangi/Ribeirão Preto</option>
+            <option>Presidente Prudente</option><option>Ribeirão Preto</option>
+            <option>Rio de Janeiro</option><option>São José do Rio Preto</option>
+            <option>São José do Rio Preto/Catanduva</option><option>São José do Rio Preto/Cross</option>
+            <option>São Paulo</option><option>São Paulo/Campinas</option><option>São Paulo/Sorocaba</option>
+            <option>Sorocaba</option><option>Valparaíso</option>
+          </select>
+          <div class="err-msg">Selecione o destino</div>
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="goTo(2)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        Próximo
+      </button>
+      <button class="btn btn-ghost" onclick="goTo(0)">Voltar</button>
+    </div>
 
-      <div class="guincho-card">
-        <div class="guincho-card-ico">📞</div>
-        <div class="guincho-card-lbl">Porto Alegre e região metropolitana</div>
-        <div class="guincho-card-num">(51) 3023-8888</div>
+    <!-- ══ ETAPA 3: CHEGADA ══ -->
+    <div class="screen" id="step2">
+      <div class="sec-hdr">
+        <div class="sec-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2.5" stroke-linecap="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+        </div>
+        <div>
+          <div class="sec-title">Chegada</div>
+          <div class="sec-step">Etapa 3 de 5</div>
+        </div>
+      </div>
+      <div class="sec-desc">Data, horário e quilometragem de retorno</div>
+      <div class="card">
+        <div class="field-row">
+          <div class="field" id="f-dataChegada">
+            <label>Data <span class="req">*</span></label>
+            <div class="cpicker-wrap">
+              <div class="cpicker-display" id="cd-dataChegada" onclick="toggleDP('dataChegada')">
+                <span class="cpicker-val ph" id="cv-dataChegada">dd/mm/aaaa</span>
+                <span class="cpicker-ico">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+                  </svg>
+                </span>
+              </div>
+              <div class="cpicker-drop" id="ddp-dataChegada" style="display:none"></div>
+            </div>
+            <input type="hidden" id="dataChegada">
+            <div class="err-msg">Obrigatório</div>
+          </div>
+          <div class="field" id="f-horarioChegada">
+            <label>Horário <span class="req">*</span></label>
+            <div class="cpicker-wrap">
+              <div class="cpicker-display" id="cd-horarioChegada" onclick="toggleTP('horarioChegada')">
+                <span class="cpicker-val ph" id="cv-horarioChegada">--:--</span>
+                <span class="cpicker-ico">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                </span>
+              </div>
+              <div class="cpicker-drop tp-drop" id="dtp-horarioChegada" style="display:none">
+                <div class="tp-cols">
+                  <div class="tp-col" id="tph-horarioChegada">
+                    <div class="tp-hdr">h</div>
+                  </div>
+                  <div class="tp-sep"></div>
+                  <div class="tp-col" id="tpm-horarioChegada">
+                    <div class="tp-hdr">min</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <input type="hidden" id="horarioChegada">
+            <div class="err-msg">Obrigatório</div>
+          </div>
+        </div>
+        <div class="field" id="f-kmChegada">
+          <label>KM de chegada <span class="req">*</span></label>
+          <div class="km-wrap">
+            <input type="number" id="kmChegada" placeholder="123456" min="0" inputmode="numeric">
+            <span class="km-unit">km</span>
+          </div>
+          <div class="err-msg">Informe o KM de chegada</div>
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="goTo(3)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        Próximo
+      </button>
+      <button class="btn btn-ghost" onclick="goTo(1)">Voltar</button>
+    </div>
+
+    <!-- ══ ETAPA 4: FOTO ══ -->
+    <div class="screen" id="step3">
+      <div class="sec-hdr">
+        <div class="sec-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2.5" stroke-linecap="round">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+            <circle cx="12" cy="13" r="4"/>
+          </svg>
+        </div>
+        <div>
+          <div class="sec-title">Foto do painel</div>
+          <div class="sec-step">Etapa 4 de 5</div>
+        </div>
+      </div>
+      <div class="sec-desc">Fotografe o hodômetro para registrar o KM</div>
+      <div class="photo-box" id="photoBox">
+        <input type="file" id="fotoInput" accept="image/*" capture="environment" onchange="previewFoto(this)">
+        <div class="ph-placeholder" id="phPlaceholder">
+          <div class="ph-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+              <circle cx="12" cy="13" r="4"/>
+            </svg>
+          </div>
+          <p>Toque para fotografar</p>
+          <span>ou selecione da galeria</span>
+        </div>
+        <div class="ph-preview" id="phPreview">
+          <img id="phImg" src="" alt="Foto do painel">
+          <div class="ph-retake">Toque para trocar a foto</div>
+        </div>
+      </div>
+      <div class="ph-err" id="phErr">Adicione uma foto do painel</div>
+      <button class="btn btn-primary" onclick="goTo(4)" style="margin-top:14px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        Próximo — Vistoria
+      </button>
+      <button class="btn btn-ghost" onclick="goTo(2)">Voltar</button>
+    </div>
+
+    <!-- ══ ETAPA 5: CHECKLIST ══ -->
+    <div class="screen" id="step4">
+      <div class="sec-hdr">
+        <div class="sec-icon" style="background:var(--warn-lt);box-shadow:0 4px 14px rgba(255,143,0,.25)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--warn)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+        </div>
+        <div>
+          <div class="sec-title">Vistoria do veículo</div>
+          <div class="sec-step">Etapa 5 de 5</div>
+        </div>
+      </div>
+      <div class="sec-desc">Marque as intercorrências identificadas no veículo. Itens urgentes impedem a partida.</div>
+
+      <div class="ck-badges">
+        <span class="ck-badge ck-badge-warn" id="ck-b-warn">Atenção: 0</span>
+        <span class="ck-badge ck-badge-err" id="ck-b-err">Urgente: 0</span>
+        <span class="ck-badge ck-badge-neu" id="ck-b-total">Marcados: 0</span>
+      </div>
+      <div class="ck-legenda">
+        <div class="ck-leg-item"><div class="ck-leg-dot-w"></div> Atenção — monitorar</div>
+        <div class="ck-leg-item"><div class="ck-leg-dot-r"></div> Urgente — veículo não deve partir</div>
       </div>
 
-      <div class="guincho-card">
-        <div class="guincho-card-ico">📞</div>
-        <div class="guincho-card-lbl">Demais localidades</div>
-        <div class="guincho-card-num">0800 602 0088</div>
+      <div id="ck-grupos-container"></div>
+
+      <div class="ck-divider"></div>
+      <div class="ck-obs-label">Outras ocorrências / observações gerais</div>
+      <textarea class="ck-obs-textarea" id="ck-obs-geral" placeholder="Descreva aqui qualquer outra situação observada, localização do dano, número de peças etc."></textarea>
+
+      <div class="ck-divider"></div>
+      <div class="ck-decl" id="ck-decl-box">
+        <div class="ck-decl-corpo">
+          <div class="ck-decl-check" onclick="toggleDecl()">
+            <div class="ck-checkbox" id="ck-checkbox"></div>
+            <div>
+              <div class="ck-decl-txt"><strong>Declaro que o veículo se encontra em ordem.</strong><br>Não foram identificadas intercorrências, avarias, defeitos mecânicos ou quaisquer irregularidades que possam comprometer a segurança da viagem.</div>
+              <div class="ck-decl-resp">Ao marcar esta opção, o motorista assume total responsabilidade pela veracidade das informações prestadas nesta vistoria, ficando sujeito às sanções administrativas e legais cabíveis em caso de omissão ou declaração falsa, conforme as normas internas da frota e a legislação de trânsito vigente.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ck-alerta-obrig" id="ck-alerta-obrig">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Nenhuma intercorrência marcada. É obrigatório declarar que o veículo está em ordem para finalizar.
       </div>
 
-      <div class="guincho-card">
-        <div class="guincho-card-ico">💬</div>
-        <div class="guincho-card-lbl">Atendimento no WhatsApp</div>
-        <div class="guincho-card-num">(51) 99993-1300</div>
+      <button class="btn btn-primary" id="btnEnviar" onclick="enviar()" style="margin-top:14px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+        Registrar viagem
+      </button>
+      <button class="btn btn-ghost" onclick="goTo(3)">Voltar</button>
+    </div>
+
+    <!-- ══ SUCESSO ══ -->
+    <div class="screen" id="stepSuccess">
+      <div class="success-bg">
+        <div class="success-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+        </div>
+        <div class="success-title">Viagem registrada!</div>
+        <div class="success-sub">Dados salvos com sucesso na planilha DigiFrota 3.0</div>
+      </div>
+      <div class="resumo-card" id="resumoCard"></div>
+      <button class="btn btn-primary" onclick="resetar()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+        </svg>
+        Nova viagem
+      </button>
+    </div>
+
+    <!-- ══ ERRO ══ -->
+    <div class="screen" id="stepError">
+      <div class="error-bg">
+        <div class="error-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="15" y1="9" x2="9" y2="15"/>
+            <line x1="9" y1="9" x2="15" y2="15"/>
+          </svg>
+        </div>
+        <div class="error-title">Falha no envio</div>
+        <div class="error-detail" id="errDetail">Não foi possível salvar. Verifique a conexão.</div>
+      </div>
+      <button class="btn btn-primary" onclick="reenviar()">Tentar novamente</button>
+      <button class="btn btn-ghost" onclick="goTo(4)">Voltar ao formulário</button>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /app -->
+
+<!-- ══ OVERLAY LOADING ══ -->
+<div class="overlay" id="overlay">
+  <div class="spin-ring"></div>
+  <div class="ov-text">Enviando dados...</div>
+  <div class="ov-sub">Aguarde um momento</div>
+</div>
+
+<!-- ══ BOTÃO GUINCHO ══ -->
+<button class="guincho-fab" onclick="openGuincho()" aria-label="Precisa de guincho?">
+  <!-- Estrela de Davi — símbolo da Gente Seguradora -->
+  <!-- Hexagrama preenchido — logotipo Gente Seguradora -->
+  <svg class="guincho-fab-star" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+    <polygon points="20,3 24.91,11.5 34.72,11.5 29.81,20 34.72,28.5 24.91,28.5 20,37 15.09,28.5 5.28,28.5 10.19,20 5.28,11.5 15.09,11.5" fill="white"/>
+  </svg>
+  Precisa de guincho?
+</button>
+
+<!-- ══ PAINEL GUINCHO ══ -->
+<div class="guincho-overlay" id="guinchoOverlay" onclick="closeGuinchoOutside(event)">
+  <div class="guincho-sheet" id="guinchoSheet">
+    <div class="guincho-handle"></div>
+    <div class="guincho-top">
+      <div class="guincho-logo">
+        <!-- Hexagrama preenchido — logotipo Gente Seguradora -->
+        <svg width="34" height="34" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="20,3 24.91,11.5 34.72,11.5 29.81,20 34.72,28.5 24.91,28.5 20,37 15.09,28.5 5.28,28.5 10.19,20 5.28,11.5 15.09,11.5" fill="#1A8CC8"/>
+        </svg>
+        <div class="guincho-logo-txt">
+          <strong>gente</strong>
+          <span>seguradora</span>
+        </div>
+      </div>
+      <button class="guincho-close" onclick="closeGuincho()">✕</button>
+    </div>
+    <div class="guincho-body">
+
+      <!-- Cartões de contato -->
+      <div class="guincho-cards">
+        <div class="guincho-card">
+          <div class="guincho-card-ico">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.72A2 2 0 012.18 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+            </svg>
+          </div>
+          <div class="guincho-card-lbl">Demais<br>localidades</div>
+          <div class="guincho-card-num">0800 602 0088</div>
+        </div>
+        <div class="guincho-card">
+          <div class="guincho-card-ico">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+            </svg>
+          </div>
+          <div class="guincho-card-lbl">Atendimento no<br>WhatsApp</div>
+          <div class="guincho-card-num">(51) 99993-1300</div>
+        </div>
+      </div>
+
+      <!-- Informações da Prefeitura -->
+      <div class="guincho-info">
+        <div class="guincho-info-row">
+          <div class="guincho-info-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round">
+              <rect x="2" y="7" width="20" height="14" rx="2"/>
+              <path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/>
+            </svg>
+          </div>
+          <div>
+            <span class="guincho-info-lbl">Contratante</span>
+            <div class="guincho-info-val">Prefeitura Municipal de Araçatuba</div>
+          </div>
+        </div>
+        <div class="guincho-info-row">
+          <div class="guincho-info-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round">
+              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+            </svg>
+          </div>
+          <div>
+            <span class="guincho-info-lbl">CNPJ</span>
+            <div class="guincho-info-val">45.511.847/0001-79</div>
+          </div>
+        </div>
+        <div class="guincho-info-row">
+          <div class="guincho-info-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round">
+              <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+          </div>
+          <div>
+            <span class="guincho-info-lbl">Endereço</span>
+            <div class="guincho-info-val">Pátio da Saúde — Rua Dona Ida, 1284<br>Bairro Santana, Araçatuba – SP<br>CEP 16055-505</div>
+          </div>
+        </div>
       </div>
 
     </div>
-
-    <!-- INFO -->
-    <div class="guincho-info">
-      <strong>Contratante:</strong><br>
-      Prefeitura Municipal de Araçatuba<br><br>
-
-      <strong>CNPJ:</strong><br>
-      45.511.847/0001-79<br><br>
-
-      <strong>Endereço:</strong><br>
-      Rua Dona Ida, 1284<br>
-      Araçatuba - SP
-    </div>
-
   </div>
 </div>
 
 <script>
-function openGuincho(){
-  document.getElementById('overlay').classList.add('show')
+// ═══════════════════════════════════════════
+// CONFIGURAÇÃO
+// ═══════════════════════════════════════════
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzOVmKH_a2gWBy-GZxp7i31W5b00TCBf7YKeFa6t9XFR4dGVwtA2XnEab-ndwO3V8bZeg/exec";
+
+// ═══════════════════════════════════════════
+// CUSTOM DATE PICKER
+// ═══════════════════════════════════════════
+const MONTH_NAMES = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+const dpState = {}; // id -> { year, month, open }
+
+function dpInit(id) {
+  const now = new Date();
+  dpState[id] = { year: now.getFullYear(), month: now.getMonth(), open: false };
 }
 
-function closeGuincho(){
-  document.getElementById('overlay').classList.remove('show')
-}
-
-function closeOutside(e){
-  if(e.target.id === 'overlay'){
-    closeGuincho()
+function toggleDP(id) {
+  closeAllPickers(id, 'date');
+  dpState[id].open = !dpState[id].open;
+  const el = document.getElementById('ddp-' + id);
+  if (dpState[id].open) {
+    renderCalendar(id);
+    el.style.display = 'block';
+    document.getElementById('cd-' + id).classList.add('open');
+  } else {
+    el.style.display = 'none';
+    document.getElementById('cd-' + id).classList.remove('open');
   }
 }
 
-/* SERVICE WORKER */
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js').then(reg => {
-    reg.update();
+function closeDP(id) {
+  if (!dpState[id]) return;
+  dpState[id].open = false;
+  const el = document.getElementById('ddp-' + id);
+  if (el) el.style.display = 'none';
+  const cd = document.getElementById('cd-' + id);
+  if (cd) cd.classList.remove('open');
+}
+
+function renderCalendar(id) {
+  const st = dpState[id];
+  const y = st.year, m = st.month;
+  const selectedVal = document.getElementById(id).value;
+
+  const firstDow = new Date(y, m, 1).getDay(); // 0=Sun
+  const daysInMonth = new Date(y, m + 1, 0).getDate();
+  const daysInPrev  = new Date(y, m, 0).getDate();
+
+  const today = new Date();
+  const todayStr = `${today.getFullYear()}-${pad2(today.getMonth()+1)}-${pad2(today.getDate())}`;
+
+  let cells = '';
+  // prev month padding
+  for (let i = firstDow - 1; i >= 0; i--) {
+    cells += `<div class="cal-day other">${daysInPrev - i}</div>`;
+  }
+  // current month days
+  for (let d = 1; d <= daysInMonth; d++) {
+    const ds = `${y}-${pad2(m+1)}-${pad2(d)}`;
+    let cls = 'cal-day';
+    if (ds === selectedVal) cls += ' sel';
+    else if (ds === todayStr) cls += ' today';
+    cells += `<div class="${cls}" onclick="selectDate('${id}','${ds}')">${d}</div>`;
+  }
+  // next month padding
+  const totalCells = Math.ceil((firstDow + daysInMonth) / 7) * 7;
+  for (let n = 1; n <= totalCells - firstDow - daysInMonth; n++) {
+    cells += `<div class="cal-day other">${n}</div>`;
+  }
+
+  document.getElementById('ddp-' + id).innerHTML = `
+    <div class="cal-hdr">
+      <button class="cal-nav-btn" onclick="calNav('${id}',-1);event.stopPropagation()">▲</button>
+      <span class="cal-month-lbl">${MONTH_NAMES[m]} de ${y}</span>
+      <button class="cal-nav-btn" onclick="calNav('${id}',1);event.stopPropagation()">▼</button>
+    </div>
+    <div class="cal-days-hdr">
+      <span>D</span><span>S</span><span>T</span><span>Q</span><span>Q</span><span>S</span><span>S</span>
+    </div>
+    <div class="cal-grid">${cells}</div>
+    <div class="cal-footer">
+      <button class="cal-foot-btn" onclick="clearDate('${id}');event.stopPropagation()">Limpar</button>
+      <button class="cal-foot-btn" onclick="selectDate('${id}','${todayStr}');event.stopPropagation()">Hoje</button>
+    </div>`;
+}
+
+function calNav(id, dir) {
+  dpState[id].month += dir;
+  if (dpState[id].month > 11) { dpState[id].month = 0; dpState[id].year++; }
+  if (dpState[id].month < 0)  { dpState[id].month = 11; dpState[id].year--; }
+  renderCalendar(id);
+}
+
+function selectDate(id, ds) {
+  document.getElementById(id).value = ds;
+  const [y, m, d] = ds.split('-');
+  const cv = document.getElementById('cv-' + id);
+  cv.textContent = `${d}/${m}/${y}`;
+  cv.classList.remove('ph');
+  document.getElementById('f-' + id)?.classList.remove('error');
+  closeDP(id);
+}
+
+function clearDate(id) {
+  document.getElementById(id).value = '';
+  const cv = document.getElementById('cv-' + id);
+  cv.textContent = 'dd/mm/aaaa';
+  cv.classList.add('ph');
+  closeDP(id);
+}
+
+// ═══════════════════════════════════════════
+// CUSTOM TIME PICKER
+// ═══════════════════════════════════════════
+const tpState = {}; // id -> { h, m, open }
+
+function tpInit(id) {
+  tpState[id] = { h: null, m: null, open: false };
+  // Populate hour/minute lists once
+  const hCol = document.getElementById('tph-' + id);
+  const mCol = document.getElementById('tpm-' + id);
+  let hHtml = '<div class="tp-hdr">h</div>';
+  let mHtml = '<div class="tp-hdr">min</div>';
+  for (let h = 0; h < 24; h++) hHtml += `<div class="tp-item" id="tph-${id}-${h}" onclick="selectHour('${id}',${h})">${pad2(h)}</div>`;
+  for (let m = 0; m < 60; m++) mHtml += `<div class="tp-item" id="tpm-${id}-${m}" onclick="selectMin('${id}',${m})">${pad2(m)}</div>`;
+  hCol.innerHTML = hHtml;
+  mCol.innerHTML = mHtml;
+}
+
+function toggleTP(id) {
+  closeAllPickers(id, 'time');
+  tpState[id].open = !tpState[id].open;
+  const el = document.getElementById('dtp-' + id);
+  if (tpState[id].open) {
+    el.style.display = 'block';
+    document.getElementById('cd-' + id).classList.add('open');
+    // Scroll to selected items
+    scrollToSelected('tph-' + id, tpState[id].h);
+    scrollToSelected('tpm-' + id, tpState[id].m);
+  } else {
+    el.style.display = 'none';
+    document.getElementById('cd-' + id).classList.remove('open');
+  }
+}
+
+function closeTP(id) {
+  if (!tpState[id]) return;
+  tpState[id].open = false;
+  const el = document.getElementById('dtp-' + id);
+  if (el) el.style.display = 'none';
+  const cd = document.getElementById('cd-' + id);
+  if (cd) cd.classList.remove('open');
+}
+
+function scrollToSelected(colId, val) {
+  if (val === null) return;
+  const col = document.getElementById(colId);
+  // header takes 1 slot (~36px), each item ~42px
+  const offset = 36 + val * 42 - 79; // center in 200px visible height
+  col.scrollTop = Math.max(0, offset);
+}
+
+function selectHour(id, h) {
+  const prev = tpState[id].h;
+  if (prev !== null) document.getElementById(`tph-${id}-${prev}`)?.classList.remove('sel');
+  tpState[id].h = h;
+  document.getElementById(`tph-${id}-${h}`)?.classList.add('sel');
+  tryCommitTime(id);
+}
+
+function selectMin(id, m) {
+  const prev = tpState[id].m;
+  if (prev !== null) document.getElementById(`tpm-${id}-${prev}`)?.classList.remove('sel');
+  tpState[id].m = m;
+  document.getElementById(`tpm-${id}-${m}`)?.classList.add('sel');
+  tryCommitTime(id);
+}
+
+function tryCommitTime(id) {
+  const st = tpState[id];
+  if (st.h !== null && st.m !== null) {
+    const val = `${pad2(st.h)}:${pad2(st.m)}`;
+    document.getElementById(id).value = val;
+    const cv = document.getElementById('cv-' + id);
+    cv.textContent = val;
+    cv.classList.remove('ph');
+    document.getElementById('f-' + id)?.classList.remove('error');
+    // Short delay then close, so user sees the selection highlight
+    setTimeout(() => closeTP(id), 180);
+  }
+}
+
+// ═══════════════════════════════════════════
+// CLOSE ALL PICKERS (except current)
+// ═══════════════════════════════════════════
+function closeAllPickers(exceptId, exceptType) {
+  Object.keys(dpState).forEach(k => { if (!(k === exceptId && exceptType === 'date')) closeDP(k); });
+  Object.keys(tpState).forEach(k => { if (!(k === exceptId && exceptType === 'time')) closeTP(k); });
+}
+
+// Close pickers when clicking outside
+document.addEventListener('click', function(e) {
+  const isInsidePicker = e.target.closest('.cpicker-wrap');
+  if (!isInsidePicker) {
+    Object.keys(dpState).forEach(k => closeDP(k));
+    Object.keys(tpState).forEach(k => closeTP(k));
+  }
+});
+
+// ═══════════════════════════════════════════
+// UTILS
+// ═══════════════════════════════════════════
+function pad2(n) { return String(n).padStart(2, '0'); }
+
+// ═══════════════════════════════════════════
+// GUINCHO PANEL
+// ═══════════════════════════════════════════
+function openGuincho() {
+  document.getElementById('guinchoOverlay').classList.add('show');
+}
+function closeGuincho() {
+  document.getElementById('guinchoOverlay').classList.remove('show');
+}
+function closeGuinchoOutside(e) {
+  if (e.target === document.getElementById('guinchoOverlay')) closeGuincho();
+}
+
+// ═══════════════════════════════════════════
+// CHECKLIST DATA
+// ═══════════════════════════════════════════
+const CK_GRUPOS = [
+  {titulo:'Iluminação',itens:[
+    {l:'Farol dianteiro queimado (baixo)',g:true},{l:'Farol dianteiro queimado (alto)',g:false},
+    {l:'Farol de neblina apagado',g:false},{l:'Lanterna traseira quebrada',g:true},
+    {l:'Luz de freio apagada',g:true},{l:'Seta / pisca com defeito',g:false},
+    {l:'Luz de ré apagada',g:false},{l:'Luz interna da cabine',g:false},
+  ]},
+  {titulo:'Motor e mecânica',itens:[
+    {l:'Vazamento de óleo',g:true},{l:'Vazamento de água / fluido',g:true},
+    {l:'Vazamento de combustível',g:true},{l:'Nível de óleo abaixo do mínimo',g:true},
+    {l:'Nível de água/arrefecimento baixo',g:true},{l:'Nível do fluido de freio baixo',g:true},
+    {l:'Correia com desgaste visível',g:true},{l:'Painel com alerta/luz acesa',g:true},
+    {l:'Fumaça saindo do motor',g:true},{l:'Superaquecimento',g:true},
+  ]},
+  {titulo:'Pneus e rodas',itens:[
+    {l:'Pneu murcho (dianteiro)',g:true},{l:'Pneu murcho (traseiro)',g:true},
+    {l:'Pneu com corte ou bolha',g:true},{l:'Pneu com desgaste excessivo',g:false},
+    {l:'Estepe sem calibragem',g:false},{l:'Estepe ausente',g:false},
+    {l:'Macaco/chave de roda ausente',g:false},{l:'Parafuso de roda faltando/solto',g:true},
+  ]},
+  {titulo:'Freios e suspensão',itens:[
+    {l:'Freio de serviço sem resposta',g:true},{l:'Freio de mão sem funcionamento',g:true},
+    {l:'Ruído ao frear',g:false},{l:'Pedal de freio fundo / mole',g:true},
+    {l:'Barulho na suspensão',g:false},{l:'Veículo puxando para um lado',g:true},
+  ]},
+  {titulo:'Lataria e carroceria',itens:[
+    {l:'Amassado na lataria (dianteiro)',g:false},{l:'Amassado na lataria (traseiro)',g:false},
+    {l:'Amassado na lataria (lateral)',g:false},{l:'Arranhão / risco na pintura',g:false},
+    {l:'Porta com dificuldade de fechar',g:false},{l:'Trava/fechadura com defeito',g:false},
+  ]},
+  {titulo:'Vidros e retrovisores',itens:[
+    {l:'Para-brisa com trinca',g:true},{l:'Vidro lateral trincado/quebrado',g:false},
+    {l:'Retrovisor externo quebrado',g:true},{l:'Retrovisor interno solto/quebrado',g:false},
+    {l:'Palheta do limpador danificada',g:false},{l:'Bomba do limpador sem funcionar',g:false},
+  ]},
+  {titulo:'Conforto e acessórios',itens:[
+    {l:'Ar condicionado sem funcionar',g:false},{l:'Cinto de segurança com defeito',g:true},
+    {l:'Buzina sem funcionar',g:false},{l:'Hodômetro com defeito',g:false},
+    {l:'Tacógrafo com defeito',g:false},{l:'Tomada/USB sem funcionar',g:false},
+  ]},
+  {titulo:'Segurança obrigatória',itens:[
+    {l:'Extinguidor ausente ou vencido',g:true},{l:'Triângulo de segurança ausente',g:true},
+    {l:'Macaco ausente',g:false},{l:'Colete refletivo ausente',g:false},
+  ]},
+];
+
+const ckSel  = new Set();
+let ckDeclMarcada = false;
+let step = 0;
+let payload = null;
+
+// ── CHECKLIST ────────────────────────────────
+function initChecklist() {
+  const container = document.getElementById('ck-grupos-container');
+  container.innerHTML = '';
+  CK_GRUPOS.forEach((g, gi) => {
+    const div = document.createElement('div');
+    div.className = 'ck-grupo';
+    const chips = g.itens.map((it, ii) => {
+      const key = gi + '_' + ii;
+      return `<div class="ck-chip${it.g ? ' grave' : ''}" id="ckchip-${key}" onclick="ckToggle('${key}')">
+        <div class="ck-dot" id="ckdot-${key}"></div>
+        <span class="ck-lbl">${it.l}</span>
+        ${it.g ? '<span class="ck-sev">urgente</span>' : ''}
+      </div>`;
+    }).join('');
+    div.innerHTML = `<div class="ck-grupo-titulo">${g.titulo}</div><div class="ck-grid">${chips}</div>`;
+    container.appendChild(div);
   });
 }
-</script>
 
+function ckToggle(key) {
+  if (ckSel.has(key)) ckSel.delete(key);
+  else ckSel.add(key);
+  document.getElementById('ckchip-' + key).classList.toggle('sel', ckSel.has(key));
+  if (ckSel.size > 0 && ckDeclMarcada) { ckDeclMarcada = false; atualizarDecl(); }
+  ckAtualizar();
+}
+
+function ckAtualizar() {
+  let warn = 0, grave = 0;
+  ckSel.forEach(key => {
+    const [gi, ii] = key.split('_').map(Number);
+    if (CK_GRUPOS[gi].itens[ii].g) grave++; else warn++;
+  });
+  document.getElementById('ck-b-warn').textContent  = 'Atenção: ' + warn;
+  document.getElementById('ck-b-err').textContent   = 'Urgente: ' + grave;
+  document.getElementById('ck-b-total').textContent = 'Marcados: ' + ckSel.size;
+  const declBox = document.getElementById('ck-decl-box');
+  declBox.classList.toggle('ck-disabled', ckSel.size > 0);
+}
+
+function toggleDecl() {
+  if (ckSel.size > 0) return;
+  ckDeclMarcada = !ckDeclMarcada;
+  atualizarDecl();
+  document.getElementById('ck-alerta-obrig').classList.remove('show');
+}
+
+function atualizarDecl() {
+  document.getElementById('ck-checkbox').className = 'ck-checkbox' + (ckDeclMarcada ? ' checked' : '');
+  document.getElementById('ck-decl-box').className = 'ck-decl' + (ckDeclMarcada ? ' ok' : '');
+}
+
+function ckReset() {
+  ckSel.clear();
+  document.querySelectorAll('.ck-chip').forEach(c => c.classList.remove('sel'));
+  ckDeclMarcada = false;
+  atualizarDecl();
+  document.getElementById('ck-obs-geral').value = '';
+  document.getElementById('ck-alerta-obrig').classList.remove('show');
+  ckAtualizar();
+}
+
+function getCkPayload() {
+  const urgentes = [], atencao = [];
+  ckSel.forEach(key => {
+    const [gi, ii] = key.split('_').map(Number);
+    const it = CK_GRUPOS[gi].itens[ii];
+    if (it.g) urgentes.push(CK_GRUPOS[gi].titulo + ' — ' + it.l);
+    else atencao.push(CK_GRUPOS[gi].titulo + ' — ' + it.l);
+  });
+  return {
+    ckStatus:        ckSel.size === 0 ? 'EM ORDEM' : (urgentes.length > 0 ? 'URGENTE' : 'ATENCAO'),
+    ckDeclarado:     ckDeclMarcada,
+    ckItensUrgentes: urgentes.join(' | '),
+    ckItensAtencao:  atencao.join(' | '),
+    ckTotalMarcados: ckSel.size,
+    ckObs:           document.getElementById('ck-obs-geral').value.trim(),
+  };
+}
+
+// ── NAVEGAÇÃO ────────────────────────────────
+window.addEventListener('online',  () => document.getElementById('offlineBar').classList.remove('show'));
+window.addEventListener('offline', () => document.getElementById('offlineBar').classList.add('show'));
+if (!navigator.onLine) document.getElementById('offlineBar').classList.add('show');
+
+// INICIALIZAÇÃO — sem pré-preenchimento de data/hora
+(function init() {
+  // Inicializa pickers (sem valor default)
+  ['dataPartida','dataChegada'].forEach(id => dpInit(id));
+  ['horarioPartida','horarioChegada'].forEach(id => tpInit(id));
+  initChecklist();
+})();
+
+const VAL = [
+  [['dataPartida','horarioPartida'],            ['f-dataPartida','f-horarioPartida']],
+  [['motorista','frota','destino'],              ['f-motorista','f-frota','f-destino']],
+  [['dataChegada','horarioChegada','kmChegada'], ['f-dataChegada','f-horarioChegada','f-kmChegada']],
+];
+
+function validar(s) {
+  if (s >= VAL.length) return true;
+  const [ids, wids] = VAL[s]; let ok = true;
+  ids.forEach((id, i) => {
+    const el = document.getElementById(id), w = document.getElementById(wids[i]);
+    if (!el.value.trim()) { w.classList.add('error'); ok = false; }
+    else w.classList.remove('error');
+  });
+  return ok;
+}
+
+function goTo(n) {
+  if (n > step && !validar(step)) return;
+  if (n === 4 && step === 3) {
+    const foto = document.getElementById('fotoInput');
+    if (!foto.files || !foto.files[0]) {
+      document.getElementById('phErr').style.display = 'block';
+      return;
+    }
+    document.getElementById('phErr').style.display = 'none';
+  }
+  closeAllPickers(null, null);
+  document.getElementById('step' + step).classList.remove('active');
+  step = n;
+  const isForm = n < 5;
+  document.getElementById('progStrip').style.display = isForm ? 'flex' : 'none';
+  if (isForm) {
+    for (let i = 0; i < 5; i++) {
+      document.getElementById('ps' + i).className = 'prog-step' + (i < n ? ' done' : i === n ? ' active' : '');
+    }
+    document.getElementById('stepNum').textContent = n + 1;
+    document.getElementById('step' + n).classList.add('active');
+  } else {
+    document.getElementById('step' + n).classList.add('active');
+  }
+  document.getElementById('mainContent').scrollTo(0, 0);
+}
+
+function previewFoto(input) {
+  if (!input.files || !input.files[0]) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    document.getElementById('phImg').src = e.target.result;
+    document.getElementById('phPlaceholder').style.display = 'none';
+    document.getElementById('phPreview').style.display = 'block';
+    document.getElementById('phErr').style.display = 'none';
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+function comprimirFoto(file, maxW, qual) {
+  return new Promise(res => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        let w = img.width, h = img.height;
+        if (w > maxW) { h = Math.round(h * maxW / w); w = maxW; }
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        res(canvas.toDataURL('image/jpeg', qual));
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function fmtData(v) {
+  if (!v) return '—';
+  const [a, m, d] = v.split('-');
+  return `${d}/${m}/${a}`;
+}
+
+function showScreen(id) {
+  ['step0','step1','step2','step3','step4','stepSuccess','stepError'].forEach(s =>
+    document.getElementById(s).classList.remove('active')
+  );
+  document.getElementById('progStrip').style.display = 'none';
+  document.getElementById(id).classList.add('active');
+  document.getElementById('mainContent').scrollTo(0, 0);
+}
+
+// ── ENVIO ────────────────────────────────────
+async function enviar() {
+  if (ckSel.size === 0 && !ckDeclMarcada) {
+    document.getElementById('ck-alerta-obrig').classList.add('show');
+    const declBox = document.getElementById('ck-decl-box');
+    declBox.classList.add('erro-decl');
+    setTimeout(() => declBox.classList.remove('erro-decl'), 500);
+    document.getElementById('mainContent').scrollTo({ top: 9999, behavior: 'smooth' });
+    return;
+  }
+  document.getElementById('ck-alerta-obrig').classList.remove('show');
+  if (!navigator.onLine) { alert('Sem conexão. Tente novamente.'); return; }
+
+  const foto = document.getElementById('fotoInput');
+  const fotoBase64 = await comprimirFoto(foto.files[0], 1200, 0.75);
+  const motorista  = document.getElementById('motorista').value;
+
+  payload = {
+    dataPartida:    document.getElementById('dataPartida').value,
+    horarioPartida: document.getElementById('horarioPartida').value,
+    dataChegada:    document.getElementById('dataChegada').value,
+    horarioChegada: document.getElementById('horarioChegada').value,
+    motorista,
+    frota:          document.getElementById('frota').value,
+    destino:        document.getElementById('destino').value,
+    kmChegada:      document.getElementById('kmChegada').value,
+    foto:           fotoBase64,
+    fotoNome:       foto.files[0].name,
+    email:          motorista,
+    ...getCkPayload()
+  };
+
+  await enviarDados(payload);
+}
+
+async function reenviar() {
+  if (!payload) { goTo(0); return; }
+  await enviarDados(payload);
+}
+
+async function enviarDados(dados) {
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('btnEnviar').disabled = true;
+  try {
+    const res  = await fetch(SCRIPT_URL, { method:'POST', body:JSON.stringify(dados), headers:{'Content-Type':'text/plain'} });
+    const json = await res.json();
+    document.getElementById('overlay').classList.remove('show');
+    document.getElementById('btnEnviar').disabled = false;
+    if (json.status === 'ok') mostrarSucesso(dados, json.kmRodado);
+    else mostrarErro(json.mensagem || 'Erro desconhecido.');
+  } catch(err) {
+    document.getElementById('overlay').classList.remove('show');
+    document.getElementById('btnEnviar').disabled = false;
+    mostrarErro('Falha de conexão: ' + err.message);
+  }
+}
+
+function mostrarSucesso(d, kmRodado) {
+  const ckStatus = d.ckStatus === 'EM ORDEM' ? '✅ Em ordem' : d.ckStatus === 'URGENTE' ? '🔴 Urgente' : '⚠️ Com atenção';
+  const rows = [
+    ['Motorista', d.motorista],['Frota', d.frota],['Destino', d.destino],
+    ['Partida', fmtData(d.dataPartida) + ' às ' + d.horarioPartida],
+    ['Chegada', fmtData(d.dataChegada) + ' às ' + d.horarioChegada],
+    ['KM chegada', Number(d.kmChegada).toLocaleString('pt-BR') + ' km'],
+    ['Vistoria', ckStatus],
+  ];
+  const kmRow = kmRodado
+    ? `<div class="resumo-row"><span class="resumo-key">KM rodado</span><span class="resumo-km-badge">${Number(kmRodado).toLocaleString('pt-BR')} km</span></div>`
+    : '';
+  document.getElementById('resumoCard').innerHTML =
+    '<div class="resumo-header">Resumo da viagem</div>' +
+    rows.map(([k,v]) => `<div class="resumo-row"><span class="resumo-key">${k}</span><span class="resumo-val">${v}</span></div>`).join('') +
+    kmRow;
+  showScreen('stepSuccess');
+}
+
+function mostrarErro(msg) {
+  document.getElementById('errDetail').textContent = msg;
+  showScreen('stepError');
+}
+
+function resetar() {
+  // Limpa campos de texto
+  ['kmChegada','motorista','frota','destino'].forEach(id => document.getElementById(id).value = '');
+  // Limpa pickers — sem pré-preenchimento
+  ['dataPartida','dataChegada'].forEach(id => {
+    document.getElementById(id).value = '';
+    const cv = document.getElementById('cv-' + id);
+    cv.textContent = 'dd/mm/aaaa'; cv.classList.add('ph');
+    dpInit(id);
+  });
+  ['horarioPartida','horarioChegada'].forEach(id => {
+    document.getElementById(id).value = '';
+    const cv = document.getElementById('cv-' + id);
+    cv.textContent = '--:--'; cv.classList.add('ph');
+    // Reset time state
+    tpState[id] = { h: null, m: null, open: false };
+    // Re-render lists (clear selections)
+    document.querySelectorAll(`#tph-${id} .tp-item, #tpm-${id} .tp-item`).forEach(el => el.classList.remove('sel'));
+  });
+  // Foto
+  document.getElementById('fotoInput').value = '';
+  document.getElementById('phPlaceholder').style.display = 'block';
+  document.getElementById('phPreview').style.display = 'none';
+  document.getElementById('phErr').style.display = 'none';
+  ckReset();
+  payload = null; step = 0;
+  document.getElementById('progStrip').style.display = 'flex';
+  for (let i = 0; i < 5; i++) document.getElementById('ps' + i).className = 'prog-step' + (i === 0 ? ' active' : '');
+  document.getElementById('stepNum').textContent = '1';
+  showScreen('step0');
+  document.getElementById('step0').classList.add('active');
+}
+
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+</script>
 </body>
 </html>
