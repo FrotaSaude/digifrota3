@@ -1,5 +1,5 @@
 // DigiFrota 3.0 — Service Worker
-const CACHE = 'digifrota-20260420A';
+const CACHE = 'digifrota-20260424';
 const ASSETS = [
   './',
   './index.html',
