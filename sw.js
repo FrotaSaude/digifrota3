@@ -1,4 +1,4 @@
-const CACHE_NAME = 'digifrota-v3.1'; // ALTERE SEMPRE QUE ATUALIZAR
+const CACHE_NAME = 'digifrota-v3.2'; // ALTERE SEMPRE QUE ATUALIZAR
 
 const ASSETS = [
   '/',
