@@ -31,7 +31,7 @@
   --warn-lt:#FFF8E1;
   --radius:18px;
   --rsm:12px;
-  --blue-seg:#1565C0;
+  --blue-seg:#1A8CC8;
 }
 html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
 .app{max-width:480px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;position:relative}
@@ -84,7 +84,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 .field.error input,.field.error select{border-color:var(--danger);box-shadow:0 0 0 3px rgba(229,57,53,.1)}
 .err-msg{display:none;color:var(--danger);font-size:11px;font-weight:600;margin-top:5px}
 .field.error .err-msg{display:block}
-.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B77A0' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:40px;cursor:pointer}
+.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B77A0' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C%2Fsvg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:40px;cursor:pointer}
 .km-wrap{position:relative}
 .km-wrap input{font-size:22px;font-weight:700;padding:14px 52px 14px 16px;letter-spacing:-.5px}
 .km-unit{position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:13px;font-weight:700;color:var(--muted);pointer-events:none}
@@ -153,8 +153,6 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 .cpicker-val.ph{color:var(--muted);font-weight:400}
 .cpicker-ico{flex-shrink:0;margin-left:6px;display:flex;align-items:center}
 .cpicker-ico svg{width:17px;height:17px;stroke:var(--muted)}
-
-/* Dropdown container */
 .cpicker-drop{
   position:absolute;left:0;top:calc(100% + 6px);
   min-width:min(280px,90vw);
@@ -162,8 +160,6 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
   border-radius:14px;box-shadow:0 8px 32px rgba(11,22,56,.16);
   z-index:300;overflow:hidden
 }
-
-/* Calendar */
 .cal-hdr{
   display:flex;align-items:center;justify-content:space-between;
   padding:12px 14px 8px;border-bottom:1px solid var(--border)
@@ -209,8 +205,6 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
   transition:background .15s
 }
 .cal-foot-btn:hover{background:var(--bg)}
-
-/* Time picker */
 .tp-drop{min-width:unset;width:164px}
 .tp-cols{display:flex}
 .tp-sep{width:1px;background:var(--border);flex-shrink:0}
@@ -239,7 +233,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 }
 
 /* ══════════════════════════════════════════════════
-   CHECKLIST — ETAPA 5
+   CHECKLIST
 ══════════════════════════════════════════════════ */
 .ck-badges{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px;margin-bottom:18px}
 .ck-badge{font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;border:1.5px solid}
@@ -292,10 +286,12 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
   display:flex;align-items:center;gap:8px;
   font-family:'Inter',sans-serif;font-size:12px;font-weight:700;
   cursor:pointer;letter-spacing:.2px;
-  box-shadow:0 4px 18px rgba(21,101,192,.55);
+  box-shadow:0 4px 18px rgba(26,140,200,.55);
   z-index:490;transition:transform .15s,box-shadow .15s
 }
 .guincho-fab:active{transform:scale(.96)}
+
+/* Ícone estrela de 6 pontas no FAB */
 .guincho-fab-star{width:22px;height:22px;flex-shrink:0}
 
 .guincho-overlay{
@@ -313,34 +309,86 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 }
 @keyframes sheetUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
 .guincho-handle{width:40px;height:4px;background:var(--border);border-radius:4px;margin:14px auto 0}
+
+/* ── Topo do painel: logo igual à imagem real ── */
 .guincho-top{
   display:flex;align-items:center;justify-content:space-between;
   padding:14px 20px 12px;border-bottom:1px solid var(--border)
 }
 .guincho-logo{display:flex;align-items:center;gap:10px}
-.guincho-logo svg{width:34px;height:34px}
-.guincho-logo-txt{line-height:1}
-.guincho-logo-txt strong{display:block;font-size:15px;font-weight:800;color:var(--blue-seg)}
-.guincho-logo-txt span{font-size:10px;font-weight:600;color:var(--blue-seg);opacity:.7;text-transform:lowercase;letter-spacing:.4px}
+
+/* Estrela azul SVG — hexagrama exato da Gente Seguradora */
+.gente-star{width:38px;height:38px;flex-shrink:0}
+
+/* Texto do logo: "gente" bold + "seguradora" abaixo */
+.gente-logo-txt{line-height:1.1}
+.gente-logo-txt .gente-nome{
+  display:block;
+  font-size:18px;font-weight:800;
+  color:#1A5276; /* azul escuro da marca */
+  letter-spacing:-.3px
+}
+.gente-logo-txt .gente-sub{
+  display:block;
+  font-size:11px;font-weight:400;
+  color:#1A8CC8; /* azul médio da marca */
+  letter-spacing:.2px
+}
+
 .guincho-close{
   width:32px;height:32px;border:none;background:var(--bg);
   border-radius:50%;cursor:pointer;display:flex;align-items:center;
   justify-content:center;color:var(--muted);font-size:18px;line-height:1
 }
+
 .guincho-body{padding:16px 20px 4px}
-.guincho-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+
+/* ── Cards de contato: 3 colunas como na imagem ── */
+.guincho-cards{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:10px;
+  margin-bottom:16px
+}
 .guincho-card{
-  background:var(--blue-seg);border-radius:14px;
-  padding:18px 14px 16px;text-align:center;color:#fff
+  background:var(--blue-seg);
+  border-radius:14px;
+  padding:18px 10px 16px;
+  text-align:center;
+  color:#fff;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:0
 }
+/* Círculo com ícone branco */
 .guincho-card-ico{
-  width:46px;height:46px;background:rgba(255,255,255,.15);
-  border-radius:50%;display:flex;align-items:center;justify-content:center;
-  margin:0 auto 10px
+  width:52px;height:52px;
+  background:rgba(255,255,255,.18);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:12px
 }
-.guincho-card-ico svg{width:22px;height:22px;stroke:#fff;stroke-width:2;fill:none}
-.guincho-card-lbl{font-size:11px;font-weight:700;line-height:1.35;margin-bottom:6px;opacity:.85}
-.guincho-card-num{font-size:14px;font-weight:800;letter-spacing:.3px}
+.guincho-card-ico svg{
+  width:26px;height:26px;
+  fill:none;stroke:#fff;stroke-width:1.8;
+  stroke-linecap:round;stroke-linejoin:round
+}
+/* WhatsApp usa fill */
+.guincho-card-ico.fill-icon svg{
+  fill:#fff;stroke:none
+}
+.guincho-card-lbl{
+  font-size:11px;font-weight:700;
+  line-height:1.35;margin-bottom:8px;
+  opacity:.9;color:#fff
+}
+.guincho-card-num{
+  font-size:12px;font-weight:800;
+  letter-spacing:.1px;color:#fff
+}
+
+/* ── Info da Prefeitura ── */
 .guincho-info{
   background:var(--bg);border:1px solid var(--border);
   border-radius:14px;padding:4px 16px 2px;margin-bottom:20px
@@ -441,13 +489,9 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
               </div>
               <div class="cpicker-drop tp-drop" id="dtp-horarioPartida" style="display:none">
                 <div class="tp-cols">
-                  <div class="tp-col" id="tph-horarioPartida">
-                    <div class="tp-hdr">h</div>
-                  </div>
+                  <div class="tp-col" id="tph-horarioPartida"><div class="tp-hdr">h</div></div>
                   <div class="tp-sep"></div>
-                  <div class="tp-col" id="tpm-horarioPartida">
-                    <div class="tp-hdr">min</div>
-                  </div>
+                  <div class="tp-col" id="tpm-horarioPartida"><div class="tp-hdr">min</div></div>
                 </div>
               </div>
             </div>
@@ -623,13 +667,9 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
               </div>
               <div class="cpicker-drop tp-drop" id="dtp-horarioChegada" style="display:none">
                 <div class="tp-cols">
-                  <div class="tp-col" id="tph-horarioChegada">
-                    <div class="tp-hdr">h</div>
-                  </div>
+                  <div class="tp-col" id="tph-horarioChegada"><div class="tp-hdr">h</div></div>
                   <div class="tp-sep"></div>
-                  <div class="tp-col" id="tpm-horarioChegada">
-                    <div class="tp-hdr">min</div>
-                  </div>
+                  <div class="tp-col" id="tpm-horarioChegada"><div class="tp-hdr">min</div></div>
                 </div>
               </div>
             </div>
@@ -800,8 +840,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 
 <!-- ══ BOTÃO GUINCHO ══ -->
 <button class="guincho-fab" onclick="openGuincho()" aria-label="Precisa de guincho?">
-  <!-- Estrela de Davi — símbolo da Gente Seguradora -->
-  <!-- Hexagrama preenchido — logotipo Gente Seguradora -->
+  <!-- Estrela de 6 pontas — Gente Seguradora -->
   <svg class="guincho-fab-star" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
     <polygon points="20,3 24.91,11.5 34.72,11.5 29.81,20 34.72,28.5 24.91,28.5 20,37 15.09,28.5 5.28,28.5 10.19,20 5.28,11.5 15.09,11.5" fill="white"/>
   </svg>
@@ -812,41 +851,65 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 <div class="guincho-overlay" id="guinchoOverlay" onclick="closeGuinchoOutside(event)">
   <div class="guincho-sheet" id="guinchoSheet">
     <div class="guincho-handle"></div>
+
+    <!-- Topo: logo Gente Seguradora fiel ao original -->
     <div class="guincho-top">
       <div class="guincho-logo">
-        <!-- Hexagrama preenchido — logotipo Gente Seguradora -->
-        <svg width="34" height="34" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-          <polygon points="20,3 24.91,11.5 34.72,11.5 29.81,20 34.72,28.5 24.91,28.5 20,37 15.09,28.5 5.28,28.5 10.19,20 5.28,11.5 15.09,11.5" fill="#1A8CC8"/>
+        <!-- Estrela de 6 pontas azul — exatamente como no logo da Gente Seguradora -->
+        <svg class="gente-star" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+          <!-- Triângulo apontando para cima -->
+          <polygon points="30,4 56,50 4,50" fill="#1A8CC8"/>
+          <!-- Triângulo apontando para baixo (sobreposto, criando estrela de 6 pontas) -->
+          <polygon points="30,56 4,10 56,10" fill="#1A8CC8"/>
         </svg>
-        <div class="guincho-logo-txt">
-          <strong>gente</strong>
-          <span>seguradora</span>
+        <div class="gente-logo-txt">
+          <span class="gente-nome">gente</span>
+          <span class="gente-sub">seguradora</span>
         </div>
       </div>
       <button class="guincho-close" onclick="closeGuincho()">✕</button>
     </div>
+
     <div class="guincho-body">
 
-      <!-- Cartões de contato -->
+      <!-- 3 cartões de contato — exatamente como na imagem -->
       <div class="guincho-cards">
+
+        <!-- Card 1: Porto Alegre -->
         <div class="guincho-card">
           <div class="guincho-card-ico">
-            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Telefone com fio -->
+            <svg viewBox="0 0 24 24">
               <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.72A2 2 0 012.18 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
             </svg>
           </div>
-          <div class="guincho-card-lbl">Demais<br>localidades</div>
-          <div class="guincho-card-num">0800 602 0088</div>
+          <div class="guincho-card-lbl">Porto Alegre e região metropolitana</div>
+          <div class="guincho-card-num">(51) 3023-8888</div>
         </div>
+
+        <!-- Card 2: Demais localidades -->
         <div class="guincho-card">
           <div class="guincho-card-ico">
-            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+            <svg viewBox="0 0 24 24">
+              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.72A2 2 0 012.18 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
             </svg>
           </div>
-          <div class="guincho-card-lbl">Atendimento no<br>WhatsApp</div>
+          <div class="guincho-card-lbl">Demais localidades</div>
+          <div class="guincho-card-num">0800 602 0088</div>
+        </div>
+
+        <!-- Card 3: WhatsApp -->
+        <div class="guincho-card">
+          <div class="guincho-card-ico fill-icon">
+            <!-- Ícone WhatsApp -->
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+          </div>
+          <div class="guincho-card-lbl">Atendimento no WhatsApp</div>
           <div class="guincho-card-num">(51) 99993-1300</div>
         </div>
+
       </div>
 
       <!-- Informações da Prefeitura -->
@@ -903,7 +966,7 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzOVmKH_a2gWBy-GZxp7
 // CUSTOM DATE PICKER
 // ═══════════════════════════════════════════
 const MONTH_NAMES = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
-const dpState = {}; // id -> { year, month, open }
+const dpState = {};
 
 function dpInit(id) {
   const now = new Date();
@@ -937,20 +1000,15 @@ function renderCalendar(id) {
   const st = dpState[id];
   const y = st.year, m = st.month;
   const selectedVal = document.getElementById(id).value;
-
-  const firstDow = new Date(y, m, 1).getDay(); // 0=Sun
+  const firstDow = new Date(y, m, 1).getDay();
   const daysInMonth = new Date(y, m + 1, 0).getDate();
   const daysInPrev  = new Date(y, m, 0).getDate();
-
   const today = new Date();
   const todayStr = `${today.getFullYear()}-${pad2(today.getMonth()+1)}-${pad2(today.getDate())}`;
-
   let cells = '';
-  // prev month padding
   for (let i = firstDow - 1; i >= 0; i--) {
     cells += `<div class="cal-day other">${daysInPrev - i}</div>`;
   }
-  // current month days
   for (let d = 1; d <= daysInMonth; d++) {
     const ds = `${y}-${pad2(m+1)}-${pad2(d)}`;
     let cls = 'cal-day';
@@ -958,12 +1016,10 @@ function renderCalendar(id) {
     else if (ds === todayStr) cls += ' today';
     cells += `<div class="${cls}" onclick="selectDate('${id}','${ds}')">${d}</div>`;
   }
-  // next month padding
   const totalCells = Math.ceil((firstDow + daysInMonth) / 7) * 7;
   for (let n = 1; n <= totalCells - firstDow - daysInMonth; n++) {
     cells += `<div class="cal-day other">${n}</div>`;
   }
-
   document.getElementById('ddp-' + id).innerHTML = `
     <div class="cal-hdr">
       <button class="cal-nav-btn" onclick="calNav('${id}',-1);event.stopPropagation()">▲</button>
@@ -1008,11 +1064,10 @@ function clearDate(id) {
 // ═══════════════════════════════════════════
 // CUSTOM TIME PICKER
 // ═══════════════════════════════════════════
-const tpState = {}; // id -> { h, m, open }
+const tpState = {};
 
 function tpInit(id) {
   tpState[id] = { h: null, m: null, open: false };
-  // Populate hour/minute lists once
   const hCol = document.getElementById('tph-' + id);
   const mCol = document.getElementById('tpm-' + id);
   let hHtml = '<div class="tp-hdr">h</div>';
@@ -1030,7 +1085,6 @@ function toggleTP(id) {
   if (tpState[id].open) {
     el.style.display = 'block';
     document.getElementById('cd-' + id).classList.add('open');
-    // Scroll to selected items
     scrollToSelected('tph-' + id, tpState[id].h);
     scrollToSelected('tpm-' + id, tpState[id].m);
   } else {
@@ -1051,8 +1105,7 @@ function closeTP(id) {
 function scrollToSelected(colId, val) {
   if (val === null) return;
   const col = document.getElementById(colId);
-  // header takes 1 slot (~36px), each item ~42px
-  const offset = 36 + val * 42 - 79; // center in 200px visible height
+  const offset = 36 + val * 42 - 79;
   col.scrollTop = Math.max(0, offset);
 }
 
@@ -1081,20 +1134,15 @@ function tryCommitTime(id) {
     cv.textContent = val;
     cv.classList.remove('ph');
     document.getElementById('f-' + id)?.classList.remove('error');
-    // Short delay then close, so user sees the selection highlight
     setTimeout(() => closeTP(id), 180);
   }
 }
 
-// ═══════════════════════════════════════════
-// CLOSE ALL PICKERS (except current)
-// ═══════════════════════════════════════════
 function closeAllPickers(exceptId, exceptType) {
   Object.keys(dpState).forEach(k => { if (!(k === exceptId && exceptType === 'date')) closeDP(k); });
   Object.keys(tpState).forEach(k => { if (!(k === exceptId && exceptType === 'time')) closeTP(k); });
 }
 
-// Close pickers when clicking outside
 document.addEventListener('click', function(e) {
   const isInsidePicker = e.target.closest('.cpicker-wrap');
   if (!isInsidePicker) {
@@ -1103,9 +1151,6 @@ document.addEventListener('click', function(e) {
   }
 });
 
-// ═══════════════════════════════════════════
-// UTILS
-// ═══════════════════════════════════════════
 function pad2(n) { return String(n).padStart(2, '0'); }
 
 // ═══════════════════════════════════════════
@@ -1175,7 +1220,6 @@ let ckDeclMarcada = false;
 let step = 0;
 let payload = null;
 
-// ── CHECKLIST ────────────────────────────────
 function initChecklist() {
   const container = document.getElementById('ck-grupos-container');
   container.innerHTML = '';
@@ -1256,14 +1300,12 @@ function getCkPayload() {
   };
 }
 
-// ── NAVEGAÇÃO ────────────────────────────────
+// ── NAVEGAÇÃO
 window.addEventListener('online',  () => document.getElementById('offlineBar').classList.remove('show'));
 window.addEventListener('offline', () => document.getElementById('offlineBar').classList.add('show'));
 if (!navigator.onLine) document.getElementById('offlineBar').classList.add('show');
 
-// INICIALIZAÇÃO — sem pré-preenchimento de data/hora
 (function init() {
-  // Inicializa pickers (sem valor default)
   ['dataPartida','dataChegada'].forEach(id => dpInit(id));
   ['horarioPartida','horarioChegada'].forEach(id => tpInit(id));
   initChecklist();
@@ -1359,7 +1401,6 @@ function showScreen(id) {
   document.getElementById('mainContent').scrollTo(0, 0);
 }
 
-// ── ENVIO ────────────────────────────────────
 async function enviar() {
   if (ckSel.size === 0 && !ckDeclMarcada) {
     document.getElementById('ck-alerta-obrig').classList.add('show');
@@ -1441,9 +1482,7 @@ function mostrarErro(msg) {
 }
 
 function resetar() {
-  // Limpa campos de texto
   ['kmChegada','motorista','frota','destino'].forEach(id => document.getElementById(id).value = '');
-  // Limpa pickers — sem pré-preenchimento
   ['dataPartida','dataChegada'].forEach(id => {
     document.getElementById(id).value = '';
     const cv = document.getElementById('cv-' + id);
@@ -1454,12 +1493,9 @@ function resetar() {
     document.getElementById(id).value = '';
     const cv = document.getElementById('cv-' + id);
     cv.textContent = '--:--'; cv.classList.add('ph');
-    // Reset time state
     tpState[id] = { h: null, m: null, open: false };
-    // Re-render lists (clear selections)
     document.querySelectorAll(`#tph-${id} .tp-item, #tpm-${id} .tp-item`).forEach(el => el.classList.remove('sel'));
   });
-  // Foto
   document.getElementById('fotoInput').value = '';
   document.getElementById('phPlaceholder').style.display = 'block';
   document.getElementById('phPreview').style.display = 'none';
