@@ -1,39 +1,44 @@
-// DigiFrota 3.0 — Service Worker
-const CACHE = 'digifrota-20260424z';
+const CACHE_NAME = 'digifrota-v3.1'; // ALTERE SEMPRE QUE ATUALIZAR
+
 const ASSETS = [
-  './',
-  './index.html',
-  './manifest.json',
-  'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap'
+  '/',
+  '/index.html',
+  '/manifest.json'
 ];
-self.addEventListener('install', e => {
-  e.waitUntil(
-    caches.open(CACHE)
-      .then(c => c.addAll(ASSETS))
-      .then(() => self.skipWaiting())
+
+// install
+self.addEventListener('install', event => {
+  self.skipWaiting();
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS))
   );
 });
-self.addEventListener('activate', e => {
-  e.waitUntil(
+
+// activate
+self.addEventListener('activate', event => {
+  event.waitUntil(
     caches.keys().then(keys =>
-      Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
-    ).then(() => self.clients.claim())
+      Promise.all(
+        keys.map(key => {
+          if (key !== CACHE_NAME) {
+            return caches.delete(key);
+          }
+        })
+      )
+    )
   );
+  self.clients.claim();
 });
-self.addEventListener('fetch', e => {
-  const url = e.request.url;
-  if (url.includes('script.google.com')) return;
-  if (
-    url.includes('manifest.json') ||
-    url.includes('icon-192') ||
-    url.includes('icon-512')
-  ) {
-    e.respondWith(
-      fetch(e.request).catch(() => caches.match(e.request))
-    );
-    return;
-  }
-  e.respondWith(
-    caches.match(e.request).then(cached => cached || fetch(e.request))
+
+// fetch (network first)
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    fetch(event.request)
+      .then(response => {
+        const clone = response.clone();
+        caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+        return response;
+      })
+      .catch(() => caches.match(event.request))
   );
 });
