@@ -31,6 +31,7 @@
   --warn-lt:#FFF8E1;
   --radius:18px;
   --rsm:12px;
+  --blue-seg:#1565C0;
 }
 html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
 .app{max-width:480px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;position:relative}
@@ -62,7 +63,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 .offline.show{display:block}
 
 /* ── CONTENT ─────────────────────────────────────── */
-.content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:24px 20px 48px}
+.content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:24px 20px 100px}
 .screen{display:none;animation:fadeUp .25s ease}
 .screen.active{display:block}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
@@ -99,11 +100,6 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 .ph-preview img{width:100%;max-height:240px;object-fit:cover;display:block}
 .ph-retake{padding:11px;text-align:center;font-size:12px;font-weight:700;color:var(--navy);background:var(--bg);border-top:1px solid var(--border)}
 .ph-err{display:none;color:var(--danger);font-size:11px;font-weight:600;margin-top:6px}
-.resumo-pre{background:var(--bg);border:1px solid var(--border);border-radius:var(--rsm);padding:14px 16px;margin-bottom:14px}
-.resumo-pre-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border);font-size:13px}
-.resumo-pre-row:last-child{border-bottom:none}
-.resumo-pre-key{color:var(--muted);font-weight:500}
-.resumo-pre-val{color:var(--navy);font-weight:700;text-align:right;max-width:60%}
 .btn{width:100%;padding:17px;border:none;border-radius:var(--radius);font-family:'Inter',sans-serif;font-size:16px;font-weight:700;cursor:pointer;transition:transform .15s,box-shadow .15s,opacity .15s;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:9px;letter-spacing:.2px}
 .btn:active{transform:scale(.98)}
 .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
@@ -130,12 +126,117 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 .error-icon svg{width:36px;height:36px;stroke:#FCA5A5}
 .error-title{font-size:24px;font-weight:800;color:#fff}
 .error-detail{color:rgba(255,255,255,.6);font-size:13px;margin-top:8px;line-height:1.5;word-break:break-word}
-.overlay{display:none;position:fixed;inset:0;background:rgba(11,22,56,.8);backdrop-filter:blur(4px);z-index:999;align-items:center;justify-content:flex-direction:column;gap:18px;flex-direction:column}
+.overlay{display:none;position:fixed;inset:0;background:rgba(11,22,56,.8);backdrop-filter:blur(4px);z-index:999;align-items:center;justify-content:center;gap:18px;flex-direction:column}
 .overlay.show{display:flex}
 .spin-ring{width:56px;height:56px;border:4px solid rgba(245,196,0,.2);border-top-color:var(--yellow);border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .ov-text{color:#fff;font-size:16px;font-weight:700}
 .ov-sub{color:rgba(255,255,255,.4);font-size:12px;margin-top:-10px}
+
+/* ══════════════════════════════════════════════════
+   CUSTOM DATE / TIME PICKERS
+══════════════════════════════════════════════════ */
+.cpicker-wrap{position:relative}
+.cpicker-display{
+  width:100%;padding:14px 12px 14px 14px;
+  border:1.5px solid var(--border);border-radius:var(--rsm);
+  font-family:'Inter',sans-serif;font-size:15px;font-weight:500;
+  color:var(--text);background:var(--bg);
+  display:flex;align-items:center;justify-content:space-between;
+  cursor:pointer;transition:border-color .2s,box-shadow .2s,background .2s;
+  user-select:none;-webkit-user-select:none
+}
+.cpicker-display.open,
+.cpicker-display:focus{border-color:var(--navy3);box-shadow:0 0 0 3px rgba(30,45,110,.1);background:var(--card)}
+.field.error .cpicker-display{border-color:var(--danger);box-shadow:0 0 0 3px rgba(229,57,53,.1)}
+.cpicker-val{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cpicker-val.ph{color:var(--muted);font-weight:400}
+.cpicker-ico{flex-shrink:0;margin-left:6px;display:flex;align-items:center}
+.cpicker-ico svg{width:17px;height:17px;stroke:var(--muted)}
+
+/* Dropdown container */
+.cpicker-drop{
+  position:absolute;left:0;top:calc(100% + 6px);
+  min-width:min(280px,90vw);
+  background:var(--card);border:1.5px solid var(--border);
+  border-radius:14px;box-shadow:0 8px 32px rgba(11,22,56,.16);
+  z-index:300;overflow:hidden
+}
+
+/* Calendar */
+.cal-hdr{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 14px 8px;border-bottom:1px solid var(--border)
+}
+.cal-month-lbl{font-size:13px;font-weight:700;color:var(--navy);flex:1;text-align:center}
+.cal-nav-btn{
+  background:none;border:none;cursor:pointer;
+  width:28px;height:28px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--muted);font-size:14px;
+  transition:background .15s
+}
+.cal-nav-btn:hover{background:var(--bg)}
+.cal-days-hdr{
+  display:grid;grid-template-columns:repeat(7,1fr);
+  padding:8px 10px 4px
+}
+.cal-days-hdr span{
+  text-align:center;font-size:10px;font-weight:700;
+  color:var(--muted);text-transform:uppercase
+}
+.cal-grid{
+  display:grid;grid-template-columns:repeat(7,1fr);
+  padding:2px 10px 10px;gap:2px
+}
+.cal-day{
+  aspect-ratio:1;display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:500;border-radius:8px;
+  cursor:pointer;transition:background .15s;color:var(--text)
+}
+.cal-day:active{transform:scale(.92)}
+.cal-day.other{color:var(--border);cursor:default;pointer-events:none}
+.cal-day.today{color:var(--navy3);font-weight:700}
+.cal-day.sel{background:var(--navy);color:#fff;font-weight:700}
+.cal-footer{
+  display:flex;justify-content:space-between;
+  padding:8px 14px 10px;border-top:1px solid var(--border)
+}
+.cal-foot-btn{
+  background:none;border:none;font-family:'Inter',sans-serif;
+  font-size:13px;font-weight:600;cursor:pointer;
+  color:var(--navy3);padding:4px 10px;border-radius:8px;
+  transition:background .15s
+}
+.cal-foot-btn:hover{background:var(--bg)}
+
+/* Time picker */
+.tp-drop{min-width:unset;width:164px}
+.tp-cols{display:flex}
+.tp-sep{width:1px;background:var(--border);flex-shrink:0}
+.tp-col{
+  flex:1;height:200px;overflow-y:scroll;
+  scroll-behavior:smooth;-webkit-overflow-scrolling:touch;
+  scrollbar-width:none
+}
+.tp-col::-webkit-scrollbar{display:none}
+.tp-item{
+  padding:11px 0;text-align:center;
+  font-size:15px;font-weight:500;color:var(--text);
+  cursor:pointer;transition:background .1s
+}
+.tp-item:hover:not(.sel){background:var(--bg)}
+.tp-item.sel{
+  background:var(--border);font-weight:700;
+  color:var(--navy);border-radius:6px;
+  margin:0 4px
+}
+.tp-hdr{
+  padding:8px 0 4px;text-align:center;
+  font-size:10px;font-weight:700;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.6px;
+  border-bottom:1px solid var(--border)
+}
 
 /* ══════════════════════════════════════════════════
    CHECKLIST — ETAPA 5
@@ -156,19 +257,15 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 .ck-chip:active{transform:scale(.97)}
 .ck-chip.sel{border-color:var(--warn);background:var(--warn-lt)}
 .ck-chip.grave.sel{border-color:var(--danger);background:var(--danger-lt)}
-.ck-chip.grave:not(.sel):hover{border-color:rgba(229,57,53,.4)}
 .ck-dot{width:9px;height:9px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;transition:all .15s}
 .ck-chip.sel .ck-dot{background:var(--warn);border-color:var(--warn)}
 .ck-chip.grave.sel .ck-dot{background:var(--danger);border-color:var(--danger)}
 .ck-lbl{font-size:12px;font-weight:600;color:var(--text);line-height:1.25;flex:1}
-.ck-sev{font-size:9px;font-weight:700;color:var(--danger);margin-left:auto;white-space:nowrap;opacity:0;transition:opacity .15s}
-.ck-chip.grave .ck-sev{opacity:1}
+.ck-sev{font-size:9px;font-weight:700;color:var(--danger);margin-left:auto;white-space:nowrap}
 .ck-divider{height:1px;background:var(--border);margin:18px 0}
 .ck-obs-label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px}
 .ck-obs-textarea{width:100%;min-height:80px;font-size:13px;font-family:'Inter',sans-serif;padding:12px 14px;border:1.5px solid var(--border);border-radius:var(--rsm);background:var(--bg);color:var(--text);resize:vertical;outline:none;transition:border-color .2s}
 .ck-obs-textarea:focus{border-color:var(--navy3);box-shadow:0 0 0 3px rgba(30,45,110,.1);background:var(--card)}
-
-/* Declaração de responsabilidade */
 .ck-decl{border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:all .2s;margin-top:4px}
 .ck-decl.ok{border-color:var(--success);background:var(--success-lt)}
 .ck-decl.erro-decl{border-color:var(--danger);background:var(--danger-lt);animation:shake .35s ease}
@@ -183,6 +280,80 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 .ck-disabled{opacity:.4;pointer-events:none}
 .ck-alerta-obrig{display:none;align-items:center;gap:8px;padding:11px 14px;background:var(--danger-lt);border:1.5px solid var(--danger);border-radius:var(--rsm);margin-top:10px;font-size:12px;font-weight:600;color:var(--danger)}
 .ck-alerta-obrig.show{display:flex}
+
+/* ══════════════════════════════════════════════════
+   GUINCHO FAB + PAINEL
+══════════════════════════════════════════════════ */
+.guincho-fab{
+  position:fixed;bottom:22px;right:16px;
+  background:var(--blue-seg);color:#fff;
+  border:none;border-radius:30px;
+  padding:12px 16px 12px 13px;
+  display:flex;align-items:center;gap:8px;
+  font-family:'Inter',sans-serif;font-size:12px;font-weight:700;
+  cursor:pointer;letter-spacing:.2px;
+  box-shadow:0 4px 18px rgba(21,101,192,.55);
+  z-index:490;transition:transform .15s,box-shadow .15s
+}
+.guincho-fab:active{transform:scale(.96)}
+.guincho-fab-star{width:22px;height:22px;flex-shrink:0}
+
+.guincho-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(11,22,56,.55);backdrop-filter:blur(3px);
+  z-index:700;align-items:flex-end;justify-content:center
+}
+.guincho-overlay.show{display:flex}
+.guincho-sheet{
+  width:100%;max-width:480px;
+  background:var(--card);border-radius:24px 24px 0 0;
+  padding-bottom:env(safe-area-inset-bottom,12px);
+  animation:sheetUp .3s cubic-bezier(.32,0,.2,1);
+  max-height:88vh;overflow-y:auto
+}
+@keyframes sheetUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.guincho-handle{width:40px;height:4px;background:var(--border);border-radius:4px;margin:14px auto 0}
+.guincho-top{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 20px 12px;border-bottom:1px solid var(--border)
+}
+.guincho-logo{display:flex;align-items:center;gap:10px}
+.guincho-logo svg{width:34px;height:34px}
+.guincho-logo-txt{line-height:1}
+.guincho-logo-txt strong{display:block;font-size:15px;font-weight:800;color:var(--blue-seg)}
+.guincho-logo-txt span{font-size:10px;font-weight:600;color:var(--blue-seg);opacity:.7;text-transform:lowercase;letter-spacing:.4px}
+.guincho-close{
+  width:32px;height:32px;border:none;background:var(--bg);
+  border-radius:50%;cursor:pointer;display:flex;align-items:center;
+  justify-content:center;color:var(--muted);font-size:18px;line-height:1
+}
+.guincho-body{padding:16px 20px 4px}
+.guincho-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.guincho-card{
+  background:var(--blue-seg);border-radius:14px;
+  padding:18px 14px 16px;text-align:center;color:#fff
+}
+.guincho-card-ico{
+  width:46px;height:46px;background:rgba(255,255,255,.15);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  margin:0 auto 10px
+}
+.guincho-card-ico svg{width:22px;height:22px;stroke:#fff;stroke-width:2;fill:none}
+.guincho-card-lbl{font-size:11px;font-weight:700;line-height:1.35;margin-bottom:6px;opacity:.85}
+.guincho-card-num{font-size:14px;font-weight:800;letter-spacing:.3px}
+.guincho-info{
+  background:var(--bg);border:1px solid var(--border);
+  border-radius:14px;padding:4px 16px 2px;margin-bottom:20px
+}
+.guincho-info-row{
+  display:flex;gap:10px;align-items:flex-start;
+  padding:10px 0;border-bottom:1px solid var(--border);font-size:13px
+}
+.guincho-info-row:last-child{border-bottom:none}
+.guincho-info-ico{flex-shrink:0;margin-top:1px}
+.guincho-info-ico svg{width:15px;height:15px;stroke:var(--muted);stroke-width:2}
+.guincho-info-lbl{font-weight:600;color:var(--muted);font-size:11px;display:block;margin-bottom:1px}
+.guincho-info-val{font-weight:600;color:var(--navy);line-height:1.45}
 </style>
 </head>
 <body>
@@ -242,12 +413,45 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
         <div class="field-row">
           <div class="field" id="f-dataPartida">
             <label>Data <span class="req">*</span></label>
-            <input type="date" id="dataPartida">
+            <div class="cpicker-wrap">
+              <div class="cpicker-display" id="cd-dataPartida" onclick="toggleDP('dataPartida')">
+                <span class="cpicker-val ph" id="cv-dataPartida">dd/mm/aaaa</span>
+                <span class="cpicker-ico">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+                  </svg>
+                </span>
+              </div>
+              <div class="cpicker-drop" id="ddp-dataPartida" style="display:none"></div>
+            </div>
+            <input type="hidden" id="dataPartida">
             <div class="err-msg">Obrigatório</div>
           </div>
           <div class="field" id="f-horarioPartida">
             <label>Horário <span class="req">*</span></label>
-            <input type="time" id="horarioPartida">
+            <div class="cpicker-wrap">
+              <div class="cpicker-display" id="cd-horarioPartida" onclick="toggleTP('horarioPartida')">
+                <span class="cpicker-val ph" id="cv-horarioPartida">--:--</span>
+                <span class="cpicker-ico">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                </span>
+              </div>
+              <div class="cpicker-drop tp-drop" id="dtp-horarioPartida" style="display:none">
+                <div class="tp-cols">
+                  <div class="tp-col" id="tph-horarioPartida">
+                    <div class="tp-hdr">h</div>
+                  </div>
+                  <div class="tp-sep"></div>
+                  <div class="tp-col" id="tpm-horarioPartida">
+                    <div class="tp-hdr">min</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <input type="hidden" id="horarioPartida">
             <div class="err-msg">Obrigatório</div>
           </div>
         </div>
@@ -391,12 +595,45 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
         <div class="field-row">
           <div class="field" id="f-dataChegada">
             <label>Data <span class="req">*</span></label>
-            <input type="date" id="dataChegada">
+            <div class="cpicker-wrap">
+              <div class="cpicker-display" id="cd-dataChegada" onclick="toggleDP('dataChegada')">
+                <span class="cpicker-val ph" id="cv-dataChegada">dd/mm/aaaa</span>
+                <span class="cpicker-ico">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+                  </svg>
+                </span>
+              </div>
+              <div class="cpicker-drop" id="ddp-dataChegada" style="display:none"></div>
+            </div>
+            <input type="hidden" id="dataChegada">
             <div class="err-msg">Obrigatório</div>
           </div>
           <div class="field" id="f-horarioChegada">
             <label>Horário <span class="req">*</span></label>
-            <input type="time" id="horarioChegada">
+            <div class="cpicker-wrap">
+              <div class="cpicker-display" id="cd-horarioChegada" onclick="toggleTP('horarioChegada')">
+                <span class="cpicker-val ph" id="cv-horarioChegada">--:--</span>
+                <span class="cpicker-ico">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                </span>
+              </div>
+              <div class="cpicker-drop tp-drop" id="dtp-horarioChegada" style="display:none">
+                <div class="tp-cols">
+                  <div class="tp-col" id="tph-horarioChegada">
+                    <div class="tp-hdr">h</div>
+                  </div>
+                  <div class="tp-sep"></div>
+                  <div class="tp-col" id="tpm-horarioChegada">
+                    <div class="tp-hdr">min</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <input type="hidden" id="horarioChegada">
             <div class="err-msg">Obrigatório</div>
           </div>
         </div>
@@ -456,7 +693,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
       <button class="btn btn-ghost" onclick="goTo(2)">Voltar</button>
     </div>
 
-    <!-- ══ ETAPA 5: CHECKLIST DE VISTORIA ══ -->
+    <!-- ══ ETAPA 5: CHECKLIST ══ -->
     <div class="screen" id="step4">
       <div class="sec-hdr">
         <div class="sec-icon" style="background:var(--warn-lt);box-shadow:0 4px 14px rgba(255,143,0,.25)">
@@ -489,8 +726,6 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
       <textarea class="ck-obs-textarea" id="ck-obs-geral" placeholder="Descreva aqui qualquer outra situação observada, localização do dano, número de peças etc."></textarea>
 
       <div class="ck-divider"></div>
-
-      <!-- Declaração de responsabilidade -->
       <div class="ck-decl" id="ck-decl-box">
         <div class="ck-decl-corpo">
           <div class="ck-decl-check" onclick="toggleDecl()">
@@ -553,92 +788,385 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
       <button class="btn btn-ghost" onclick="goTo(4)">Voltar ao formulário</button>
     </div>
 
-  </div>
-</div>
+  </div><!-- /content -->
+</div><!-- /app -->
 
+<!-- ══ OVERLAY LOADING ══ -->
 <div class="overlay" id="overlay">
   <div class="spin-ring"></div>
   <div class="ov-text">Enviando dados...</div>
   <div class="ov-sub">Aguarde um momento</div>
 </div>
 
+<!-- ══ BOTÃO GUINCHO ══ -->
+<button class="guincho-fab" onclick="openGuincho()" aria-label="Precisa de guincho?">
+  <!-- Estrela de Davi — símbolo da Gente Seguradora -->
+  <!-- Hexagrama preenchido — logotipo Gente Seguradora -->
+  <svg class="guincho-fab-star" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+    <polygon points="20,3 24.91,11.5 34.72,11.5 29.81,20 34.72,28.5 24.91,28.5 20,37 15.09,28.5 5.28,28.5 10.19,20 5.28,11.5 15.09,11.5" fill="white"/>
+  </svg>
+  Precisa de guincho?
+</button>
+
+<!-- ══ PAINEL GUINCHO ══ -->
+<div class="guincho-overlay" id="guinchoOverlay" onclick="closeGuinchoOutside(event)">
+  <div class="guincho-sheet" id="guinchoSheet">
+    <div class="guincho-handle"></div>
+    <div class="guincho-top">
+      <div class="guincho-logo">
+        <!-- Hexagrama preenchido — logotipo Gente Seguradora -->
+        <svg width="34" height="34" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="20,3 24.91,11.5 34.72,11.5 29.81,20 34.72,28.5 24.91,28.5 20,37 15.09,28.5 5.28,28.5 10.19,20 5.28,11.5 15.09,11.5" fill="#1A8CC8"/>
+        </svg>
+        <div class="guincho-logo-txt">
+          <strong>gente</strong>
+          <span>seguradora</span>
+        </div>
+      </div>
+      <button class="guincho-close" onclick="closeGuincho()">✕</button>
+    </div>
+    <div class="guincho-body">
+
+      <!-- Cartões de contato -->
+      <div class="guincho-cards">
+        <div class="guincho-card">
+          <div class="guincho-card-ico">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.72A2 2 0 012.18 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+            </svg>
+          </div>
+          <div class="guincho-card-lbl">Demais<br>localidades</div>
+          <div class="guincho-card-num">0800 602 0088</div>
+        </div>
+        <div class="guincho-card">
+          <div class="guincho-card-ico">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+            </svg>
+          </div>
+          <div class="guincho-card-lbl">Atendimento no<br>WhatsApp</div>
+          <div class="guincho-card-num">(51) 99993-1300</div>
+        </div>
+      </div>
+
+      <!-- Informações da Prefeitura -->
+      <div class="guincho-info">
+        <div class="guincho-info-row">
+          <div class="guincho-info-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round">
+              <rect x="2" y="7" width="20" height="14" rx="2"/>
+              <path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/>
+            </svg>
+          </div>
+          <div>
+            <span class="guincho-info-lbl">Contratante</span>
+            <div class="guincho-info-val">Prefeitura Municipal de Araçatuba</div>
+          </div>
+        </div>
+        <div class="guincho-info-row">
+          <div class="guincho-info-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round">
+              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+            </svg>
+          </div>
+          <div>
+            <span class="guincho-info-lbl">CNPJ</span>
+            <div class="guincho-info-val">45.511.847/0001-79</div>
+          </div>
+        </div>
+        <div class="guincho-info-row">
+          <div class="guincho-info-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round">
+              <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+          </div>
+          <div>
+            <span class="guincho-info-lbl">Endereço</span>
+            <div class="guincho-info-val">Pátio da Saúde — Rua Dona Ida, 1284<br>Bairro Santana, Araçatuba – SP<br>CEP 16055-505</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 <script>
 // ═══════════════════════════════════════════
-// CONFIGURAÇÃO — substitua pela URL do seu Apps Script
+// CONFIGURAÇÃO
 // ═══════════════════════════════════════════
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzOVmKH_a2gWBy-GZxp7i31W5b00TCBf7YKeFa6t9XFR4dGVwtA2XnEab-ndwO3V8bZeg/exec";
 
-// ── CHECKLIST DATA ──────────────────────────
+// ═══════════════════════════════════════════
+// CUSTOM DATE PICKER
+// ═══════════════════════════════════════════
+const MONTH_NAMES = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+const dpState = {}; // id -> { year, month, open }
+
+function dpInit(id) {
+  const now = new Date();
+  dpState[id] = { year: now.getFullYear(), month: now.getMonth(), open: false };
+}
+
+function toggleDP(id) {
+  closeAllPickers(id, 'date');
+  dpState[id].open = !dpState[id].open;
+  const el = document.getElementById('ddp-' + id);
+  if (dpState[id].open) {
+    renderCalendar(id);
+    el.style.display = 'block';
+    document.getElementById('cd-' + id).classList.add('open');
+  } else {
+    el.style.display = 'none';
+    document.getElementById('cd-' + id).classList.remove('open');
+  }
+}
+
+function closeDP(id) {
+  if (!dpState[id]) return;
+  dpState[id].open = false;
+  const el = document.getElementById('ddp-' + id);
+  if (el) el.style.display = 'none';
+  const cd = document.getElementById('cd-' + id);
+  if (cd) cd.classList.remove('open');
+}
+
+function renderCalendar(id) {
+  const st = dpState[id];
+  const y = st.year, m = st.month;
+  const selectedVal = document.getElementById(id).value;
+
+  const firstDow = new Date(y, m, 1).getDay(); // 0=Sun
+  const daysInMonth = new Date(y, m + 1, 0).getDate();
+  const daysInPrev  = new Date(y, m, 0).getDate();
+
+  const today = new Date();
+  const todayStr = `${today.getFullYear()}-${pad2(today.getMonth()+1)}-${pad2(today.getDate())}`;
+
+  let cells = '';
+  // prev month padding
+  for (let i = firstDow - 1; i >= 0; i--) {
+    cells += `<div class="cal-day other">${daysInPrev - i}</div>`;
+  }
+  // current month days
+  for (let d = 1; d <= daysInMonth; d++) {
+    const ds = `${y}-${pad2(m+1)}-${pad2(d)}`;
+    let cls = 'cal-day';
+    if (ds === selectedVal) cls += ' sel';
+    else if (ds === todayStr) cls += ' today';
+    cells += `<div class="${cls}" onclick="selectDate('${id}','${ds}')">${d}</div>`;
+  }
+  // next month padding
+  const totalCells = Math.ceil((firstDow + daysInMonth) / 7) * 7;
+  for (let n = 1; n <= totalCells - firstDow - daysInMonth; n++) {
+    cells += `<div class="cal-day other">${n}</div>`;
+  }
+
+  document.getElementById('ddp-' + id).innerHTML = `
+    <div class="cal-hdr">
+      <button class="cal-nav-btn" onclick="calNav('${id}',-1);event.stopPropagation()">▲</button>
+      <span class="cal-month-lbl">${MONTH_NAMES[m]} de ${y}</span>
+      <button class="cal-nav-btn" onclick="calNav('${id}',1);event.stopPropagation()">▼</button>
+    </div>
+    <div class="cal-days-hdr">
+      <span>D</span><span>S</span><span>T</span><span>Q</span><span>Q</span><span>S</span><span>S</span>
+    </div>
+    <div class="cal-grid">${cells}</div>
+    <div class="cal-footer">
+      <button class="cal-foot-btn" onclick="clearDate('${id}');event.stopPropagation()">Limpar</button>
+      <button class="cal-foot-btn" onclick="selectDate('${id}','${todayStr}');event.stopPropagation()">Hoje</button>
+    </div>`;
+}
+
+function calNav(id, dir) {
+  dpState[id].month += dir;
+  if (dpState[id].month > 11) { dpState[id].month = 0; dpState[id].year++; }
+  if (dpState[id].month < 0)  { dpState[id].month = 11; dpState[id].year--; }
+  renderCalendar(id);
+}
+
+function selectDate(id, ds) {
+  document.getElementById(id).value = ds;
+  const [y, m, d] = ds.split('-');
+  const cv = document.getElementById('cv-' + id);
+  cv.textContent = `${d}/${m}/${y}`;
+  cv.classList.remove('ph');
+  document.getElementById('f-' + id)?.classList.remove('error');
+  closeDP(id);
+}
+
+function clearDate(id) {
+  document.getElementById(id).value = '';
+  const cv = document.getElementById('cv-' + id);
+  cv.textContent = 'dd/mm/aaaa';
+  cv.classList.add('ph');
+  closeDP(id);
+}
+
+// ═══════════════════════════════════════════
+// CUSTOM TIME PICKER
+// ═══════════════════════════════════════════
+const tpState = {}; // id -> { h, m, open }
+
+function tpInit(id) {
+  tpState[id] = { h: null, m: null, open: false };
+  // Populate hour/minute lists once
+  const hCol = document.getElementById('tph-' + id);
+  const mCol = document.getElementById('tpm-' + id);
+  let hHtml = '<div class="tp-hdr">h</div>';
+  let mHtml = '<div class="tp-hdr">min</div>';
+  for (let h = 0; h < 24; h++) hHtml += `<div class="tp-item" id="tph-${id}-${h}" onclick="selectHour('${id}',${h})">${pad2(h)}</div>`;
+  for (let m = 0; m < 60; m++) mHtml += `<div class="tp-item" id="tpm-${id}-${m}" onclick="selectMin('${id}',${m})">${pad2(m)}</div>`;
+  hCol.innerHTML = hHtml;
+  mCol.innerHTML = mHtml;
+}
+
+function toggleTP(id) {
+  closeAllPickers(id, 'time');
+  tpState[id].open = !tpState[id].open;
+  const el = document.getElementById('dtp-' + id);
+  if (tpState[id].open) {
+    el.style.display = 'block';
+    document.getElementById('cd-' + id).classList.add('open');
+    // Scroll to selected items
+    scrollToSelected('tph-' + id, tpState[id].h);
+    scrollToSelected('tpm-' + id, tpState[id].m);
+  } else {
+    el.style.display = 'none';
+    document.getElementById('cd-' + id).classList.remove('open');
+  }
+}
+
+function closeTP(id) {
+  if (!tpState[id]) return;
+  tpState[id].open = false;
+  const el = document.getElementById('dtp-' + id);
+  if (el) el.style.display = 'none';
+  const cd = document.getElementById('cd-' + id);
+  if (cd) cd.classList.remove('open');
+}
+
+function scrollToSelected(colId, val) {
+  if (val === null) return;
+  const col = document.getElementById(colId);
+  // header takes 1 slot (~36px), each item ~42px
+  const offset = 36 + val * 42 - 79; // center in 200px visible height
+  col.scrollTop = Math.max(0, offset);
+}
+
+function selectHour(id, h) {
+  const prev = tpState[id].h;
+  if (prev !== null) document.getElementById(`tph-${id}-${prev}`)?.classList.remove('sel');
+  tpState[id].h = h;
+  document.getElementById(`tph-${id}-${h}`)?.classList.add('sel');
+  tryCommitTime(id);
+}
+
+function selectMin(id, m) {
+  const prev = tpState[id].m;
+  if (prev !== null) document.getElementById(`tpm-${id}-${prev}`)?.classList.remove('sel');
+  tpState[id].m = m;
+  document.getElementById(`tpm-${id}-${m}`)?.classList.add('sel');
+  tryCommitTime(id);
+}
+
+function tryCommitTime(id) {
+  const st = tpState[id];
+  if (st.h !== null && st.m !== null) {
+    const val = `${pad2(st.h)}:${pad2(st.m)}`;
+    document.getElementById(id).value = val;
+    const cv = document.getElementById('cv-' + id);
+    cv.textContent = val;
+    cv.classList.remove('ph');
+    document.getElementById('f-' + id)?.classList.remove('error');
+    // Short delay then close, so user sees the selection highlight
+    setTimeout(() => closeTP(id), 180);
+  }
+}
+
+// ═══════════════════════════════════════════
+// CLOSE ALL PICKERS (except current)
+// ═══════════════════════════════════════════
+function closeAllPickers(exceptId, exceptType) {
+  Object.keys(dpState).forEach(k => { if (!(k === exceptId && exceptType === 'date')) closeDP(k); });
+  Object.keys(tpState).forEach(k => { if (!(k === exceptId && exceptType === 'time')) closeTP(k); });
+}
+
+// Close pickers when clicking outside
+document.addEventListener('click', function(e) {
+  const isInsidePicker = e.target.closest('.cpicker-wrap');
+  if (!isInsidePicker) {
+    Object.keys(dpState).forEach(k => closeDP(k));
+    Object.keys(tpState).forEach(k => closeTP(k));
+  }
+});
+
+// ═══════════════════════════════════════════
+// UTILS
+// ═══════════════════════════════════════════
+function pad2(n) { return String(n).padStart(2, '0'); }
+
+// ═══════════════════════════════════════════
+// GUINCHO PANEL
+// ═══════════════════════════════════════════
+function openGuincho() {
+  document.getElementById('guinchoOverlay').classList.add('show');
+}
+function closeGuincho() {
+  document.getElementById('guinchoOverlay').classList.remove('show');
+}
+function closeGuinchoOutside(e) {
+  if (e.target === document.getElementById('guinchoOverlay')) closeGuincho();
+}
+
+// ═══════════════════════════════════════════
+// CHECKLIST DATA
+// ═══════════════════════════════════════════
 const CK_GRUPOS = [
   {titulo:'Iluminação',itens:[
-    {l:'Farol dianteiro queimado (baixo)',g:true},
-    {l:'Farol dianteiro queimado (alto)',g:false},
-    {l:'Farol de neblina apagado',g:false},
-    {l:'Lanterna traseira quebrada',g:true},
-    {l:'Luz de freio apagada',g:true},
-    {l:'Seta / pisca com defeito',g:false},
-    {l:'Luz de ré apagada',g:false},
-    {l:'Luz interna da cabine',g:false},
+    {l:'Farol dianteiro queimado (baixo)',g:true},{l:'Farol dianteiro queimado (alto)',g:false},
+    {l:'Farol de neblina apagado',g:false},{l:'Lanterna traseira quebrada',g:true},
+    {l:'Luz de freio apagada',g:true},{l:'Seta / pisca com defeito',g:false},
+    {l:'Luz de ré apagada',g:false},{l:'Luz interna da cabine',g:false},
   ]},
   {titulo:'Motor e mecânica',itens:[
-    {l:'Vazamento de óleo',g:true},
-    {l:'Vazamento de água / fluido',g:true},
-    {l:'Vazamento de combustível',g:true},
-    {l:'Nível de óleo abaixo do mínimo',g:true},
-    {l:'Nível de água/arrefecimento baixo',g:true},
-    {l:'Nível do fluido de freio baixo',g:true},
-    {l:'Correia com desgaste visível',g:true},
-    {l:'Painel com alerta/luz acesa',g:true},
-    {l:'Fumaça saindo do motor',g:true},
-    {l:'Superaquecimento',g:true},
+    {l:'Vazamento de óleo',g:true},{l:'Vazamento de água / fluido',g:true},
+    {l:'Vazamento de combustível',g:true},{l:'Nível de óleo abaixo do mínimo',g:true},
+    {l:'Nível de água/arrefecimento baixo',g:true},{l:'Nível do fluido de freio baixo',g:true},
+    {l:'Correia com desgaste visível',g:true},{l:'Painel com alerta/luz acesa',g:true},
+    {l:'Fumaça saindo do motor',g:true},{l:'Superaquecimento',g:true},
   ]},
   {titulo:'Pneus e rodas',itens:[
-    {l:'Pneu murcho (dianteiro)',g:true},
-    {l:'Pneu murcho (traseiro)',g:true},
-    {l:'Pneu com corte ou bolha',g:true},
-    {l:'Pneu com desgaste excessivo',g:false},
-    {l:'Estepe sem calibragem',g:false},
-    {l:'Estepe ausente',g:false},
-    {l:'Macaco/chave de roda ausente',g:false},
-    {l:'Parafuso de roda faltando/solto',g:true},
+    {l:'Pneu murcho (dianteiro)',g:true},{l:'Pneu murcho (traseiro)',g:true},
+    {l:'Pneu com corte ou bolha',g:true},{l:'Pneu com desgaste excessivo',g:false},
+    {l:'Estepe sem calibragem',g:false},{l:'Estepe ausente',g:false},
+    {l:'Macaco/chave de roda ausente',g:false},{l:'Parafuso de roda faltando/solto',g:true},
   ]},
   {titulo:'Freios e suspensão',itens:[
-    {l:'Freio de serviço sem resposta',g:true},
-    {l:'Freio de mão sem funcionamento',g:true},
-    {l:'Ruído ao frear',g:false},
-    {l:'Pedal de freio fundo / mole',g:true},
-    {l:'Barulho na suspensão',g:false},
-    {l:'Veículo puxando para um lado',g:true},
+    {l:'Freio de serviço sem resposta',g:true},{l:'Freio de mão sem funcionamento',g:true},
+    {l:'Ruído ao frear',g:false},{l:'Pedal de freio fundo / mole',g:true},
+    {l:'Barulho na suspensão',g:false},{l:'Veículo puxando para um lado',g:true},
   ]},
   {titulo:'Lataria e carroceria',itens:[
-    {l:'Amassado na lataria (dianteiro)',g:false},
-    {l:'Amassado na lataria (traseiro)',g:false},
-    {l:'Amassado na lataria (lateral)',g:false},
-    {l:'Arranhão / risco na pintura',g:false},
-    {l:'Porta com dificuldade de fechar',g:false},
-    {l:'Trava/fechadura com defeito',g:false},
+    {l:'Amassado na lataria (dianteiro)',g:false},{l:'Amassado na lataria (traseiro)',g:false},
+    {l:'Amassado na lataria (lateral)',g:false},{l:'Arranhão / risco na pintura',g:false},
+    {l:'Porta com dificuldade de fechar',g:false},{l:'Trava/fechadura com defeito',g:false},
   ]},
   {titulo:'Vidros e retrovisores',itens:[
-    {l:'Para-brisa com trinca',g:true},
-    {l:'Vidro lateral trincado/quebrado',g:false},
-    {l:'Retrovisor externo quebrado',g:true},
-    {l:'Retrovisor interno solto/quebrado',g:false},
-    {l:'Palheta do limpador danificada',g:false},
-    {l:'Bomba do limpador sem funcionar',g:false},
+    {l:'Para-brisa com trinca',g:true},{l:'Vidro lateral trincado/quebrado',g:false},
+    {l:'Retrovisor externo quebrado',g:true},{l:'Retrovisor interno solto/quebrado',g:false},
+    {l:'Palheta do limpador danificada',g:false},{l:'Bomba do limpador sem funcionar',g:false},
   ]},
   {titulo:'Conforto e acessórios',itens:[
-    {l:'Ar condicionado sem funcionar',g:false},
-    {l:'Cinto de segurança com defeito',g:true},
-    {l:'Buzina sem funcionar',g:false},
-    {l:'Hodômetro com defeito',g:false},
-    {l:'Tacógrafo com defeito',g:false},
-    {l:'Tomada/USB sem funcionar',g:false},
+    {l:'Ar condicionado sem funcionar',g:false},{l:'Cinto de segurança com defeito',g:true},
+    {l:'Buzina sem funcionar',g:false},{l:'Hodômetro com defeito',g:false},
+    {l:'Tacógrafo com defeito',g:false},{l:'Tomada/USB sem funcionar',g:false},
   ]},
   {titulo:'Segurança obrigatória',itens:[
-    {l:'Extinguidor ausente ou vencido',g:true},
-    {l:'Triângulo de segurança ausente',g:true},
-    {l:'Macaco ausente',g:false},
-    {l:'Colete refletivo ausente',g:false},
+    {l:'Extinguidor ausente ou vencido',g:true},{l:'Triângulo de segurança ausente',g:true},
+    {l:'Macaco ausente',g:false},{l:'Colete refletivo ausente',g:false},
   ]},
 ];
 
@@ -647,7 +1175,7 @@ let ckDeclMarcada = false;
 let step = 0;
 let payload = null;
 
-// ── INICIALIZAR CHECKLIST ────────────────────
+// ── CHECKLIST ────────────────────────────────
 function initChecklist() {
   const container = document.getElementById('ck-grupos-container');
   container.innerHTML = '';
@@ -671,10 +1199,7 @@ function ckToggle(key) {
   if (ckSel.has(key)) ckSel.delete(key);
   else ckSel.add(key);
   document.getElementById('ckchip-' + key).classList.toggle('sel', ckSel.has(key));
-  if (ckSel.size > 0 && ckDeclMarcada) {
-    ckDeclMarcada = false;
-    atualizarDecl();
-  }
+  if (ckSel.size > 0 && ckDeclMarcada) { ckDeclMarcada = false; atualizarDecl(); }
   ckAtualizar();
 }
 
@@ -687,15 +1212,8 @@ function ckAtualizar() {
   document.getElementById('ck-b-warn').textContent  = 'Atenção: ' + warn;
   document.getElementById('ck-b-err').textContent   = 'Urgente: ' + grave;
   document.getElementById('ck-b-total').textContent = 'Marcados: ' + ckSel.size;
-
   const declBox = document.getElementById('ck-decl-box');
-  if (ckSel.size > 0) {
-    declBox.classList.add('ck-disabled');
-    declBox.title = 'Remova as intercorrências para declarar que o veículo está em ordem';
-  } else {
-    declBox.classList.remove('ck-disabled');
-    declBox.title = '';
-  }
+  declBox.classList.toggle('ck-disabled', ckSel.size > 0);
 }
 
 function toggleDecl() {
@@ -706,10 +1224,8 @@ function toggleDecl() {
 }
 
 function atualizarDecl() {
-  const box  = document.getElementById('ck-checkbox');
-  const card = document.getElementById('ck-decl-box');
-  box.className  = 'ck-checkbox' + (ckDeclMarcada ? ' checked' : '');
-  card.className = 'ck-decl' + (ckDeclMarcada ? ' ok' : '');
+  document.getElementById('ck-checkbox').className = 'ck-checkbox' + (ckDeclMarcada ? ' checked' : '');
+  document.getElementById('ck-decl-box').className = 'ck-decl' + (ckDeclMarcada ? ' ok' : '');
 }
 
 function ckReset() {
@@ -731,12 +1247,12 @@ function getCkPayload() {
     else atencao.push(CK_GRUPOS[gi].titulo + ' — ' + it.l);
   });
   return {
-    ckStatus:         ckSel.size === 0 ? 'EM ORDEM' : (urgentes.length > 0 ? 'URGENTE' : 'ATENCAO'),
-    ckDeclarado:      ckDeclMarcada,
-    ckItensUrgentes:  urgentes.join(' | '),
-    ckItensAtencao:   atencao.join(' | '),
-    ckTotalMarcados:  ckSel.size,
-    ckObs:            document.getElementById('ck-obs-geral').value.trim(),
+    ckStatus:        ckSel.size === 0 ? 'EM ORDEM' : (urgentes.length > 0 ? 'URGENTE' : 'ATENCAO'),
+    ckDeclarado:     ckDeclMarcada,
+    ckItensUrgentes: urgentes.join(' | '),
+    ckItensAtencao:  atencao.join(' | '),
+    ckTotalMarcados: ckSel.size,
+    ckObs:           document.getElementById('ck-obs-geral').value.trim(),
   };
 }
 
@@ -745,14 +1261,11 @@ window.addEventListener('online',  () => document.getElementById('offlineBar').c
 window.addEventListener('offline', () => document.getElementById('offlineBar').classList.add('show'));
 if (!navigator.onLine) document.getElementById('offlineBar').classList.add('show');
 
+// INICIALIZAÇÃO — sem pré-preenchimento de data/hora
 (function init() {
-  const now = new Date(), pad = n => String(n).padStart(2, '0');
-  const hoje  = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
-  const agora = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
-  document.getElementById('dataPartida').value    = hoje;
-  document.getElementById('horarioPartida').value = agora;
-  document.getElementById('dataChegada').value    = hoje;
-  document.getElementById('horarioChegada').value = agora;
+  // Inicializa pickers (sem valor default)
+  ['dataPartida','dataChegada'].forEach(id => dpInit(id));
+  ['horarioPartida','horarioChegada'].forEach(id => tpInit(id));
   initChecklist();
 })();
 
@@ -783,6 +1296,7 @@ function goTo(n) {
     }
     document.getElementById('phErr').style.display = 'none';
   }
+  closeAllPickers(null, null);
   document.getElementById('step' + step).classList.remove('active');
   step = n;
   const isForm = n < 5;
@@ -847,7 +1361,6 @@ function showScreen(id) {
 
 // ── ENVIO ────────────────────────────────────
 async function enviar() {
-  // Valida checklist
   if (ckSel.size === 0 && !ckDeclMarcada) {
     document.getElementById('ck-alerta-obrig').classList.add('show');
     const declBox = document.getElementById('ck-decl-box');
@@ -857,7 +1370,6 @@ async function enviar() {
     return;
   }
   document.getElementById('ck-alerta-obrig').classList.remove('show');
-
   if (!navigator.onLine) { alert('Sem conexão. Tente novamente.'); return; }
 
   const foto = document.getElementById('fotoInput');
@@ -907,13 +1419,11 @@ async function enviarDados(dados) {
 function mostrarSucesso(d, kmRodado) {
   const ckStatus = d.ckStatus === 'EM ORDEM' ? '✅ Em ordem' : d.ckStatus === 'URGENTE' ? '🔴 Urgente' : '⚠️ Com atenção';
   const rows = [
-    ['Motorista', d.motorista],
-    ['Frota',     d.frota],
-    ['Destino',   d.destino],
-    ['Partida',   fmtData(d.dataPartida) + ' às ' + d.horarioPartida],
-    ['Chegada',   fmtData(d.dataChegada) + ' às ' + d.horarioChegada],
+    ['Motorista', d.motorista],['Frota', d.frota],['Destino', d.destino],
+    ['Partida', fmtData(d.dataPartida) + ' às ' + d.horarioPartida],
+    ['Chegada', fmtData(d.dataChegada) + ' às ' + d.horarioChegada],
     ['KM chegada', Number(d.kmChegada).toLocaleString('pt-BR') + ' km'],
-    ['Vistoria',  ckStatus],
+    ['Vistoria', ckStatus],
   ];
   const kmRow = kmRodado
     ? `<div class="resumo-row"><span class="resumo-key">KM rodado</span><span class="resumo-km-badge">${Number(kmRodado).toLocaleString('pt-BR')} km</span></div>`
@@ -931,14 +1441,25 @@ function mostrarErro(msg) {
 }
 
 function resetar() {
-  const now = new Date(), pad = n => String(n).padStart(2,'0');
-  const hoje  = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
-  const agora = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
+  // Limpa campos de texto
   ['kmChegada','motorista','frota','destino'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('dataPartida').value    = hoje;
-  document.getElementById('horarioPartida').value = agora;
-  document.getElementById('dataChegada').value    = hoje;
-  document.getElementById('horarioChegada').value = agora;
+  // Limpa pickers — sem pré-preenchimento
+  ['dataPartida','dataChegada'].forEach(id => {
+    document.getElementById(id).value = '';
+    const cv = document.getElementById('cv-' + id);
+    cv.textContent = 'dd/mm/aaaa'; cv.classList.add('ph');
+    dpInit(id);
+  });
+  ['horarioPartida','horarioChegada'].forEach(id => {
+    document.getElementById(id).value = '';
+    const cv = document.getElementById('cv-' + id);
+    cv.textContent = '--:--'; cv.classList.add('ph');
+    // Reset time state
+    tpState[id] = { h: null, m: null, open: false };
+    // Re-render lists (clear selections)
+    document.querySelectorAll(`#tph-${id} .tp-item, #tpm-${id} .tp-item`).forEach(el => el.classList.remove('sel'));
+  });
+  // Foto
   document.getElementById('fotoInput').value = '';
   document.getElementById('phPlaceholder').style.display = 'block';
   document.getElementById('phPreview').style.display = 'none';
