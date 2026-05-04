@@ -154,7 +154,6 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 .cpicker-ico{flex-shrink:0;margin-left:6px;display:flex;align-items:center}
 .cpicker-ico svg{width:17px;height:17px;stroke:var(--muted)}
 
-/* Dropdown container */
 .cpicker-drop{
   position:absolute;left:0;top:calc(100% + 6px);
   min-width:min(280px,90vw);
@@ -163,7 +162,6 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
   z-index:300;overflow:hidden
 }
 
-/* Calendar */
 .cal-hdr{
   display:flex;align-items:center;justify-content:space-between;
   padding:12px 14px 8px;border-bottom:1px solid var(--border)
@@ -210,7 +208,6 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 }
 .cal-foot-btn:hover{background:var(--bg)}
 
-/* Time picker */
 .tp-drop{min-width:unset;width:164px}
 .tp-cols{display:flex}
 .tp-sep{width:1px;background:var(--border);flex-shrink:0}
@@ -251,7 +248,6 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
   background:#EEF2FF;color:var(--navy3);border-color:var(--navy3)
 }
 
-/* Acordeão de grupos */
 .ck-grupo{
   margin-bottom:8px;
   border:1.5px solid var(--border);
@@ -306,8 +302,58 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 .ck-chip.sel .ck-dot{background:var(--navy3);border-color:var(--navy3)}
 .ck-lbl{font-size:12px;font-weight:600;color:var(--text);line-height:1.25;flex:1}
 
-.ck-divider{height:1px;background:var(--border);margin:18px 0}
-.ck-obs-label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px}
+/* ── OUTRAS OCORRÊNCIAS — grupo especial ── */
+.ck-outras-grupo{
+  margin-bottom:8px;
+  border:1.5px solid var(--border);
+  border-radius:14px;
+  overflow:hidden;
+  background:var(--card);
+  box-shadow:0 1px 6px rgba(11,22,56,.04)
+}
+.ck-outras-grupo.sel-outras{
+  border-color:var(--navy3);
+  background:#EEF2FF
+}
+.ck-outras-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:13px 16px;cursor:pointer;user-select:none;
+  transition:background .15s;gap:10px
+}
+.ck-outras-header:active{background:var(--bg)}
+.ck-outras-titulo{
+  font-size:13px;font-weight:700;color:var(--navy);flex:1
+}
+.ck-outras-arrow{
+  width:18px;height:18px;flex-shrink:0;
+  stroke:var(--muted);transition:transform .25s ease
+}
+.ck-outras-grupo.open .ck-outras-arrow{transform:rotate(180deg)}
+.ck-outras-body{
+  display:none;
+  border-top:1px solid var(--border);
+  padding:12px 14px 14px
+}
+.ck-outras-grupo.open .ck-outras-body{display:block}
+/* Chip "Marcar outras ocorrências" full-width */
+.ck-chip-outras{
+  display:flex;align-items:center;gap:8px;
+  padding:11px 14px;
+  border:1.5px solid var(--border);border-radius:10px;
+  cursor:pointer;transition:all .15s;
+  background:var(--card);user-select:none;
+  margin-bottom:10px;width:100%
+}
+.ck-chip-outras:active{transform:scale(.98)}
+.ck-chip-outras.sel{border-color:var(--navy3);background:#EEF2FF}
+.ck-chip-outras .ck-dot{
+  width:9px;height:9px;border-radius:50%;
+  border:2px solid var(--border);flex-shrink:0;
+  transition:all .15s
+}
+.ck-chip-outras.sel .ck-dot{background:var(--navy3);border-color:var(--navy3)}
+.ck-chip-outras .ck-lbl{font-size:12px;font-weight:600;color:var(--text);flex:1}
+/* Textarea dentro do grupo */
 .ck-obs-textarea{
   width:100%;min-height:80px;font-size:13px;font-family:'Inter',sans-serif;
   padding:12px 14px;border:1.5px solid var(--border);border-radius:var(--rsm);
@@ -316,7 +362,9 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 }
 .ck-obs-textarea:focus{border-color:var(--navy3);box-shadow:0 0 0 3px rgba(30,45,110,.1);background:var(--card)}
 
-/* Declaração simplificada */
+.ck-divider{height:1px;background:var(--border);margin:18px 0}
+
+/* Declaração */
 .ck-decl{
   border:1.5px solid var(--border);border-radius:var(--radius);
   overflow:hidden;transition:all .2s;margin-top:4px
@@ -776,11 +824,29 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
         Marcados: 0
       </span>
 
+      <!-- Grupos normais gerados por JS -->
       <div id="ck-grupos-container"></div>
 
-      <div class="ck-divider"></div>
-      <div class="ck-obs-label">Outras ocorrências / observações gerais</div>
-      <textarea class="ck-obs-textarea" id="ck-obs-geral" placeholder="Descreva aqui qualquer outra situação observada, localização do dano, número de peças etc."></textarea>
+      <!-- ── GRUPO ESPECIAL: OUTRAS OCORRÊNCIAS ── -->
+      <div class="ck-outras-grupo" id="ck-outras-grupo">
+        <div class="ck-outras-header" onclick="toggleOutras()">
+          <span class="ck-outras-titulo">Outras ocorrências / observações gerais</span>
+          <svg class="ck-outras-arrow" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </div>
+        <div class="ck-outras-body">
+          <!-- Chip de seleção -->
+          <div class="ck-chip-outras" id="ck-chip-outras" onclick="ckToggleOutras()">
+            <div class="ck-dot" id="ck-dot-outras"></div>
+            <span class="ck-lbl">Marcar outras ocorrências</span>
+          </div>
+          <!-- Textarea — aparece só quando marcado -->
+          <div id="ck-obs-wrap" style="display:none">
+            <textarea class="ck-obs-textarea" id="ck-obs-geral" placeholder="Descreva aqui qualquer outra situação observada, localização do dano, número de peças etc."></textarea>
+          </div>
+        </div>
+      </div>
 
       <div class="ck-divider"></div>
 
@@ -1172,7 +1238,7 @@ function closeGuinchoOutside(e) {
 }
 
 // ═══════════════════════════════════════════
-// CHECKLIST DATA (sem classificação urgente/atenção)
+// CHECKLIST DATA — "Extintor" corrigido
 // ═══════════════════════════════════════════
 const CK_GRUPOS = [
   {titulo:'Iluminação',itens:[
@@ -1215,16 +1281,23 @@ const CK_GRUPOS = [
     'Tacógrafo com defeito','Tomada/USB sem funcionar',
   ]},
   {titulo:'Segurança obrigatória',itens:[
-    'Extinguidor ausente ou vencido','Triângulo de segurança ausente',
+    'Extintor ausente ou vencido',   // ← corrigido
+    'Triângulo de segurança ausente',
     'Macaco ausente','Colete refletivo ausente',
   ]},
 ];
 
-const ckSel  = new Set();
-let ckDeclMarcada = false;
+// ─── Estado do checklist ───
+const ckSel  = new Set(); // chaves "gi_ii"
+let ckOutrasMarcada = false; // chip "outras ocorrências"
+let ckDeclMarcada   = false; // "sem intercorrências"
+let ckOutrasAberto  = false; // acordeão do grupo especial
 let step = 0;
 let payload = null;
 
+// ═══════════════════════════════════════════
+// RENDER GRUPOS
+// ═══════════════════════════════════════════
 function initChecklist() {
   const container = document.getElementById('ck-grupos-container');
   container.innerHTML = '';
@@ -1261,39 +1334,75 @@ function toggleGrupo(gi) {
   el.classList.toggle('open');
 }
 
+// ═══════════════════════════════════════════
+// LÓGICA DE EXCLUSIVIDADE MÚTUA
+// ─────────────────────────────────────────
+//  • Itens normais  + "Outras ocorrências" = intercorrências reais
+//  • "Sem intercorrências" só pode ser marcado se NÃO houver
+//    nenhum item nem "outras" marcado
+//  • Marcar qualquer item/outras desmarca "sem intercorrências"
+//  • Marcar "sem intercorrências" desmarca tudo (mas não desabilita,
+//    pois o usuário pode desmarcar a declaração e voltar a marcar itens)
+// ═══════════════════════════════════════════
+
+function temQualquerMarcacao() {
+  return ckSel.size > 0 || ckOutrasMarcada;
+}
+
+// Marca/desmarca item normal
 function ckToggle(key) {
-  if (ckSel.has(key)) ckSel.delete(key);
-  else ckSel.add(key);
+  if (ckSel.has(key)) {
+    ckSel.delete(key);
+  } else {
+    ckSel.add(key);
+    // desmarcar "sem intercorrências" ao marcar item
+    if (ckDeclMarcada) { ckDeclMarcada = false; atualizarDecl(); }
+  }
   document.getElementById('ckchip-' + key).classList.toggle('sel', ckSel.has(key));
-  if (ckSel.size > 0 && ckDeclMarcada) { ckDeclMarcada = false; atualizarDecl(); }
   ckAtualizar();
 }
 
-function ckAtualizar() {
-  // Contador por grupo
-  CK_GRUPOS.forEach((g, gi) => {
-    let count = 0;
-    g.itens.forEach((_, ii) => {
-      if (ckSel.has(gi + '_' + ii)) count++;
-    });
-    const badge = document.getElementById('ck-gc-' + gi);
-    badge.textContent = count;
-    badge.classList.toggle('show', count > 0);
-  });
+// Marca/desmarca chip "outras ocorrências"
+function ckToggleOutras() {
+  ckOutrasMarcada = !ckOutrasMarcada;
+  document.getElementById('ck-chip-outras').classList.toggle('sel', ckOutrasMarcada);
+  document.getElementById('ck-dot-outras').style.background = ckOutrasMarcada ? 'var(--navy3)' : '';
+  document.getElementById('ck-dot-outras').style.borderColor = ckOutrasMarcada ? 'var(--navy3)' : '';
+  document.getElementById('ck-obs-wrap').style.display = ckOutrasMarcada ? 'block' : 'none';
+  document.getElementById('ck-outras-grupo').classList.toggle('sel-outras', ckOutrasMarcada);
 
-  // Badge total
-  const totalBadge = document.getElementById('ck-b-total');
-  totalBadge.textContent = `Marcados: ${ckSel.size}`;
-  totalBadge.classList.toggle('has-items', ckSel.size > 0);
-
-  // Desabilita declaração se há itens marcados
-  const declBox = document.getElementById('ck-decl-box');
-  declBox.classList.toggle('ck-disabled', ckSel.size > 0);
+  // desmarcar "sem intercorrências" se "outras" foi marcado
+  if (ckOutrasMarcada && ckDeclMarcada) { ckDeclMarcada = false; atualizarDecl(); }
+  ckAtualizar();
 }
 
+// Abre/fecha acordeão do grupo especial
+function toggleOutras() {
+  ckOutrasAberto = !ckOutrasAberto;
+  document.getElementById('ck-outras-grupo').classList.toggle('open', ckOutrasAberto);
+}
+
+// Marca/desmarca "sem intercorrências"
 function toggleDecl() {
-  if (ckSel.size > 0) return;
+  // Só permite marcar se não há nenhuma marcação real
+  if (!ckDeclMarcada && temQualquerMarcacao()) return;
   ckDeclMarcada = !ckDeclMarcada;
+
+  // Se marcou "sem intercorrências", desmarca tudo
+  if (ckDeclMarcada) {
+    ckSel.forEach(key => document.getElementById('ckchip-' + key)?.classList.remove('sel'));
+    ckSel.clear();
+    if (ckOutrasMarcada) {
+      ckOutrasMarcada = false;
+      document.getElementById('ck-chip-outras').classList.remove('sel');
+      document.getElementById('ck-dot-outras').style.background = '';
+      document.getElementById('ck-dot-outras').style.borderColor = '';
+      document.getElementById('ck-obs-wrap').style.display = 'none';
+      document.getElementById('ck-outras-grupo').classList.remove('sel-outras');
+    }
+    ckAtualizar();
+  }
+
   atualizarDecl();
   document.getElementById('ck-alerta-obrig').classList.remove('show');
 }
@@ -1301,16 +1410,46 @@ function toggleDecl() {
 function atualizarDecl() {
   document.getElementById('ck-checkbox').className = 'ck-checkbox' + (ckDeclMarcada ? ' checked' : '');
   document.getElementById('ck-decl-box').className = 'ck-decl' + (ckDeclMarcada ? ' ok' : '');
+  // Desabilita declaração se há qualquer marcação real
+  document.getElementById('ck-decl-box').classList.toggle('ck-disabled', temQualquerMarcacao());
+}
+
+function ckAtualizar() {
+  // Contador por grupo
+  CK_GRUPOS.forEach((g, gi) => {
+    let count = 0;
+    g.itens.forEach((_, ii) => { if (ckSel.has(gi + '_' + ii)) count++; });
+    const badge = document.getElementById('ck-gc-' + gi);
+    badge.textContent = count;
+    badge.classList.toggle('show', count > 0);
+  });
+
+  // Badge total (itens normais + outras)
+  const total = ckSel.size + (ckOutrasMarcada ? 1 : 0);
+  const totalBadge = document.getElementById('ck-b-total');
+  totalBadge.textContent = `Marcados: ${total}`;
+  totalBadge.classList.toggle('has-items', total > 0);
+
+  // Atualiza estado da declaração
+  atualizarDecl();
 }
 
 function ckReset() {
   ckSel.clear();
   document.querySelectorAll('.ck-chip').forEach(c => c.classList.remove('sel'));
-  // Fechar todos os grupos
   document.querySelectorAll('.ck-grupo').forEach(g => g.classList.remove('open'));
+  // Reset "outras"
+  ckOutrasMarcada = false;
+  ckOutrasAberto  = false;
+  document.getElementById('ck-chip-outras').classList.remove('sel');
+  document.getElementById('ck-dot-outras').style.background = '';
+  document.getElementById('ck-dot-outras').style.borderColor = '';
+  document.getElementById('ck-obs-wrap').style.display = 'none';
+  document.getElementById('ck-outras-grupo').classList.remove('sel-outras','open');
+  document.getElementById('ck-obs-geral').value = '';
+  // Reset declaração
   ckDeclMarcada = false;
   atualizarDecl();
-  document.getElementById('ck-obs-geral').value = '';
   document.getElementById('ck-alerta-obrig').classList.remove('show');
   ckAtualizar();
 }
@@ -1321,18 +1460,23 @@ function getCkPayload() {
     const [gi, ii] = key.split('_').map(Number);
     marcados.push(CK_GRUPOS[gi].titulo + ' — ' + CK_GRUPOS[gi].itens[ii]);
   });
+  const obsGeral = document.getElementById('ck-obs-geral').value.trim();
+  if (ckOutrasMarcada && obsGeral) marcados.push('Outras ocorrências — ' + obsGeral);
+
   return {
-    ckStatus:        ckSel.size === 0 ? 'EM ORDEM' : 'COM INTERCORRENCIAS',
+    ckStatus:        !temQualquerMarcacao() ? 'EM ORDEM' : 'COM INTERCORRENCIAS',
     ckDeclarado:     ckDeclMarcada,
     ckItensUrgentes: '',
     ckItensAtencao:  '',
     ckItensMarcados: marcados.join(' | '),
-    ckTotalMarcados: ckSel.size,
-    ckObs:           document.getElementById('ck-obs-geral').value.trim(),
+    ckTotalMarcados: ckSel.size + (ckOutrasMarcada ? 1 : 0),
+    ckObs:           obsGeral,
   };
 }
 
-// ── NAVEGAÇÃO ────────────────────────────────
+// ═══════════════════════════════════════════
+// NAVEGAÇÃO
+// ═══════════════════════════════════════════
 window.addEventListener('online',  () => document.getElementById('offlineBar').classList.remove('show'));
 window.addEventListener('offline', () => document.getElementById('offlineBar').classList.add('show'));
 if (!navigator.onLine) document.getElementById('offlineBar').classList.add('show');
@@ -1433,9 +1577,12 @@ function showScreen(id) {
   document.getElementById('mainContent').scrollTo(0, 0);
 }
 
-// ── ENVIO ────────────────────────────────────
+// ═══════════════════════════════════════════
+// ENVIO
+// ═══════════════════════════════════════════
 async function enviar() {
-  if (ckSel.size === 0 && !ckDeclMarcada) {
+  // Validação: deve ter alguma marcação OU declaração "sem intercorrências"
+  if (!temQualquerMarcacao() && !ckDeclMarcada) {
     document.getElementById('ck-alerta-obrig').classList.add('show');
     const declBox = document.getElementById('ck-decl-box');
     declBox.classList.add('erro-decl');
