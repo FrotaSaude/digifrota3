@@ -2,7 +2,7 @@
 // ║  SERVICE WORKER — DigiFrota 3.2                              ║
 // ║  Cache atualizado em 2026-05 para forçar reload nos devices  ║
 // ╚══════════════════════════════════════════════════════════════╝
-const CACHE_NAME = 'digifrota-v3-2-20260505b'; // ← versão nova
+const CACHE_NAME = 'digifrota-v3-2-20260505c'; // ← versão nova
 const ASSETS = [
   './',
   './index.html',
