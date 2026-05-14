@@ -1,4 +1,4 @@
-const CACHE_NAME = 'digifrota-v3-2-20260514d'; // ← versão atualizada
+const CACHE_NAME = 'digifrota-v3-2-20260514Z'; // ← versão atualizada
 const ASSETS = [
   './',
   './index.html',
