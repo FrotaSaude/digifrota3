@@ -288,7 +288,6 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 
   <div class="content" id="mainContent">
 
-    <!-- ══ ETAPA 1: PARTIDA ══ -->
     <div class="screen active" id="step0">
       <div class="sec-hdr">
         <div class="sec-icon">
@@ -351,7 +350,6 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
       </button>
     </div>
 
-    <!-- ══ ETAPA 2: VIAGEM ══ -->
     <div class="screen" id="step1">
       <div class="sec-hdr">
         <div class="sec-icon">
@@ -425,7 +423,6 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
             <option>909</option><option>910</option><option>911</option><option>912</option>
             <option>913</option><option>914</option><option>918</option><option>919</option>
             <option>921</option><option>923</option><option>924</option>
-            <!-- ✅ NOVAS FROTAS -->
             <option>928</option><option>929</option><option>930</option>
           </select>
           <div class="err-msg">Selecione a frota</div>
@@ -448,7 +445,6 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
             <option>Ilha Solteira/Nhandeara</option><option>Ilha Solteira/Valparaíso</option>
             <option>Jaci</option><option>Jales</option><option>Jales/Fernandópolis</option>
             <option>Jaú</option><option>Lins</option><option>Mirandópolis</option>
-            <!-- ✅ NOVO DESTINO -->
             <option>Mirandópolis/Penápolis</option>
             <option>Mirassol</option><option>Monte Aprazível</option><option>Nhandeara</option>
             <option>Nhandeara/São José do Rio Preto</option><option>Nhandeara/Valparaíso</option>
@@ -470,7 +466,6 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
       <button class="btn btn-ghost" onclick="goTo(0)">Voltar</button>
     </div>
 
-    <!-- ══ ETAPA 3: CHEGADA ══ -->
     <div class="screen" id="step2">
       <div class="sec-hdr">
         <div class="sec-icon">
@@ -534,7 +529,6 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
           </div>
           <div class="err-msg">Informe o KM de chegada</div>
         </div>
-        <!-- ✅ NOVO CAMPO: ABASTECIMENTO -->
         <div class="field" id="f-frotaAbastecida">
           <label>A frota foi abastecida? <span class="req">*</span></label>
           <div class="sn-group">
@@ -556,7 +550,6 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
       <button class="btn btn-ghost" onclick="goTo(1)">Voltar</button>
     </div>
 
-    <!-- ══ ETAPA 4: FOTO ══ -->
     <div class="screen" id="step3">
       <div class="sec-hdr">
         <div class="sec-icon">
@@ -596,7 +589,6 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
       <button class="btn btn-ghost" onclick="goTo(2)">Voltar</button>
     </div>
 
-    <!-- ══ ETAPA 5: CHECKLIST ══ -->
     <div class="screen" id="step4">
       <div class="sec-hdr">
         <div class="sec-icon" style="background:#EEF2FF;box-shadow:0 4px 14px rgba(30,45,110,.15)">
@@ -661,7 +653,6 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
       <button class="btn btn-ghost" onclick="goTo(3)">Voltar</button>
     </div>
 
-    <!-- ══ SUCESSO ══ -->
     <div class="screen" id="stepSuccess">
       <div class="success-bg">
         <div class="success-icon">
@@ -681,7 +672,6 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
       </button>
     </div>
 
-    <!-- ══ ERRO ══ -->
     <div class="screen" id="stepError">
       <div class="error-bg">
         <div class="error-icon">
@@ -701,14 +691,12 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
   </div>
 </div>
 
-<!-- ══ OVERLAY ══ -->
 <div class="overlay" id="overlay">
   <div class="spin-ring"></div>
   <div class="ov-text">Enviando dados...</div>
   <div class="ov-sub">Aguarde um momento</div>
 </div>
 
-<!-- ══ BOTÃO GUINCHO ══ -->
 <button class="guincho-fab" onclick="openGuincho()" aria-label="Precisa de guincho?">
   <svg class="guincho-fab-star" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M12,2.5 L14.75,7.24 L20.23,7.25 L17.5,12 L20.23,16.75 L14.75,16.76 L12,21.5 L9.25,16.76 L3.77,16.75 L6.5,12 L3.77,7.25 L9.25,7.24 Z"
@@ -717,7 +705,6 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
   Precisa de guincho?
 </button>
 
-<!-- ══ PAINEL GUINCHO ══ -->
 <div class="guincho-overlay" id="guinchoOverlay" onclick="closeGuinchoOutside(event)">
   <div class="guincho-sheet" id="guinchoSheet">
     <div class="guincho-handle"></div>
@@ -921,11 +908,11 @@ if(!navigator.onLine)document.getElementById('offlineBar').classList.add('show')
   initChecklist();
 })();
 
-// ✅ Validação atualizada: inclui frotaAbastecida na etapa 2
+// ✅ Validação
 const VAL=[
-  [['dataPartida','horarioPartida'],                                    ['f-dataPartida','f-horarioPartida']],
-  [['motorista','frota','destino'],                                      ['f-motorista','f-frota','f-destino']],
-  [['dataChegada','horarioChegada','kmChegada','frotaAbastecida'],       ['f-dataChegada','f-horarioChegada','f-kmChegada','f-frotaAbastecida']],
+  [['dataPartida','horarioPartida'],                                      ['f-dataPartida','f-horarioPartida']],
+  [['motorista','frota','destino'],                                       ['f-motorista','f-frota','f-destino']],
+  [['dataChegada','horarioChegada','kmChegada','frotaAbastecida'],        ['f-dataChegada','f-horarioChegada','f-kmChegada','f-frotaAbastecida']],
 ];
 
 function validar(s){
@@ -937,7 +924,16 @@ function validar(s){
 
 function goTo(n){
   if(n>step&&!validar(step))return;
-  if(n===4&&step===3){const foto=document.getElementById('fotoInput');if(!foto.files||!foto.files[0]){document.getElementById('phErr').style.display='block';return;}document.getElementById('phErr').style.display='none';}
+  
+  // ✅ Validação de Foto simplificada, confere se o Base64Global já está pronto
+  if(n===4&&step===3){
+    if(!fotoBase64Global){
+      document.getElementById('phErr').style.display='block';
+      return;
+    }
+    document.getElementById('phErr').style.display='none';
+  }
+  
   closeAllPickers(null,null);
   document.getElementById('step'+step).classList.remove('active');
   step=n;
@@ -948,20 +944,58 @@ function goTo(n){
   document.getElementById('mainContent').scrollTo(0,0);
 }
 
-function previewFoto(input){
-  if(!input.files||!input.files[0])return;
-  const reader=new FileReader();
-  reader.onload=e=>{document.getElementById('phImg').src=e.target.result;document.getElementById('phPlaceholder').style.display='none';document.getElementById('phPreview').style.display='block';document.getElementById('phErr').style.display='none';};
-  reader.readAsDataURL(input.files[0]);
-}
 
-function comprimirFoto(file,maxW,qual){
-  return new Promise(res=>{
-    const reader=new FileReader();
-    reader.onload=e=>{const img=new Image();img.onload=()=>{const canvas=document.createElement('canvas');let w=img.width,h=img.height;if(w>maxW){h=Math.round(h*maxW/w);w=maxW;}canvas.width=w;canvas.height=h;canvas.getContext('2d').drawImage(img,0,0,w,h);res(canvas.toDataURL('image/jpeg',qual));};img.src=e.target.result;};
-    reader.readAsDataURL(file);
+/* ═══ MÁGICA DA FOTO: NÃO USA MEMÓRIA RAM ═══ */
+let fotoBase64Global = null;
+
+function comprimirFoto(file, maxW, qual) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    
+    // 🔥 O SEGREDO: Em vez do FileReader, que joga a imagem inteira na RAM como texto base64 (pesado!), 
+    // nós criamos um "ponteiro falso" pro arquivo físico. Uso de RAM quase ZERO.
+    const objectUrl = URL.createObjectURL(file); 
+    
+    img.onload = () => {
+      URL.revokeObjectURL(objectUrl); // 🧹 Limpa o ponteiro pra não dar vazamento de memória
+      const canvas = document.createElement('canvas');
+      let w = img.width, h = img.height;
+      if (w > maxW) {
+        h = Math.round(h * maxW / w);
+        w = maxW;
+      }
+      canvas.width = w;
+      canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      resolve(canvas.toDataURL('image/jpeg', qual)); // Devolve a foto miudinha (150kb)
+    };
+    img.onerror = reject;
+    img.src = objectUrl;
   });
 }
+
+async function previewFoto(input){
+  if(!input.files||!input.files[0]) return;
+  
+  // Mostra pro motorista que tá trabalhando
+  document.getElementById('phPlaceholder').innerHTML = '<p style="margin-top:20px;color:var(--navy3);font-weight:800;font-size:16px;">Otimizando foto... ⏳</p>';
+  
+  try {
+    // ⬇️ Comprime na HORA! Resolução de 1024px, 70% de qualidade. Fica leve pro zap e leve pro celular.
+    fotoBase64Global = await comprimirFoto(input.files[0], 1024, 0.70); 
+    
+    document.getElementById('phImg').src = fotoBase64Global;
+    document.getElementById('phPlaceholder').style.display='none';
+    document.getElementById('phPreview').style.display='block';
+    document.getElementById('phErr').style.display='none';
+  } catch (e) {
+    alert('Erro ao processar imagem no aparelho. Tente novamente.');
+  }
+  
+  // Restaura o ícone padrão pro placeholder (caso ele clique em "Trocar foto" depois)
+  document.getElementById('phPlaceholder').innerHTML = '<div class="ph-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div><p>Toque para fotografar</p><span>ou selecione da galeria</span>';
+}
+
 
 function fmtData(v){if(!v)return'—';const[a,m,d]=v.split('-');return`${d}/${m}/${a}`;}
 
@@ -982,9 +1016,8 @@ async function enviar(){
   document.getElementById('ck-alerta-obrig').classList.remove('show');
   if(!navigator.onLine){alert('Sem conexão. Tente novamente.');return;}
 
-  const foto=document.getElementById('fotoInput');
-  const fotoBase64=await comprimirFoto(foto.files[0],1200,0.75);
   const motorista=document.getElementById('motorista').value;
+  const fotoNome = document.getElementById('fotoInput').files[0]?.name || "foto_hodometro.jpg";
 
   payload={
     dataPartida:       document.getElementById('dataPartida').value,
@@ -995,9 +1028,9 @@ async function enviar(){
     frota:             document.getElementById('frota').value,
     destino:           document.getElementById('destino').value,
     kmChegada:         document.getElementById('kmChegada').value,
-    frotaAbastecida:   document.getElementById('frotaAbastecida').value, // ✅ NOVO
-    foto:              fotoBase64,
-    fotoNome:          foto.files[0].name,
+    frotaAbastecida:   document.getElementById('frotaAbastecida').value,
+    foto:              fotoBase64Global, // ✅ Pega a foto que já está otimizada na RAM
+    fotoNome:          fotoNome,
     email:             motorista,
     ...getCkPayload()
   };
@@ -1031,7 +1064,7 @@ function mostrarSucesso(d,kmRodado){
     ['Partida',fmtData(d.dataPartida)+' às '+d.horarioPartida],
     ['Chegada',fmtData(d.dataChegada)+' às '+d.horarioChegada],
     ['KM chegada',Number(d.kmChegada).toLocaleString('pt-BR')+' km'],
-    ['Abastecida',abastecida], // ✅ NOVO
+    ['Abastecida',abastecida],
     ['Vistoria',ckStatus],
   ];
   const kmRow=kmRodado?`<div class="resumo-row"><span class="resumo-key">KM rodado</span><span class="resumo-km-badge">${Number(kmRodado).toLocaleString('pt-BR')} km</span></div>`:'';
@@ -1045,14 +1078,19 @@ function resetar(){
   ['kmChegada','motorista','frota','destino'].forEach(id=>document.getElementById(id).value='');
   ['dataPartida','dataChegada'].forEach(id=>{document.getElementById(id).value='';const cv=document.getElementById('cv-'+id);cv.textContent='dd/mm/aaaa';cv.classList.add('ph');dpInit(id);});
   ['horarioPartida','horarioChegada'].forEach(id=>{document.getElementById(id).value='';const cv=document.getElementById('cv-'+id);cv.textContent='--:--';cv.classList.add('ph');tpState[id]={h:null,m:null,open:false};document.querySelectorAll(`#tph-${id} .tp-item, #tpm-${id} .tp-item`).forEach(el=>el.classList.remove('sel'));});
-  // ✅ Reset abastecida
+  
+  // ✅ Reset inputs adicionais
   document.getElementById('frotaAbastecida').value='';
   document.getElementById('sn-sim').classList.remove('sel');
   document.getElementById('sn-nao').classList.remove('sel');
+  
+  // ✅ Zera a foto da memória
+  fotoBase64Global = null; 
   document.getElementById('fotoInput').value='';
   document.getElementById('phPlaceholder').style.display='block';
   document.getElementById('phPreview').style.display='none';
   document.getElementById('phErr').style.display='none';
+  
   ckReset();
   payload=null;step=0;
   document.getElementById('progStrip').style.display='flex';
