@@ -1,13 +1,15 @@
-const CACHE_NAME = 'digifrota-v3-2-20260530z'; // ← versão atualizada
+const CACHE_NAME = 'digifrota-v3-2-20260528';
 const ASSETS = [
   './',
   './index.html',
   'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap',
 ];
+
 self.addEventListener('install', event => {
   self.skipWaiting();
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS)));
 });
+
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys =>
@@ -15,9 +17,14 @@ self.addEventListener('activate', event => {
     ).then(() => self.clients.claim())
   );
 });
+
 self.addEventListener('fetch', event => {
   const url = event.request.url;
-  if (url.includes('script.google.com') || url.includes('fonts.googleapis.com') || url.includes('fonts.gstatic.com')) {
+  if (
+    url.includes('script.google.com') ||
+    url.includes('fonts.googleapis.com') ||
+    url.includes('fonts.gstatic.com')
+  ) {
     event.respondWith(fetch(event.request).catch(() => caches.match(event.request)));
     return;
   }
