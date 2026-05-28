@@ -288,6 +288,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 
   <div class="content" id="mainContent">
 
+    <!-- ══ ETAPA 1: PARTIDA ══ -->
     <div class="screen active" id="step0">
       <div class="sec-hdr">
         <div class="sec-icon">
@@ -308,12 +309,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
             <div class="cpicker-wrap">
               <div class="cpicker-display" id="cd-dataPartida" onclick="toggleDP('dataPartida')">
                 <span class="cpicker-val ph" id="cv-dataPartida">dd/mm/aaaa</span>
-                <span class="cpicker-ico">
-                  <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                    <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/>
-                    <line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
-                  </svg>
-                </span>
+                <span class="cpicker-ico"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
               </div>
               <div class="cpicker-drop" id="ddp-dataPartida" style="display:none"></div>
             </div>
@@ -325,11 +321,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
             <div class="cpicker-wrap">
               <div class="cpicker-display" id="cd-horarioPartida" onclick="toggleTP('horarioPartida')">
                 <span class="cpicker-val ph" id="cv-horarioPartida">--:--</span>
-                <span class="cpicker-ico">
-                  <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-                  </svg>
-                </span>
+                <span class="cpicker-ico"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
               </div>
               <div class="cpicker-drop tp-drop" id="dtp-horarioPartida" style="display:none">
                 <div class="tp-cols">
@@ -350,6 +342,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
       </button>
     </div>
 
+    <!-- ══ ETAPA 2: VIAGEM ══ -->
     <div class="screen" id="step1">
       <div class="sec-hdr">
         <div class="sec-icon">
@@ -367,95 +360,79 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
       </div>
       <div class="sec-desc">Selecione motorista, frota e destino</div>
       <div class="card">
+
+        <!-- Motorista principal (obrigatório) -->
         <div class="field" id="f-motorista">
           <label>Motorista <span class="req">*</span></label>
           <select id="motorista">
             <option value="">Selecione o motorista...</option>
-            <option>ADEMAR SAMU</option>
-            <option>AGNALDO</option>
-            <option>ALBERTO</option>
-            <option>ALCY</option>
-            <option>ALESSANDRA</option>
-            <option>ALEXANDRE BARBOSA</option>
-            <option>ALEXANDRE SAMU</option>
-            <option>ALEXANDRE SILVEIRA</option>
-            <option>ANA CLAUDIA</option>
-            <option>ANDRE COUTO</option>
-            <option>ANDRE RENATO</option>
-            <option>ANTONIO MARCOS</option>
-            <option>CARLOS NEGRAO</option>
-            <option>CELSO SAMU</option>
-            <option>CESAR</option>
-            <option>CRISTIANE</option>
-            <option>DIEGO</option>
-            <option>EDSON BARBOSA SAMU</option>
-            <option>EDSON FELICIANO SAMU</option>
-            <option>EMERSON BISPO</option>
-            <option>ERICA</option>
-            <option>EVERTON CAVASSANA</option>
-            <option>EVERTON MACHADO</option>
-            <option>EVERTON SAMU</option>
-            <option>FABIO SAMU</option>
-            <option>FLAVIO DAMAS</option>
-            <option>FRANCISCO</option>
-            <option>GABRIEL BRANDAO</option>
-            <option>GERSON</option>
-            <option>GREGORIO</option>
-            <option>GUILHERME</option>
-            <option>JANAINA</option>
-            <option>JEFFERSON</option>
-            <option>JHONAS</option>
-            <option>JOAO CAMPANA</option>
-            <option>JOAO PAULO</option>
-            <option>JOSE ALVES</option>
-            <option>JOSE DONISETE</option>
-            <option>JOSE ROBERTO</option>
-            <option>JOSENIR</option>
-            <option>JULIO SAMU</option>
-            <option>JUNIO</option>
-            <option>JURACI</option>
-            <option>LAURINDO</option>
-            <option>LUCIANA</option>
-            <option>LUIS FEITOSA</option>
-            <option>MARCELO CARVALHO</option>
-            <option>MARCELO LOPES</option>
-            <option>MARCELO MARQUES</option>
-            <option>MARCIO NUNES</option>
-            <option>MARCIO RODRIGUES</option>
-            <option>MARCO AURELIO</option>
-            <option>MARCOS GARCIA</option>
-            <option>MARCOS MORGADO</option>
-            <option>MARCOS RODRIGO</option>
-            <option>MARCOS SOARES</option>
-            <option>MARINES</option>
-            <option>MAURILIO SAMU</option>
-            <option>MAURO ALBERTO</option>
-            <option>MAURO CELSO</option>
-            <option>MOACIR</option>
-            <option>MOURA</option>
-            <option>NICOLAU SAMU</option>
-            <option>OMAR</option>
-            <option>PATRICIA</option>
-            <option>PAULO ROBERTO</option>
-            <option>PETER</option>
-            <option>RAFAEL</option>
-            <option>REGIS</option>
-            <option>RENAN</option>
-            <option>ROBERTO BONFIM</option>
-            <option>ROSANGELA</option>
-            <option>SAMIR</option>
-            <option>SERGIO</option>
-            <option>SIBELE</option>
-            <option>SIDNEI</option>
-            <option>TAKASHI</option>
-            <option>VAGNER SAMU</option>
-            <option>VALDINEI</option>
-            <option>WAGNER</option>
-            <option>WELTON</option>
-            <option>WILTON</option>
+            <option>ADEMAR SAMU</option><option>AGNALDO</option><option>ALBERTO</option>
+            <option>ALCY</option><option>ALESSANDRA</option><option>ALEXANDRE BARBOSA</option>
+            <option>ALEXANDRE SAMU</option><option>ALEXANDRE SILVEIRA</option><option>ANA CLAUDIA</option>
+            <option>ANDRE COUTO</option><option>ANDRE RENATO</option><option>ANTONIO MARCOS</option>
+            <option>CARLOS NEGRAO</option><option>CELSO SAMU</option><option>CESAR</option>
+            <option>CRISTIANE</option><option>DIEGO</option><option>EDSON BARBOSA SAMU</option>
+            <option>EDSON FELICIANO SAMU</option><option>EMERSON BISPO</option><option>ERICA</option>
+            <option>EVERTON CAVASSANA</option><option>EVERTON MACHADO</option><option>EVERTON SAMU</option>
+            <option>FABIO SAMU</option><option>FLAVIO DAMAS</option><option>FRANCISCO</option>
+            <option>GABRIEL BRANDAO</option><option>GERSON</option><option>GREGORIO</option>
+            <option>GUILHERME</option><option>JANAINA</option><option>JEFFERSON</option>
+            <option>JHONAS</option><option>JOAO CAMPANA</option><option>JOAO PAULO</option>
+            <option>JOSE ALVES</option><option>JOSE DONISETE</option><option>JOSE ROBERTO</option>
+            <option>JOSENIR</option><option>JULIO SAMU</option><option>JUNIO</option>
+            <option>JURACI</option><option>LAURINDO</option><option>LUCIANA</option>
+            <option>LUIS FEITOSA</option><option>MARCELO CARVALHO</option><option>MARCELO LOPES</option>
+            <option>MARCELO MARQUES</option><option>MARCIO NUNES</option><option>MARCIO RODRIGUES</option>
+            <option>MARCO AURELIO</option><option>MARCOS GARCIA</option><option>MARCOS MORGADO</option>
+            <option>MARCOS RODRIGO</option><option>MARCOS SOARES</option><option>MARINES</option>
+            <option>MAURILIO SAMU</option><option>MAURO ALBERTO</option><option>MAURO CELSO</option>
+            <option>MOACIR</option><option>MOURA</option><option>NICOLAU SAMU</option>
+            <option>OMAR</option><option>PATRICIA</option><option>PETER</option>
+            <option>RAFAEL</option><option>REGIS</option><option>RENAN</option>
+            <option>ROBERTO BONFIM</option><option>ROSANGELA</option><option>SAMIR</option>
+            <option>SERGIO</option><option>SIBELE</option><option>SIDNEI</option>
+            <option>TAKASHI</option><option>TELMA</option><option>VAGNER SAMU</option><option>VALDINEI</option>
+            <option>WAGNER</option><option>WELTON</option><option>WILTON</option>
           </select>
           <div class="err-msg">Selecione o motorista</div>
         </div>
+
+        <!-- 2º Motorista (opcional, padrão NÃO) -->
+        <div class="field" id="f-motorista2">
+          <label>2º Motorista</label>
+          <select id="motorista2">
+            <option value="NÃO" selected>NÃO</option>
+            <option>ADEMAR SAMU</option><option>AGNALDO</option><option>ALBERTO</option>
+            <option>ALCY</option><option>ALESSANDRA</option><option>ALEXANDRE BARBOSA</option>
+            <option>ALEXANDRE SAMU</option><option>ALEXANDRE SILVEIRA</option><option>ANA CLAUDIA</option>
+            <option>ANDRE COUTO</option><option>ANDRE RENATO</option><option>ANTONIO MARCOS</option>
+            <option>CARLOS NEGRAO</option><option>CELSO SAMU</option><option>CESAR</option>
+            <option>CRISTIANE</option><option>DIEGO</option><option>EDSON BARBOSA SAMU</option>
+            <option>EDSON FELICIANO SAMU</option><option>EMERSON BISPO</option><option>ERICA</option>
+            <option>EVERTON CAVASSANA</option><option>EVERTON MACHADO</option><option>EVERTON SAMU</option>
+            <option>FABIO SAMU</option><option>FLAVIO DAMAS</option><option>FRANCISCO</option>
+            <option>GABRIEL BRANDAO</option><option>GERSON</option><option>GREGORIO</option>
+            <option>GUILHERME</option><option>JANAINA</option><option>JEFFERSON</option>
+            <option>JHONAS</option><option>JOAO CAMPANA</option><option>JOAO PAULO</option>
+            <option>JOSE ALVES</option><option>JOSE DONISETE</option><option>JOSE ROBERTO</option>
+            <option>JOSENIR</option><option>JULIO SAMU</option><option>JUNIO</option>
+            <option>JURACI</option><option>LAURINDO</option><option>LUCIANA</option>
+            <option>LUIS FEITOSA</option><option>MARCELO CARVALHO</option><option>MARCELO LOPES</option>
+            <option>MARCELO MARQUES</option><option>MARCIO NUNES</option><option>MARCIO RODRIGUES</option>
+            <option>MARCO AURELIO</option><option>MARCOS GARCIA</option><option>MARCOS MORGADO</option>
+            <option>MARCOS RODRIGO</option><option>MARCOS SOARES</option><option>MARINES</option>
+            <option>MAURILIO SAMU</option><option>MAURO ALBERTO</option><option>MAURO CELSO</option>
+            <option>MOACIR</option><option>MOURA</option><option>NICOLAU SAMU</option>
+            <option>OMAR</option><option>PATRICIA</option><option>PETER</option>
+            <option>RAFAEL</option><option>REGIS</option><option>RENAN</option>
+            <option>ROBERTO BONFIM</option><option>ROSANGELA</option><option>SAMIR</option>
+            <option>SERGIO</option><option>SIBELE</option><option>SIDNEI</option>
+            <option>TAKASHI</option><option>TELMA</option><option>VAGNER SAMU</option><option>VALDINEI</option>
+            <option>WAGNER</option><option>WELTON</option><option>WILTON</option>
+          </select>
+        </div>
+
+        <!-- Frota (obrigatório) -->
         <div class="field" id="f-frota">
           <label>Frota <span class="req">*</span></label>
           <select id="frota">
@@ -478,9 +455,9 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
             <option>786</option><option>787</option><option>788</option><option>789</option>
             <option>790</option><option>791</option><option>792</option><option>793</option>
             <option>794</option><option>795</option><option>796</option><option>810</option>
-            <option>820</option><option>823</option><option>825</option><option>828</option>
-            <option>829</option><option>830</option><option>831</option><option>835</option>
-            <option>857</option><option>860</option><option>893</option>
+            <option>820</option><option>822</option><option>823</option><option>825</option>
+            <option>828</option><option>829</option><option>830</option><option>831</option>
+            <option>835</option><option>857</option><option>860</option><option>893</option>
             <option>894</option><option>895</option><option>899</option><option>908</option>
             <option>909</option><option>910</option><option>911</option><option>912</option>
             <option>913</option><option>914</option><option>918</option><option>919</option>
@@ -489,6 +466,8 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
           </select>
           <div class="err-msg">Selecione a frota</div>
         </div>
+
+        <!-- Destino (obrigatório) -->
         <div class="field" id="f-destino">
           <label>Destino <span class="req">*</span></label>
           <select id="destino">
@@ -528,6 +507,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
       <button class="btn btn-ghost" onclick="goTo(0)">Voltar</button>
     </div>
 
+    <!-- ══ ETAPA 3: CHEGADA ══ -->
     <div class="screen" id="step2">
       <div class="sec-hdr">
         <div class="sec-icon">
@@ -548,12 +528,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
             <div class="cpicker-wrap">
               <div class="cpicker-display" id="cd-dataChegada" onclick="toggleDP('dataChegada')">
                 <span class="cpicker-val ph" id="cv-dataChegada">dd/mm/aaaa</span>
-                <span class="cpicker-ico">
-                  <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                    <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/>
-                    <line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
-                  </svg>
-                </span>
+                <span class="cpicker-ico"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
               </div>
               <div class="cpicker-drop" id="ddp-dataChegada" style="display:none"></div>
             </div>
@@ -565,11 +540,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
             <div class="cpicker-wrap">
               <div class="cpicker-display" id="cd-horarioChegada" onclick="toggleTP('horarioChegada')">
                 <span class="cpicker-val ph" id="cv-horarioChegada">--:--</span>
-                <span class="cpicker-ico">
-                  <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-                  </svg>
-                </span>
+                <span class="cpicker-ico"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
               </div>
               <div class="cpicker-drop tp-drop" id="dtp-horarioChegada" style="display:none">
                 <div class="tp-cols">
@@ -594,12 +565,8 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
         <div class="field" id="f-frotaAbastecida">
           <label>A frota foi abastecida? <span class="req">*</span></label>
           <div class="sn-group">
-            <button type="button" class="sn-btn sn-sim" id="sn-sim" onclick="setSN('SIM')">
-              ✅ Sim
-            </button>
-            <button type="button" class="sn-btn sn-nao" id="sn-nao" onclick="setSN('NÃO')">
-              ❌ Não
-            </button>
+            <button type="button" class="sn-btn sn-sim" id="sn-sim" onclick="setSN('SIM')">✅ Sim</button>
+            <button type="button" class="sn-btn sn-nao" id="sn-nao" onclick="setSN('NÃO')">❌ Não</button>
           </div>
           <input type="hidden" id="frotaAbastecida">
           <div class="err-msg">Selecione uma opção</div>
@@ -612,6 +579,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
       <button class="btn btn-ghost" onclick="goTo(1)">Voltar</button>
     </div>
 
+    <!-- ══ ETAPA 4: FOTO ══ -->
     <div class="screen" id="step3">
       <div class="sec-hdr">
         <div class="sec-icon">
@@ -651,6 +619,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
       <button class="btn btn-ghost" onclick="goTo(2)">Voltar</button>
     </div>
 
+    <!-- ══ ETAPA 5: VISTORIA ══ -->
     <div class="screen" id="step4">
       <div class="sec-hdr">
         <div class="sec-icon" style="background:#EEF2FF;box-shadow:0 4px 14px rgba(30,45,110,.15)">
@@ -675,9 +644,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
       <div class="ck-outras-grupo" id="ck-outras-grupo">
         <div class="ck-outras-header" onclick="toggleOutras()">
           <span class="ck-outras-titulo">Outras ocorrências / observações gerais</span>
-          <svg class="ck-outras-arrow" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="6 9 12 15 18 9"/>
-          </svg>
+          <svg class="ck-outras-arrow" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
         <div class="ck-outras-body">
           <div class="ck-chip-outras" id="ck-chip-outras" onclick="ckToggleOutras()">
@@ -715,6 +682,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
       <button class="btn btn-ghost" onclick="goTo(3)">Voltar</button>
     </div>
 
+    <!-- ══ SUCESSO ══ -->
     <div class="screen" id="stepSuccess">
       <div class="success-bg">
         <div class="success-icon">
@@ -734,6 +702,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
       </button>
     </div>
 
+    <!-- ══ ERRO ══ -->
     <div class="screen" id="stepError">
       <div class="error-bg">
         <div class="error-icon">
@@ -786,29 +755,17 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
     <div class="guincho-body">
       <div class="guincho-cards">
         <div class="guincho-card">
-          <div class="guincho-card-ico">
-            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C9.6 21 3 14.4 3 6.5c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/>
-            </svg>
-          </div>
+          <div class="guincho-card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C9.6 21 3 14.4 3 6.5c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg></div>
           <div class="guincho-card-lbl">Porto Alegre e<br>região metropolitana</div>
           <div class="guincho-card-num">(51) 3023-8888</div>
         </div>
         <div class="guincho-card">
-          <div class="guincho-card-ico">
-            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C9.6 21 3 14.4 3 6.5c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/>
-            </svg>
-          </div>
+          <div class="guincho-card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C9.6 21 3 14.4 3 6.5c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg></div>
           <div class="guincho-card-lbl">Demais<br>localidades</div>
           <div class="guincho-card-num">0800 602 0088</div>
         </div>
         <div class="guincho-card">
-          <div class="guincho-card-ico">
-            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
-            </svg>
-          </div>
+          <div class="guincho-card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
           <div class="guincho-card-lbl">Atendimento no<br>WhatsApp</div>
           <div class="guincho-card-num">(51) 99993-1300</div>
         </div>
@@ -861,10 +818,10 @@ document.addEventListener('click',function(e){const isInsidePicker=e.target.clos
 function pad2(n){return String(n).padStart(2,'0');}
 
 /* ═══ SIM / NÃO ═══ */
-function setSN(val) {
-  document.getElementById('frotaAbastecida').value = val;
-  document.getElementById('sn-sim').classList.toggle('sel', val === 'SIM');
-  document.getElementById('sn-nao').classList.toggle('sel', val === 'NÃO');
+function setSN(val){
+  document.getElementById('frotaAbastecida').value=val;
+  document.getElementById('sn-sim').classList.toggle('sel',val==='SIM');
+  document.getElementById('sn-nao').classList.toggle('sel',val==='NÃO');
   document.getElementById('f-frotaAbastecida')?.classList.remove('error');
 }
 
@@ -970,11 +927,11 @@ if(!navigator.onLine)document.getElementById('offlineBar').classList.add('show')
   initChecklist();
 })();
 
-// ✅ Validação
+// Validação — step 1 agora valida motorista, frota, destino (motorista2 é opcional)
 const VAL=[
-  [['dataPartida','horarioPartida'],                                      ['f-dataPartida','f-horarioPartida']],
-  [['motorista','frota','destino'],                                       ['f-motorista','f-frota','f-destino']],
-  [['dataChegada','horarioChegada','kmChegada','frotaAbastecida'],        ['f-dataChegada','f-horarioChegada','f-kmChegada','f-frotaAbastecida']],
+  [['dataPartida','horarioPartida'],                                ['f-dataPartida','f-horarioPartida']],
+  [['motorista','frota','destino'],                                 ['f-motorista','f-frota','f-destino']],
+  [['dataChegada','horarioChegada','kmChegada','frotaAbastecida'],  ['f-dataChegada','f-horarioChegada','f-kmChegada','f-frotaAbastecida']],
 ];
 
 function validar(s){
@@ -986,16 +943,10 @@ function validar(s){
 
 function goTo(n){
   if(n>step&&!validar(step))return;
-  
-  // ✅ Validação de Foto simplificada, confere se o Base64Global já está pronto
   if(n===4&&step===3){
-    if(!fotoBase64Global){
-      document.getElementById('phErr').style.display='block';
-      return;
-    }
+    if(!fotoBase64Global){document.getElementById('phErr').style.display='block';return;}
     document.getElementById('phErr').style.display='none';
   }
-  
   closeAllPickers(null,null);
   document.getElementById('step'+step).classList.remove('active');
   step=n;
@@ -1006,47 +957,16 @@ function goTo(n){
   document.getElementById('mainContent').scrollTo(0,0);
 }
 
-
-/* ═══ MÁGICA DA FOTO: NÃO USA MEMÓRIA RAM ═══ */
-let fotoBase64Global = null;
-
-function comprimirFoto(file, maxW, qual) {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    const objectUrl = URL.createObjectURL(file); 
-    img.onload = () => {
-      URL.revokeObjectURL(objectUrl);
-      const canvas = document.createElement('canvas');
-      let w = img.width, h = img.height;
-      if (w > maxW) {
-        h = Math.round(h * maxW / w);
-        w = maxW;
-      }
-      canvas.width = w;
-      canvas.height = h;
-      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-      resolve(canvas.toDataURL('image/jpeg', qual));
-    };
-    img.onerror = reject;
-    img.src = objectUrl;
-  });
-}
-
+/* ═══ FOTO ═══ */
+let fotoBase64Global=null;
+function comprimirFoto(file,maxW,qual){return new Promise((resolve,reject)=>{const img=new Image();const objectUrl=URL.createObjectURL(file);img.onload=()=>{URL.revokeObjectURL(objectUrl);const canvas=document.createElement('canvas');let w=img.width,h=img.height;if(w>maxW){h=Math.round(h*maxW/w);w=maxW;}canvas.width=w;canvas.height=h;canvas.getContext('2d').drawImage(img,0,0,w,h);resolve(canvas.toDataURL('image/jpeg',qual));};img.onerror=reject;img.src=objectUrl;});}
 async function previewFoto(input){
-  if(!input.files||!input.files[0]) return;
-  document.getElementById('phPlaceholder').innerHTML = '<p style="margin-top:20px;color:var(--navy3);font-weight:800;font-size:16px;">Otimizando foto... ⏳</p>';
-  try {
-    fotoBase64Global = await comprimirFoto(input.files[0], 1024, 0.70); 
-    document.getElementById('phImg').src = fotoBase64Global;
-    document.getElementById('phPlaceholder').style.display='none';
-    document.getElementById('phPreview').style.display='block';
-    document.getElementById('phErr').style.display='none';
-  } catch (e) {
-    alert('Erro ao processar imagem no aparelho. Tente novamente.');
-  }
-  document.getElementById('phPlaceholder').innerHTML = '<div class="ph-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div><p>Toque para fotografar</p><span>ou selecione da galeria</span>';
+  if(!input.files||!input.files[0])return;
+  document.getElementById('phPlaceholder').innerHTML='<p style="margin-top:20px;color:var(--navy3);font-weight:800;font-size:16px;">Otimizando foto... ⏳</p>';
+  try{fotoBase64Global=await comprimirFoto(input.files[0],1024,0.70);document.getElementById('phImg').src=fotoBase64Global;document.getElementById('phPlaceholder').style.display='none';document.getElementById('phPreview').style.display='block';document.getElementById('phErr').style.display='none';}
+  catch(e){alert('Erro ao processar imagem no aparelho. Tente novamente.');}
+  document.getElementById('phPlaceholder').innerHTML='<div class="ph-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div><p>Toque para fotografar</p><span>ou selecione da galeria</span>';
 }
-
 
 function fmtData(v){if(!v)return'—';const[a,m,d]=v.split('-');return`${d}/${m}/${a}`;}
 
@@ -1068,21 +988,23 @@ async function enviar(){
   if(!navigator.onLine){alert('Sem conexão. Tente novamente.');return;}
 
   const motorista=document.getElementById('motorista').value;
-  const fotoNome = document.getElementById('fotoInput').files[0]?.name || "foto_hodometro.jpg";
+  const motorista2=document.getElementById('motorista2').value;
+  const fotoNome=document.getElementById('fotoInput').files[0]?.name||"foto_hodometro.jpg";
 
   payload={
-    dataPartida:       document.getElementById('dataPartida').value,
-    horarioPartida:    document.getElementById('horarioPartida').value,
-    dataChegada:       document.getElementById('dataChegada').value,
-    horarioChegada:    document.getElementById('horarioChegada').value,
+    dataPartida:      document.getElementById('dataPartida').value,
+    horarioPartida:   document.getElementById('horarioPartida').value,
+    dataChegada:      document.getElementById('dataChegada').value,
+    horarioChegada:   document.getElementById('horarioChegada').value,
     motorista,
-    frota:             document.getElementById('frota').value,
-    destino:           document.getElementById('destino').value,
-    kmChegada:         document.getElementById('kmChegada').value,
-    frotaAbastecida:   document.getElementById('frotaAbastecida').value,
-    foto:              fotoBase64Global,
-    fotoNome:          fotoNome,
-    email:             motorista,
+    motorista2,
+    frota:            document.getElementById('frota').value,
+    destino:          document.getElementById('destino').value,
+    kmChegada:        document.getElementById('kmChegada').value,
+    frotaAbastecida:  document.getElementById('frotaAbastecida').value,
+    foto:             fotoBase64Global,
+    fotoNome,
+    email:            motorista,
     ...getCkPayload()
   };
   await enviarDados(payload);
@@ -1098,7 +1020,7 @@ async function enviarDados(dados){
     const json=await res.json();
     document.getElementById('overlay').classList.remove('show');
     document.getElementById('btnEnviar').disabled=false;
-    if(json.status==='ok')mostrarSucesso(dados,json.kmRodado);
+    if(json.status==='ok')mostrarSucesso(dados,json.kmRodado,json.placa);
     else mostrarErro(json.mensagem||'Erro desconhecido.');
   }catch(err){
     document.getElementById('overlay').classList.remove('show');
@@ -1107,11 +1029,18 @@ async function enviarDados(dados){
   }
 }
 
-function mostrarSucesso(d,kmRodado){
+function mostrarSucesso(d,kmRodado,placa){
   const ckStatus=d.ckStatus==='EM ORDEM'?'✅ Em ordem':'📋 Com intercorrências';
   const abastecida=d.frotaAbastecida==='SIM'?'✅ Sim':d.frotaAbastecida==='NÃO'?'❌ Não':'—';
+  const mot2=d.motorista2&&d.motorista2!=='NÃO'?d.motorista2:'—';
+  const placaExib=placa&&placa!=='—'?placa:'—';
+
   const rows=[
-    ['Motorista',d.motorista],['Frota',d.frota],['Destino',d.destino],
+    ['Motorista',d.motorista],
+    ['2º Motorista',mot2],
+    ['Frota',d.frota],
+    ['Placa',placaExib],
+    ['Destino',d.destino],
     ['Partida',fmtData(d.dataPartida)+' às '+d.horarioPartida],
     ['Chegada',fmtData(d.dataChegada)+' às '+d.horarioChegada],
     ['KM chegada',Number(d.kmChegada).toLocaleString('pt-BR')+' km'],
@@ -1127,19 +1056,17 @@ function mostrarErro(msg){document.getElementById('errDetail').textContent=msg;s
 
 function resetar(){
   ['kmChegada','motorista','frota','destino'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('motorista2').value='NÃO';
   ['dataPartida','dataChegada'].forEach(id=>{document.getElementById(id).value='';const cv=document.getElementById('cv-'+id);cv.textContent='dd/mm/aaaa';cv.classList.add('ph');dpInit(id);});
   ['horarioPartida','horarioChegada'].forEach(id=>{document.getElementById(id).value='';const cv=document.getElementById('cv-'+id);cv.textContent='--:--';cv.classList.add('ph');tpState[id]={h:null,m:null,open:false};document.querySelectorAll(`#tph-${id} .tp-item, #tpm-${id} .tp-item`).forEach(el=>el.classList.remove('sel'));});
-  
   document.getElementById('frotaAbastecida').value='';
   document.getElementById('sn-sim').classList.remove('sel');
   document.getElementById('sn-nao').classList.remove('sel');
-  
-  fotoBase64Global = null; 
+  fotoBase64Global=null;
   document.getElementById('fotoInput').value='';
   document.getElementById('phPlaceholder').style.display='block';
   document.getElementById('phPreview').style.display='none';
   document.getElementById('phErr').style.display='none';
-  
   ckReset();
   payload=null;step=0;
   document.getElementById('progStrip').style.display='flex';
