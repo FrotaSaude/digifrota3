@@ -2,6 +2,204 @@
 
 <html lang="pt-BR">
 
+<head><meta charset="UTF-8"/></head>
+
+<body style="margin:0;padding:0;font-family:'Segoe UI',Arial,sans-serif;background:#F0F4F8;">
+
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#F0F4F8;padding:28px 0;">
+
+  <tr><td align="center">
+
+    <table width="560" cellpadding="0" cellspacing="0"
+
+           style="background:#ffffff;border-radius:14px;overflow:hidden;
+
+                  box-shadow:0 4px 20px rgba(0,0,0,.10);max-width:560px;width:100%;">
+
+      <tr>
+
+        <td style="background:#0D47A1;padding:24px 28px;">
+
+          <div style="font-size:22px;font-weight:800;color:#ffffff;letter-spacing:-0.5px;">🚌 DigiFrota</div>
+
+          <div style="font-size:13px;color:#BBDEFB;margin-top:4px;">Resumo de viagem registrada</div>
+
+        </td>
+
+      </tr>
+
+      <tr>
+
+        <td style="padding:22px 28px 10px;">
+
+          <p style="margin:0;font-size:15px;color:#1E293B;">Olá, <b>${dados.motorista}</b>! Sua viagem foi registrada com sucesso.</p>
+
+        </td>
+
+      </tr>
+
+      <tr>
+
+        <td style="padding:8px 28px 16px;">
+
+          <table width="100%" cellpadding="0" cellspacing="0"
+
+                 style="background:#F8FAFC;border-radius:10px;border:1px solid #E2E8F0;overflow:hidden;">
+
+            <tr style="background:#E3F2FD;">
+
+              <td colspan="2" style="padding:10px 16px;font-size:12px;font-weight:700;color:#0D47A1;text-transform:uppercase;letter-spacing:.5px;">📋 Dados da Viagem</td>
+
+            </tr>
+
+            <tr><td style="padding:9px 16px;font-size:12px;color:#64748B;font-weight:600;width:140px;">Data</td><td style="padding:9px 16px;font-size:13px;color:#1E293B;font-weight:500;">${dataFmt}</td></tr>
+
+            <tr style="background:#F1F5F9;"><td style="padding:9px 16px;font-size:12px;color:#64748B;font-weight:600;">Frota</td><td style="padding:9px 16px;font-size:13px;color:#1E293B;font-weight:700;">${dados.frota}</td></tr>
+
+            ${placaRow}
+
+            <tr><td style="padding:9px 16px;font-size:12px;color:#64748B;font-weight:600;">Destino</td><td style="padding:9px 16px;font-size:13px;color:#1E293B;">${dados.destino}</td></tr>
+
+            <tr style="background:#F1F5F9;"><td style="padding:9px 16px;font-size:12px;color:#64748B;font-weight:600;">Motorista</td><td style="padding:9px 16px;font-size:13px;color:#1E293B;font-weight:600;">${dados.motorista}</td></tr>
+
+            ${mot2Row}
+
+            <tr><td style="padding:9px 16px;font-size:12px;color:#64748B;font-weight:600;">Partida</td><td style="padding:9px 16px;font-size:13px;color:#1E293B;">${horaP}</td></tr>
+
+            <tr style="background:#F1F5F9;"><td style="padding:9px 16px;font-size:12px;color:#64748B;font-weight:600;">Chegada</td><td style="padding:9px 16px;font-size:13px;color:#1E293B;">${horaC}</td></tr>
+
+            <tr><td style="padding:9px 16px;font-size:12px;color:#64748B;font-weight:600;">KM chegada</td><td style="padding:9px 16px;font-size:13px;color:#1E293B;font-weight:500;">${kmCheg}</td></tr>
+
+            <tr style="background:#F1F5F9;"><td style="padding:9px 16px;font-size:12px;color:#64748B;font-weight:600;">KM rodado</td><td style="padding:9px 16px;font-size:15px;color:#0D47A1;font-weight:800;">${kmRod}</td></tr>
+
+          </table>
+
+        </td>
+
+      </tr>
+
+      <tr>
+
+        <td style="padding:0 28px 16px;">
+
+          <table width="100%" cellpadding="0" cellspacing="0"
+
+                 style="background:#F8FAFC;border-radius:10px;border:1px solid #E2E8F0;overflow:hidden;">
+
+            <tr style="background:#ECEFF1;">
+
+              <td colspan="2" style="padding:10px 16px;font-size:12px;font-weight:700;color:#37474F;text-transform:uppercase;letter-spacing:.5px;">🔍 Vistoria</td>
+
+            </tr>
+
+            <tr>
+
+              <td style="padding:12px 16px;" colspan="2">
+
+                <span style="display:inline-block;background:${corStatus};color:#fff;padding:5px 16px;border-radius:20px;font-size:13px;font-weight:700;">
+
+                  ${emojiStatus} ${labelStatus}
+
+                </span>
+
+              </td>
+
+            </tr>
+
+            ${blocoItens}
+
+          </table>
+
+        </td>
+
+      </tr>
+
+      <tr>
+
+        <td style="background:#F8FAFC;padding:16px 28px;border-top:1px solid #E2E8F0;border-radius:0 0 14px 14px;">
+
+          <p style="margin:0;font-size:11px;color:#94A3B8;text-align:center;">${nomeSS} · DigiFrota 3.0 · Mensagem gerada automaticamente</p>
+
+        </td>
+
+      </tr>
+
+    </table>
+
+  </td></tr>
+
+</table>
+
+</body>
+
+</html>`;
+
+    const assunto = `[DigiFrota] Viagem registrada — ${dados.motorista} · Frota ${dados.frota} · ${dataFmt}`;
+
+    MailApp.sendEmail({ to: email, subject: assunto, htmlBody: htmlBody });
+
+    Logger.log("Resumo enviado para " + email + " (" + dados.motorista + ")");
+
+  } catch (err) {
+
+    Logger.log("Erro em _enviarResumoMotorista: " + err.message);
+
+  }
+
+}
+
+// ─── HELPER: formatar hora ─────────────────────────────────────
+
+function _fmtHora(valor) {
+
+  if (!valor) return "—";
+
+  if (valor instanceof Date && !isNaN(valor.getTime())) {
+
+    return Utilities.formatDate(valor, Session.getScriptTimeZone(), "HH:mm");
+
+  }
+
+  const str   = String(valor);
+
+  const match = str.match(/(\d{2}):(\d{2})/);
+
+  return match ? match[1] + ":" + match[2] : "—";
+
+}
+
+function ajeitarColunaAbastecida() {
+
+  const aba = getAba(CFG.ABA_REGISTROS);
+
+  if (!aba) return;
+
+  // 1. Define o nome correto do cabeçalho na Linha 1, Coluna 13 (M)
+
+  const celulaCabecalho = aba.getRange(1, 13);
+
+  celulaCabecalho.setValue("Abastecida");
+
+  // 2. Aplica o mesmo estilo azul com texto branco do resto da planilha
+
+  aplicarEstiloHeader(celulaCabecalho, CFG.COR_HEADER);
+
+  // 3. Ajusta a largura da coluna para um tamanho ideal (ex: 110 pixels)
+
+  aba.setColumnWidth(13, 110);
+
+  // 4. Centraliza os "SIM" e "NÃO" para ficar visualmente organizado
+
+  aba.getRange(CFG.LINHA_DADOS, 13, aba.getMaxRows(), 1).setHorizontalAlignment("center");
+
+  SpreadsheetApp.getUi().alert("✅ Coluna 13 (Abastecida) padronizada com sucesso!");
+
+}
+
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
 <head>
 
 <meta charset="UTF-8">
@@ -862,7 +1060,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 
             <option>634</option><option>635</option><option>636</option><option>638</option>
 
-            <option>639</option><option>640</option><option>642</option><option>652</option>
+            <option>639</option><option>640</option><option>642</option><option>649</option><option>652</option>
 
             <option>653</option><option>654</option><option>676</option><option>677</option>
 
@@ -882,7 +1080,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 
             <option>790</option><option>791</option><option>792</option><option>793</option>
 
-            <option>794</option><option>795</option><option>796</option><option>810</option>
+            <option>794</option><option>795</option><option>796</option><option>808</option><option>810</option>
 
             <option>820</option><option>822</option><option>823</option><option>825</option>
 
