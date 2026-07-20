@@ -1,4 +1,4 @@
-const CACHE_NAME = 'digifrota-v3-3-20260716a';
+const CACHE_NAME = 'digifrota-v3-3-20260720zau';
 
 const ASSETS = [
   './',
