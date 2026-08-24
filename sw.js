@@ -1,18 +1,15 @@
-const CACHE_NAME = 'digifrota-v3-3-21082026saojorge';
-
+const CACHE_NAME = 'digifrota-v3-4-vistoriasaida';
 const ASSETS = [
   './',
   './index.html',
   'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap',
 ];
-
 self.addEventListener('install', event => {
   self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS))
   );
 });
-
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys()
@@ -22,10 +19,8 @@ self.addEventListener('activate', event => {
       .then(() => self.clients.claim())
   );
 });
-
 self.addEventListener('fetch', event => {
   const url = event.request.url;
-
   // Sempre busca da rede para o Apps Script e fontes do Google
   if (
     url.includes('script.google.com') ||
@@ -37,7 +32,6 @@ self.addEventListener('fetch', event => {
     );
     return;
   }
-
   // Estratégia network-first com fallback para cache
   event.respondWith(
     fetch(event.request)
