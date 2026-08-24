@@ -21,7 +21,7 @@
   --warn:#FF8F00;--warn-lt:#FFF8E1;
   --radius:18px;--rsm:12px;--blue-seg:#1565C0;
 }
-html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;font-size:15px}
 .app{max-width:480px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;position:relative}
 /* ── HEADER ─────────────────────────────────────── */
 .hdr{background:var(--navy);flex-shrink:0;position:relative;overflow:hidden;min-height:160px}
@@ -58,7 +58,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 .sec-icon svg{width:22px;height:22px}
 .sec-title{font-size:20px;font-weight:800;color:var(--navy);line-height:1.1}
 .sec-step{font-size:11px;font-weight:600;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.5px}
-.sec-desc{font-size:13px;color:var(--muted);margin:10px 0 22px;padding-left:58px;line-height:1.5}
+.sec-desc{font-size:15px;color:var(--muted);margin:10px 0 22px;padding:0 24px;line-height:1.5;text-align:justify}
 .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:14px;box-shadow:0 2px 12px rgba(11,22,56,.06)}
 .field{margin-bottom:16px}
 .field:last-child{margin-bottom:0}
@@ -88,7 +88,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 .ph-ico{width:60px;height:60px;background:linear-gradient(135deg,var(--navy),var(--navy3));border-radius:18px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;box-shadow:0 6px 16px rgba(11,22,56,.2)}
 .ph-ico svg{width:28px;height:28px;stroke:#fff}
 .ph-placeholder p{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:5px}
-.ph-placeholder span{font-size:12px;color:var(--muted)}
+.ph-placeholder span{font-size:13px;color:var(--muted)}
 .ph-preview{display:none}
 .ph-preview img{width:100%;max-height:240px;object-fit:cover;display:block}
 .ph-retake{padding:11px;text-align:center;font-size:12px;font-weight:700;color:var(--navy);background:var(--bg);border-top:1px solid var(--border)}
@@ -106,19 +106,19 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 .success-icon{width:72px;height:72px;background:rgba(0,200,83,.15);border:2px solid rgba(0,200,83,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;position:relative;z-index:1}
 .success-icon svg{width:36px;height:36px;stroke:var(--success)}
 .success-title{font-size:26px;font-weight:800;color:#fff;position:relative;z-index:1}
-.success-sub{color:rgba(255,255,255,.5);font-size:13px;margin-top:8px;line-height:1.5;position:relative;z-index:1}
+.success-sub{color:rgba(255,255,255,.5);font-size:15px;margin-top:8px;line-height:1.5;position:relative;z-index:1}
 .resumo-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:14px;box-shadow:0 2px 12px rgba(11,22,56,.06)}
 .resumo-header{background:var(--navy);padding:12px 18px;font-size:11px;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.7px}
 .resumo-row{display:flex;justify-content:space-between;align-items:center;padding:12px 18px;border-bottom:1px solid var(--border)}
 .resumo-row:last-child{border-bottom:none}
-.resumo-key{font-size:12px;color:var(--muted);font-weight:500}
-.resumo-val{font-size:14px;font-weight:700;color:var(--navy);text-align:right;max-width:60%}
+.resumo-key{font-size:15px;color:var(--muted);font-weight:500}
+.resumo-val{font-size:15px;font-weight:700;color:var(--navy);text-align:right;max-width:60%}
 .resumo-km-badge{background:linear-gradient(135deg,var(--navy),var(--navy3));color:var(--yellow);padding:4px 12px;border-radius:20px;font-size:13px;font-weight:700}
 .error-bg{background:linear-gradient(160deg,#7F1D1D,#991B1B);border-radius:var(--radius);padding:32px 24px;text-align:center;margin-bottom:16px}
 .error-icon{width:72px;height:72px;background:rgba(229,57,53,.2);border:2px solid rgba(229,57,53,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px}
 .error-icon svg{width:36px;height:36px;stroke:#FCA5A5}
 .error-title{font-size:24px;font-weight:800;color:#fff}
-.error-detail{color:rgba(255,255,255,.6);font-size:13px;margin-top:8px;line-height:1.5;word-break:break-word}
+.error-detail{color:rgba(255,255,255,.6);font-size:15px;margin-top:8px;line-height:1.5;word-break:break-word}
 .overlay{display:none;position:fixed;inset:0;background:rgba(11,22,56,.8);backdrop-filter:blur(4px);z-index:999;align-items:center;justify-content:center;gap:18px;flex-direction:column}
 .overlay.show{display:flex}
 .spin-ring{width:56px;height:56px;border:4px solid rgba(245,196,0,.2);border-top-color:var(--yellow);border-radius:50%;animation:spin .8s linear infinite}
@@ -178,7 +178,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 .ck-chip.sel{border-color:var(--navy3);background:#EEF2FF}
 .ck-dot{width:9px;height:9px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;transition:all .15s}
 .ck-chip.sel .ck-dot{background:var(--navy3);border-color:var(--navy3)}
-.ck-lbl{font-size:12px;font-weight:600;color:var(--text);line-height:1.25;flex:1}
+.ck-lbl{font-size:15px;font-weight:600;color:var(--text);line-height:1.25;flex:1}
 .ck-outras-grupo{margin-bottom:8px;border:1.5px solid var(--border);border-radius:14px;overflow:hidden;background:var(--card);box-shadow:0 1px 6px rgba(11,22,56,.04)}
 .ck-outras-grupo.sel-outras{border-color:var(--navy3);background:#EEF2FF}
 .ck-outras-header{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;cursor:pointer;user-select:none;transition:background .15s;gap:10px}
@@ -193,7 +193,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 .ck-chip-outras.sel{border-color:var(--navy3);background:#EEF2FF}
 .ck-chip-outras .ck-dot{width:9px;height:9px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;transition:all .15s}
 .ck-chip-outras.sel .ck-dot{background:var(--navy3);border-color:var(--navy3)}
-.ck-chip-outras .ck-lbl{font-size:12px;font-weight:600;color:var(--text);flex:1}
+.ck-chip-outras .ck-lbl{font-size:15px;font-weight:600;color:var(--text);flex:1}
 .ck-obs-textarea{width:100%;min-height:80px;font-size:13px;font-family:'Inter',sans-serif;padding:12px 14px;border:1.5px solid var(--border);border-radius:var(--rsm);background:var(--bg);color:var(--text);resize:vertical;outline:none;transition:border-color .2s}
 .ck-obs-textarea:focus{border-color:var(--navy3);box-shadow:0 0 0 3px rgba(30,45,110,.1);background:var(--card)}
 .ck-divider{height:1px;background:var(--border);margin:18px 0}
@@ -206,7 +206,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 .ck-checkbox{width:22px;height:22px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;background:var(--card)}
 .ck-checkbox.checked{background:var(--success);border-color:var(--success)}
 .ck-checkbox.checked::after{content:'✓';font-size:13px;color:#fff;font-weight:700}
-.ck-decl-txt{font-size:14px;font-weight:600;color:var(--navy);line-height:1.4}
+.ck-decl-txt{font-size:15px;font-weight:600;color:var(--navy);line-height:1.4}
 .ck-disabled{opacity:.4;pointer-events:none}
 .ck-alerta-obrig{display:none;align-items:center;gap:8px;padding:11px 14px;background:var(--danger-lt);border:1.5px solid var(--danger);border-radius:var(--rsm);margin-top:10px;font-size:12px;font-weight:600;color:var(--danger)}
 .ck-alerta-obrig.show{display:flex}
@@ -238,8 +238,19 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 .guincho-info-row:last-child{border-bottom:none}
 .guincho-info-ico{flex-shrink:0;margin-top:1px}
 .guincho-info-ico svg{width:15px;height:15px;stroke:var(--muted);stroke-width:2}
-.guincho-info-lbl{font-weight:600;color:var(--muted);font-size:11px;display:block;margin-bottom:1px}
-.guincho-info-val{font-weight:600;color:var(--navy);line-height:1.45}
+.guincho-info-lbl{font-weight:600;color:var(--muted);font-size:13px;display:block;margin-bottom:1px}
+.guincho-info-val{font-weight:600;color:var(--navy);line-height:1.45;font-size:15px}
+/* ══ MENU INICIAL (ETAPA 0) ══ */
+.menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:4px}
+.menu-card{background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);padding:26px 14px;text-align:center;cursor:pointer;transition:transform .15s,box-shadow .15s;box-shadow:0 2px 12px rgba(11,22,56,.06)}
+.menu-card:active{transform:scale(.97)}
+.menu-card-icon{width:64px;height:64px;background:var(--yellow);border-radius:18px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 4px 14px rgba(245,196,0,.4)}
+.menu-card-icon svg{width:32px;height:32px}
+.menu-card.alt .menu-card-icon{background:var(--navy);box-shadow:0 4px 14px rgba(11,22,56,.3)}
+.menu-card-title{font-size:14px;font-weight:800;color:var(--navy);line-height:1.3;margin-bottom:4px}
+.menu-card-sub{font-size:11px;color:var(--muted);font-weight:600;line-height:1.4}
+.field textarea{width:100%;min-height:90px;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;padding:14px 16px;border:1.5px solid var(--border);border-radius:var(--rsm);background:var(--bg);color:var(--text);resize:vertical;outline:none;transition:border-color .2s,box-shadow .2s,background .2s}
+.field textarea:focus{border-color:var(--navy3);box-shadow:0 0 0 3px rgba(30,45,110,.1);background:var(--card)}
 </style>
 </head>
 <body>
@@ -263,7 +274,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
       <div class="ver-pill">v3.0</div>
     </div>
     <div class="hdr-tagline" id="hdrTagline">Registro de viagem</div>
-    <div class="prog-strip" id="progStrip">
+    <div class="prog-strip" id="progStrip" style="display:none">
       <div class="prog-steps">
         <div class="prog-step active" id="ps0"></div>
         <div class="prog-step" id="ps1"></div>
@@ -278,8 +289,49 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
     </div>
   </header>
   <div class="content" id="mainContent">
+    <!-- ══ ETAPA 0: MENU INICIAL ══ -->
+    <div class="screen active" id="stepMenu">
+      <div class="sec-hdr">
+        <div class="sec-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="3" width="15" height="13" rx="2"/>
+            <path d="M16 8h4l3 3v5h-7V8z"/>
+            <circle cx="5.5" cy="18.5" r="2.5"/>
+            <circle cx="18.5" cy="18.5" r="2.5"/>
+          </svg>
+        </div>
+        <div>
+          <div class="sec-title">O que você deseja fazer?</div>
+          <div class="sec-step">Vistoria e lançamento são independentes</div>
+        </div>
+      </div>
+      <div class="sec-desc">Faça a vistoria de saída antes de utilizar o veículo. O lançamento da viagem deve ser feito ao final do trajeto.</div>
+      <div class="menu-grid">
+        <div class="menu-card" onclick="abrirVistoriaSaida()">
+          <div class="menu-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+            </svg>
+          </div>
+          <div class="menu-card-title">Vistoria de Saída</div>
+          <div class="menu-card-sub">Antes de sair, registre as condições do veículo</div>
+        </div>
+        <div class="menu-card alt" onclick="abrirLancamentoViagem()">
+          <div class="menu-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--yellow)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="1" y="3" width="15" height="13" rx="2"/>
+              <path d="M16 8h4l3 3v5h-7V8z"/>
+              <circle cx="5.5" cy="18.5" r="2.5"/>
+              <circle cx="18.5" cy="18.5" r="2.5"/>
+            </svg>
+          </div>
+          <div class="menu-card-title">Lançamento de Viagem</div>
+          <div class="menu-card-sub">Ao final da viagem, registre partida e chegada</div>
+        </div>
+      </div>
+    </div>
     <!-- ══ ETAPA 1: PARTIDA ══ -->
-    <div class="screen active" id="step0">
+    <div class="screen" id="step0">
       <div class="sec-hdr">
         <div class="sec-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2.5" stroke-linecap="round">
@@ -330,6 +382,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         Próximo
       </button>
+      <button class="btn btn-ghost" onclick="voltarMenuDoLancamento()">Voltar ao menu</button>
     </div>
     <!-- ══ ETAPA 2: VIAGEM ══ -->
     <div class="screen" id="step1">
@@ -698,6 +751,194 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
       <button class="btn btn-primary" onclick="reenviar()">Tentar novamente</button>
       <button class="btn btn-ghost" onclick="goTo(4)">Voltar ao formulário</button>
     </div>
+    <!-- ══ VISTORIA DE SAÍDA ══ -->
+    <div class="screen" id="stepVistoriaSaida">
+      <div class="sec-hdr">
+        <div class="sec-icon" style="background:#EEF2FF;box-shadow:0 4px 14px rgba(30,45,110,.15)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--navy3)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+          </svg>
+        </div>
+        <div>
+          <div class="sec-title">Vistoria de Saída</div>
+          <div class="sec-step">Antes de sair com o veículo</div>
+        </div>
+      </div>
+      <div class="sec-desc">Preencha os dados antes de partir. Este registro é independente do lançamento de viagem.</div>
+      <div class="card">
+        <div class="field" id="f-motoristaSaida">
+          <label>Motorista <span class="req">*</span></label>
+          <select id="motoristaSaida">
+            <option value="">Selecione o motorista...</option>
+            <option>ADEMAR SAMU</option><option>ADRIANE</option><option>AGNALDO</option><option>ALBERTO</option>
+            <option>ALCY</option><option>ALESSANDRA</option><option>ALEXANDRE BARBOSA</option>
+            <option>ALEXANDRE SAMU</option><option>ALEXANDRE SILVEIRA</option><option>ANA CLAUDIA</option>
+            <option>ANDRE COUTO</option><option>ANDRE RENATO</option><option>ANTONIO MARCOS</option>
+            <option>CARLOS NEGRAO</option><option>CELSO SAMU</option><option>CESAR</option>
+            <option>CRISTIANE</option><option>DIEGO</option><option>EDSON BARBOSA SAMU</option>
+            <option>EDSON FELICIANO SAMU</option><option>EMERSON BISPO</option><option>ERICA</option>
+            <option>EVERTON CAVASSANA</option><option>EVERTON MACHADO</option><option>EVERTON SAMU</option>
+            <option>FABIO SAMU</option><option>FLAVIO DAMAS</option><option>FRANCISCO</option>
+            <option>GABRIEL BRANDAO</option><option>GERSON</option><option>GREGORIO</option>
+            <option>GUILHERME</option><option>JANAINA</option><option>JEFFERSON</option>
+            <option>JHONAS</option><option>JOAO CAMPANA</option><option>JOAO PAULO</option>
+            <option>JOSE ALVES</option><option>JOSE DONISETE</option><option>JOSE ROBERTO</option>
+            <option>JOSENIR</option><option>JULIO SAMU</option><option>JUNIO</option>
+            <option>JURACI</option><option>LAURINDO</option><option>LUCIANA</option>
+            <option>LUIS FEITOSA</option><option>MARCELO CARVALHO</option><option>MARCELO LOPES</option>
+            <option>MARCELO MARQUES</option><option>MARCIO NUNES</option><option>MARCIO RODRIGUES</option>
+            <option>MARCO AURELIO</option><option>MARCOS GARCIA</option><option>MARCO MORGADO</option>
+            <option>MARCOS RODRIGO</option><option>MARCOS SOARES</option><option>MARINES</option>
+            <option>MAURILIO SAMU</option><option>MAURO ALBERTO</option><option>MAURO CELSO</option>
+            <option>MOACIR</option><option>MOURA</option><option>NICOLAU SAMU</option>
+            <option>OMAR</option><option>PATRICIA</option><option>PAULO ROBERTO</option><option>PETER</option>
+            <option>PRATES</option><option>RAFAEL</option><option>REGIS</option><option>RENAN</option>
+            <option>ROBERTO BONFIM</option><option>ROSANGELA</option><option>SAMIR</option>
+            <option>SERGIO</option><option>SIBELE</option><option>SIDNEI</option>
+            <option>TAKASHI</option><option>TELMA</option><option>TRISTANTE SAMU</option><option>VAGNER SAMU</option>
+            <option>VALDINEI</option><option>WAGNER</option><option>WELTON</option><option>WILTON</option>
+          </select>
+          <div class="err-msg">Selecione o motorista</div>
+        </div>
+        <div class="field" id="f-frotaSaida">
+          <label>Frota <span class="req">*</span></label>
+          <select id="frotaSaida">
+            <option value="">Selecione a frota...</option>
+            <option>12</option><option>338</option><option>347</option><option>386</option>
+            <option>387</option><option>404</option><option>405</option><option>407</option>
+            <option>445</option><option>449</option><option>454</option><option>487</option>
+            <option>492</option><option>496</option><option>509</option><option>514</option>
+            <option>521</option><option>537</option><option>543</option><option>552</option><option>556</option>
+            <option>591</option><option>607</option><option>621</option><option>622</option>
+            <option>634</option><option>635</option><option>636</option><option>638</option>
+            <option>639</option><option>640</option><option>642</option><option>649</option><option>650</option><option>652</option>
+            <option>653</option><option>654</option><option>664</option><option>676</option><option>677</option>
+            <option>680</option><option>681</option><option>682</option><option>691</option>
+            <option>692</option><option>697</option><option>698</option><option>699</option>
+            <option>701</option><option>702</option><option>708</option><option>714</option>
+            <option>716</option><option>748</option><option>755</option><option>760</option>
+            <option>761</option><option>762</option><option>763</option><option>781</option>
+            <option>782</option><option>783</option><option>784</option><option>785</option>
+            <option>786</option><option>787</option><option>788</option><option>789</option>
+            <option>790</option><option>791</option><option>792</option><option>793</option>
+            <option>794</option><option>795</option><option>796</option><option>808</option><option>810</option>
+            <option>820</option><option>822</option><option>823</option><option>825</option>
+            <option>828</option><option>829</option><option>830</option><option>831</option>
+            <option>835</option><option>847</option><option>854</option><option>857</option><option>860</option><option>893</option>
+            <option>894</option><option>895</option><option>899</option><option>908</option>
+            <option>909</option><option>910</option><option>911</option><option>912</option>
+            <option>913</option><option>914</option><option>918</option><option>919</option>
+            <option>921</option><option>923</option><option>924</option>
+            <option>928</option><option>929</option><option>930</option>
+          </select>
+          <div class="err-msg">Selecione a frota</div>
+        </div>
+        <div class="field-row">
+          <div class="field" id="f-dataSaida">
+            <label>Data <span class="req">*</span></label>
+            <div class="cpicker-wrap">
+              <div class="cpicker-display" id="cd-dataSaida" onclick="toggleDP('dataSaida')">
+                <span class="cpicker-val ph" id="cv-dataSaida">dd/mm/aaaa</span>
+                <span class="cpicker-ico"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+              </div>
+              <div class="cpicker-drop" id="ddp-dataSaida" style="display:none"></div>
+            </div>
+            <input type="hidden" id="dataSaida">
+            <div class="err-msg">Obrigatório</div>
+          </div>
+          <div class="field" id="f-horarioSaida">
+            <label>Horário <span class="req">*</span></label>
+            <div class="cpicker-wrap">
+              <div class="cpicker-display" id="cd-horarioSaida" onclick="toggleTP('horarioSaida')">
+                <span class="cpicker-val ph" id="cv-horarioSaida">--:--</span>
+                <span class="cpicker-ico"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+              </div>
+              <div class="cpicker-drop tp-drop" id="dtp-horarioSaida" style="display:none">
+                <div class="tp-cols">
+                  <div class="tp-col" id="tph-horarioSaida"><div class="tp-hdr">h</div></div>
+                  <div class="tp-sep"></div>
+                  <div class="tp-col" id="tpm-horarioSaida"><div class="tp-hdr">min</div></div>
+                </div>
+              </div>
+            </div>
+            <input type="hidden" id="horarioSaida">
+            <div class="err-msg">Obrigatório</div>
+          </div>
+        </div>
+        <div class="field" id="f-destinoSaida">
+          <label>Destino <span class="req">*</span></label>
+          <select id="destinoSaida">
+            <option value="">Selecione o destino...</option>
+            <option>Araçatuba</option><option>Andradina</option>
+            <option>Andradina/Castilho/Ilha Solteira</option><option>Andradina/Ilha Solteira</option>
+            <option>Andradina/Ilha Solteira/Mirandópolis</option><option>Andradina/Mirandópolis</option>
+            <option>Auriflama</option><option>Auriflama/Nhandeara</option>
+            <option>Barretos</option><option>Barretos/São José do Rio Preto</option><option>Barretos/Pirangi</option>
+            <option>Bauru</option><option>Bauru/Botucatu</option><option>Birigui</option>
+            <option>Botucatu</option><option>Brasília</option><option>Buritama</option><option>Campinas</option>
+            <option>Campo Grande</option><option>Castilho</option><option>Castilho/Ilha Solteira</option>
+            <option>Catanduva</option><option>Catanduva/Jaci</option><option>Fernandópolis</option>
+            <option>Fernandópolis/Jales</option><option>Franco da Rocha</option><option>Ilha Solteira</option>
+            <option>Ilha Solteira/Castilho</option><option>Ilha Solteira/Mirandópolis</option>
+            <option>Ilha Solteira/Nhandeara</option><option>Ilha Solteira/Valparaíso</option>
+            <option>Jaci</option><option>Jales</option><option>Jales/Fernandópolis</option>
+            <option>Jaú</option><option>Lins</option><option>Luiziânia</option><option>Marília</option><option>Mirandópolis</option>
+            <option>Mirandópolis/Penápolis</option>
+            <option>Mirassol</option><option>Monte Aprazível</option><option>Nhandeara</option>
+            <option>Nhandeara/São José do Rio Preto</option><option>Nhandeara/Valparaíso</option>
+            <option>Nhandeara/Votuporanga</option><option>Penápolis</option>
+            <option>Pirangi</option><option>Pirangi/Ribeirão Preto</option>
+            <option>Presidente Prudente</option><option>Ribeirão Preto</option>
+            <option>Rio de Janeiro</option><option>São José do Rio Preto</option>
+            <option>São José do Rio Preto/Catanduva</option><option>São José do Rio Preto/Cross</option>
+            <option>São Paulo</option><option>São Paulo/Campinas</option><option>São Paulo/Sorocaba</option>
+            <option>Sorocaba</option><option>Taquaritinga</option><option>Taubaté</option><option>Valparaíso</option>
+          </select>
+          <div class="err-msg">Selecione o destino</div>
+        </div>
+        <div class="field" id="f-detalhesVeiculoSaida">
+          <label>Detalhes do veículo <span style="font-weight:500;color:var(--muted)">(opcional)</span></label>
+          <textarea id="detalhesVeiculoSaida" placeholder="Ex: arranhão na porta traseira, pneu murcho, farol queimado..."></textarea>
+        </div>
+      </div>
+      <button class="btn btn-primary" id="btnEnviarVistoria" onclick="enviarVistoriaSaida()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+        Registrar vistoria de saída
+      </button>
+      <button class="btn btn-ghost" onclick="voltarMenuDeVistoria()">Voltar ao menu</button>
+    </div>
+    <!-- ══ SUCESSO VISTORIA ══ -->
+    <div class="screen" id="stepVistoriaSuccess">
+      <div class="success-bg">
+        <div class="success-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+        </div>
+        <div class="success-title">Vistoria registrada!</div>
+        <div class="success-sub">Boa viagem! Não esqueça de fazer o lançamento ao final.</div>
+      </div>
+      <div class="resumo-card" id="resumoVistoriaCard"></div>
+      <button class="btn btn-primary" onclick="resetarVistoria()">Voltar ao início</button>
+    </div>
+    <!-- ══ ERRO VISTORIA ══ -->
+    <div class="screen" id="stepVistoriaError">
+      <div class="error-bg">
+        <div class="error-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="15" y1="9" x2="9" y2="15"/>
+            <line x1="9" y1="9" x2="15" y2="15"/>
+          </svg>
+        </div>
+        <div class="error-title">Falha no envio</div>
+        <div class="error-detail" id="errDetailVistoria">Não foi possível salvar. Verifique a conexão.</div>
+      </div>
+      <button class="btn btn-primary" onclick="reenviarVistoriaSaida()">Tentar novamente</button>
+      <button class="btn btn-ghost" onclick="document.getElementById('stepVistoriaError').classList.remove('active');document.getElementById('stepVistoriaSaida').classList.add('active')">Voltar ao formulário</button>
+    </div>
   </div>
 </div>
 <div class="overlay" id="overlay">
@@ -1023,8 +1264,114 @@ function resetar(){
   document.getElementById('progStrip').style.display='flex';
   for(let i=0;i<5;i++)document.getElementById('ps'+i).className='prog-step'+(i===0?' active':'');
   document.getElementById('stepNum').textContent='1';
-  showScreen('step0');
+  showScreen('stepMenu');
+  document.getElementById('stepMenu').classList.add('active');
+}
+/* ═══ VISTORIA DE SAÍDA (independente do lançamento de viagem) ═══ */
+let payloadVistoria=null;
+function abrirLancamentoViagem(){
+  document.getElementById('stepMenu').classList.remove('active');
+  step=0;
+  document.getElementById('progStrip').style.display='flex';
+  for(let i=0;i<5;i++)document.getElementById('ps'+i).className='prog-step'+(i===0?' active':'');
+  document.getElementById('stepNum').textContent='1';
   document.getElementById('step0').classList.add('active');
+  document.getElementById('mainContent').scrollTo(0,0);
+}
+function voltarMenuDoLancamento(){
+  document.getElementById('step0').classList.remove('active');
+  document.getElementById('progStrip').style.display='none';
+  document.getElementById('stepMenu').classList.add('active');
+  document.getElementById('mainContent').scrollTo(0,0);
+}
+function abrirVistoriaSaida(){
+  document.getElementById('stepMenu').classList.remove('active');
+  dpInit('dataSaida');
+  tpInit('horarioSaida');
+  document.getElementById('stepVistoriaSaida').classList.add('active');
+  document.getElementById('mainContent').scrollTo(0,0);
+}
+function voltarMenuDeVistoria(){
+  document.getElementById('stepVistoriaSaida').classList.remove('active');
+  closeAllPickers(null,null);
+  document.getElementById('stepMenu').classList.add('active');
+  document.getElementById('mainContent').scrollTo(0,0);
+}
+const VS_IDS=['motoristaSaida','frotaSaida','dataSaida','horarioSaida','destinoSaida'];
+const VS_WIDS=['f-motoristaSaida','f-frotaSaida','f-dataSaida','f-horarioSaida','f-destinoSaida'];
+function validarVistoriaSaida(){
+  let ok=true;
+  VS_IDS.forEach((id,i)=>{
+    const el=document.getElementById(id),w=document.getElementById(VS_WIDS[i]);
+    if(!el.value.trim()){w.classList.add('error');ok=false;}
+    else w.classList.remove('error');
+  });
+  return ok;
+}
+async function enviarVistoriaSaida(){
+  if(!validarVistoriaSaida()){
+    document.getElementById('mainContent').scrollTo({top:0,behavior:'smooth'});
+    return;
+  }
+  if(!navigator.onLine){alert('Sem conexão. Tente novamente.');return;}
+  payloadVistoria={
+    acao:            'vistoriaSaida',
+    motorista:       document.getElementById('motoristaSaida').value,
+    frota:           document.getElementById('frotaSaida').value,
+    dataSaida:       document.getElementById('dataSaida').value,
+    horarioSaida:    document.getElementById('horarioSaida').value,
+    destino:         document.getElementById('destinoSaida').value,
+    detalhesVeiculo: document.getElementById('detalhesVeiculoSaida').value.trim()
+  };
+  await enviarDadosVistoria(payloadVistoria);
+}
+async function reenviarVistoriaSaida(){if(!payloadVistoria)return;await enviarDadosVistoria(payloadVistoria);}
+async function enviarDadosVistoria(dados){
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('btnEnviarVistoria').disabled=true;
+  try{
+    const res=await fetch(SCRIPT_URL,{method:'POST',body:JSON.stringify(dados),headers:{'Content-Type':'text/plain'}});
+    const json=await res.json();
+    document.getElementById('overlay').classList.remove('show');
+    document.getElementById('btnEnviarVistoria').disabled=false;
+    if(json.status==='ok')mostrarSucessoVistoria(dados);
+    else mostrarErroVistoria(json.mensagem||'Erro desconhecido.');
+  }catch(err){
+    document.getElementById('overlay').classList.remove('show');
+    document.getElementById('btnEnviarVistoria').disabled=false;
+    mostrarErroVistoria('Falha de conexão: '+err.message);
+  }
+}
+function mostrarSucessoVistoria(d){
+  const rows=[
+    ['Motorista',d.motorista],
+    ['Frota',d.frota],
+    ['Destino',d.destino],
+    ['Saída',fmtData(d.dataSaida)+' às '+d.horarioSaida],
+    ['Detalhes',d.detalhesVeiculo||'—'],
+  ];
+  document.getElementById('resumoVistoriaCard').innerHTML='<div class="resumo-header">Resumo da vistoria de saída</div>'+rows.map(([k,v])=>`<div class="resumo-row"><span class="resumo-key">${k}</span><span class="resumo-val">${v}</span></div>`).join('');
+  document.getElementById('stepVistoriaSaida').classList.remove('active');
+  document.getElementById('stepVistoriaSuccess').classList.add('active');
+  document.getElementById('mainContent').scrollTo(0,0);
+}
+function mostrarErroVistoria(msg){
+  document.getElementById('errDetailVistoria').textContent=msg;
+  document.getElementById('stepVistoriaSaida').classList.remove('active');
+  document.getElementById('stepVistoriaError').classList.add('active');
+  document.getElementById('mainContent').scrollTo(0,0);
+}
+function resetarVistoria(){
+  ['motoristaSaida','frotaSaida','destinoSaida'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('detalhesVeiculoSaida').value='';
+  document.getElementById('dataSaida').value='';
+  const cvd=document.getElementById('cv-dataSaida');cvd.textContent='dd/mm/aaaa';cvd.classList.add('ph');
+  document.getElementById('horarioSaida').value='';
+  const cvh=document.getElementById('cv-horarioSaida');cvh.textContent='--:--';cvh.classList.add('ph');
+  payloadVistoria=null;
+  document.getElementById('stepVistoriaSuccess').classList.remove('active');
+  document.getElementById('stepMenu').classList.add('active');
+  document.getElementById('mainContent').scrollTo(0,0);
 }
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script>
