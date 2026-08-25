@@ -1,4 +1,4 @@
-const CACHE_NAME = 'digifrota-v3-4-vistoriasaida';
+const CACHE_NAME = 'digifrota-v3-4-atualizacaokminicialefoto';
 const ASSETS = [
   './',
   './index.html',
