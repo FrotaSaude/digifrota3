@@ -591,13 +591,6 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
             <div class="err-msg">Obrigatório</div>
           </div>
         </div>
-        <div class="field" id="f-kmInicial">
-          <label>KM inicial <span style="font-weight:500;color:var(--muted)">(opcional)</span></label>
-          <div class="km-wrap">
-            <input type="number" id="kmInicial" placeholder="123000" min="0" inputmode="numeric">
-            <span class="km-unit">km</span>
-          </div>
-        </div>
         <div class="field" id="f-kmChegada">
           <label>KM de chegada <span class="req">*</span></label>
           <div class="km-wrap">
@@ -833,6 +826,13 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
           </select>
           <div class="err-msg">Selecione a frota</div>
         </div>
+        <div class="field" id="f-kmInicialSaida">
+          <label>KM inicial <span style="font-weight:500;color:var(--muted)">(opcional)</span></label>
+          <div class="km-wrap">
+            <input type="number" id="kmInicialSaida" placeholder="123000" min="0" inputmode="numeric">
+            <span class="km-unit">km</span>
+          </div>
+        </div>
         <div class="field-row">
           <div class="field" id="f-dataSaida">
             <label>Data <span class="req">*</span></label>
@@ -899,6 +899,26 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
         <div class="field" id="f-detalhesVeiculoSaida">
           <label>Detalhes do veículo <span style="font-weight:500;color:var(--muted)">(opcional)</span></label>
           <textarea id="detalhesVeiculoSaida" placeholder="Ex: arranhão na porta traseira, pneu murcho, farol queimado..."></textarea>
+        </div>
+      </div>
+      <div class="field" style="margin-bottom:16px">
+        <label>Foto do veículo <span style="font-weight:500;color:var(--muted)">(opcional)</span></label>
+        <div class="photo-box" id="photoBoxSaida">
+          <input type="file" id="fotoInputSaida" accept="image/*" capture="environment" onchange="previewFotoSaida(this)">
+          <div class="ph-placeholder" id="phPlaceholderSaida">
+            <div class="ph-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                <circle cx="12" cy="13" r="4"/>
+              </svg>
+            </div>
+            <p>Toque para fotografar</p>
+            <span>ou selecione da galeria</span>
+          </div>
+          <div class="ph-preview" id="phPreviewSaida">
+            <img id="phImgSaida" src="" alt="Foto do veículo">
+            <div class="ph-retake">Toque para trocar a foto</div>
+          </div>
         </div>
       </div>
       <button class="btn btn-primary" id="btnEnviarVistoria" onclick="enviarVistoriaSaida()">
@@ -1195,7 +1215,6 @@ async function enviar(){
     frota:            document.getElementById('frota').value,
     destino:          document.getElementById('destino').value,
     kmChegada:        document.getElementById('kmChegada').value,
-    kmInicial:        document.getElementById('kmInicial').value,
     frotaAbastecida:  document.getElementById('frotaAbastecida').value,
     foto:             fotoBase64Global,
     fotoNome,
@@ -1238,16 +1257,12 @@ function mostrarSucesso(d,kmRodado,placa){
     ['Abastecida',abastecida],
     ['Vistoria',ckStatus],
   ];
-  const kmInicialNum=d.kmInicial?Number(d.kmInicial):null;
-  const kmChegadaNum=Number(d.kmChegada);
-  const kmRodadoCalc=(kmInicialNum!==null&&!isNaN(kmInicialNum)&&kmInicialNum>=0&&kmChegadaNum>kmInicialNum)?(kmChegadaNum-kmInicialNum):null;
-  const kmRow=kmRodadoCalc!==null?`<div class="resumo-row"><span class="resumo-key">KM rodado</span><span class="resumo-km-badge">${kmRodadoCalc.toLocaleString('pt-BR')} km</span></div>`:'';
-  document.getElementById('resumoCard').innerHTML='<div class="resumo-header">Resumo da viagem</div>'+rows.map(([k,v])=>`<div class="resumo-row"><span class="resumo-key">${k}</span><span class="resumo-val">${v}</span></div>`).join('')+kmRow;
+  document.getElementById('resumoCard').innerHTML='<div class="resumo-header">Resumo da viagem</div>'+rows.map(([k,v])=>`<div class="resumo-row"><span class="resumo-key">${k}</span><span class="resumo-val">${v}</span></div>`).join('');
   showScreen('stepSuccess');
 }
 function mostrarErro(msg){document.getElementById('errDetail').textContent=msg;showScreen('stepError');}
 function resetar(){
-  ['kmChegada','kmInicial','motorista','frota','destino'].forEach(id=>document.getElementById(id).value='');
+  ['kmChegada','motorista','frota','destino'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('motorista2').value='NÃO';
   ['dataPartida','dataChegada'].forEach(id=>{document.getElementById(id).value='';const cv=document.getElementById('cv-'+id);cv.textContent='dd/mm/aaaa';cv.classList.add('ph');dpInit(id);});
   ['horarioPartida','horarioChegada'].forEach(id=>{document.getElementById(id).value='';const cv=document.getElementById('cv-'+id);cv.textContent='--:--';cv.classList.add('ph');tpState[id]={h:null,m:null,open:false};document.querySelectorAll(`#tph-${id} .tp-item, #tpm-${id} .tp-item`).forEach(el=>el.classList.remove('sel'));});
@@ -1269,6 +1284,7 @@ function resetar(){
 }
 /* ═══ VISTORIA DE SAÍDA (independente do lançamento de viagem) ═══ */
 let payloadVistoria=null;
+let fotoBase64VistoriaGlobal=null;
 function abrirLancamentoViagem(){
   document.getElementById('stepMenu').classList.remove('active');
   step=0;
@@ -1283,6 +1299,13 @@ function voltarMenuDoLancamento(){
   document.getElementById('progStrip').style.display='none';
   document.getElementById('stepMenu').classList.add('active');
   document.getElementById('mainContent').scrollTo(0,0);
+}
+async function previewFotoSaida(input){
+  if(!input.files||!input.files[0])return;
+  document.getElementById('phPlaceholderSaida').innerHTML='<p style="margin-top:20px;color:var(--navy3);font-weight:800;font-size:16px;">Otimizando foto... ⏳</p>';
+  try{fotoBase64VistoriaGlobal=await comprimirFoto(input.files[0],1024,0.70);document.getElementById('phImgSaida').src=fotoBase64VistoriaGlobal;document.getElementById('phPlaceholderSaida').style.display='none';document.getElementById('phPreviewSaida').style.display='block';}
+  catch(e){alert('Erro ao processar imagem no aparelho. Tente novamente.');}
+  document.getElementById('phPlaceholderSaida').innerHTML='<div class="ph-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div><p>Toque para fotografar</p><span>ou selecione da galeria</span>';
 }
 function abrirVistoriaSaida(){
   document.getElementById('stepMenu').classList.remove('active');
@@ -1314,14 +1337,18 @@ async function enviarVistoriaSaida(){
     return;
   }
   if(!navigator.onLine){alert('Sem conexão. Tente novamente.');return;}
+  const fotoNomeSaida=document.getElementById('fotoInputSaida').files[0]?.name||"";
   payloadVistoria={
     acao:            'vistoriaSaida',
     motorista:       document.getElementById('motoristaSaida').value,
     frota:           document.getElementById('frotaSaida').value,
+    kmInicial:       document.getElementById('kmInicialSaida').value,
     dataSaida:       document.getElementById('dataSaida').value,
     horarioSaida:    document.getElementById('horarioSaida').value,
     destino:         document.getElementById('destinoSaida').value,
-    detalhesVeiculo: document.getElementById('detalhesVeiculoSaida').value.trim()
+    detalhesVeiculo: document.getElementById('detalhesVeiculoSaida').value.trim(),
+    foto:            fotoBase64VistoriaGlobal,
+    fotoNome:        fotoNomeSaida
   };
   await enviarDadosVistoria(payloadVistoria);
 }
@@ -1348,8 +1375,9 @@ function mostrarSucessoVistoria(d){
     ['Frota',d.frota],
     ['Destino',d.destino],
     ['Saída',fmtData(d.dataSaida)+' às '+d.horarioSaida],
-    ['Detalhes',d.detalhesVeiculo||'—'],
   ];
+  if(d.kmInicial&&String(d.kmInicial).trim()!=='')rows.push(['KM inicial',Number(d.kmInicial).toLocaleString('pt-BR')+' km']);
+  rows.push(['Detalhes',d.detalhesVeiculo||'—']);
   document.getElementById('resumoVistoriaCard').innerHTML='<div class="resumo-header">Resumo da vistoria de saída</div>'+rows.map(([k,v])=>`<div class="resumo-row"><span class="resumo-key">${k}</span><span class="resumo-val">${v}</span></div>`).join('');
   document.getElementById('stepVistoriaSaida').classList.remove('active');
   document.getElementById('stepVistoriaSuccess').classList.add('active');
@@ -1362,12 +1390,16 @@ function mostrarErroVistoria(msg){
   document.getElementById('mainContent').scrollTo(0,0);
 }
 function resetarVistoria(){
-  ['motoristaSaida','frotaSaida','destinoSaida'].forEach(id=>document.getElementById(id).value='');
+  ['motoristaSaida','frotaSaida','destinoSaida','kmInicialSaida'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('detalhesVeiculoSaida').value='';
   document.getElementById('dataSaida').value='';
   const cvd=document.getElementById('cv-dataSaida');cvd.textContent='dd/mm/aaaa';cvd.classList.add('ph');
   document.getElementById('horarioSaida').value='';
   const cvh=document.getElementById('cv-horarioSaida');cvh.textContent='--:--';cvh.classList.add('ph');
+  fotoBase64VistoriaGlobal=null;
+  document.getElementById('fotoInputSaida').value='';
+  document.getElementById('phPlaceholderSaida').style.display='block';
+  document.getElementById('phPreviewSaida').style.display='none';
   payloadVistoria=null;
   document.getElementById('stepVistoriaSuccess').classList.remove('active');
   document.getElementById('stepMenu').classList.add('active');
