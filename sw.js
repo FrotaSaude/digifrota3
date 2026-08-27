@@ -1,4 +1,4 @@
-const CACHE_NAME = 'digifrota-v3-4-atualizacaokminicialefoto';
+const CACHE_NAME = 'digifrota-v3-4-Ganesha2708';
 const ASSETS = [
   './',
   './index.html',
